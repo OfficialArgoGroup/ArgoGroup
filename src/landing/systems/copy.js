@@ -25,7 +25,7 @@ export const hero = {
   // Three differentiators, each with a gold mark: [title, line].
   points: [
     ['Built around you.', 'Your process is the blueprint.'],
-    ['Systems, not demos.', 'Built to run your business every day.'],
+    ['Ready for daily use.', 'Built to run your business every day.'],
     ['Always improving.', 'We track every system and optimize it as your business grows.'],
   ],
   // Not in the brief, pending review: the shorter first screen on phones and
