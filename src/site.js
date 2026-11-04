@@ -4,6 +4,10 @@
 
 export const SITE_ORIGIN = 'https://www.groupargous.com'
 
+// The only addresses whose visits count: previews, workers.dev and localhost
+// never reach Meta (src/lib/tracking.js, server/meta.js).
+export const PRODUCTION_HOSTS = ['www.groupargous.com', 'groupargous.com']
+
 export const site = {
   origin: SITE_ORIGIN,
   url: `${SITE_ORIGIN}/`,

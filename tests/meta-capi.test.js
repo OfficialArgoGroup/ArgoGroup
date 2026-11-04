@@ -86,6 +86,33 @@ test('it refuses other sites, other events, odd ids and pages from elsewhere', a
   assert.equal(calls.length, 0)
 })
 
+test('only production counts: previews, workers.dev and requests without Origin stop here', async () => {
+  const preview = 'https://fix-argo-web.sweet-poetry-73fa.workers.dev'
+  const fromPreview = new Request(`${preview}/api/event`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Origin: preview },
+    body: JSON.stringify(event({ event_source_url: `${preview}/growth` })),
+  })
+  assert.equal((await relay(fromPreview, {})).status, 403)
+
+  const spoofed = new Request(`${preview}/api/event`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Origin: SITE },
+    body: JSON.stringify(event()),
+  })
+  assert.equal((await relay(spoofed, {})).status, 403, 'a production Origin does not make a preview production')
+
+  const noOrigin = new Request(`${SITE}/api/event`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(event()),
+  })
+  assert.equal((await relay(noOrigin, {})).status, 403)
+
+  assert.equal((await relay(post(event(), { Origin: 'https://groupargous.com' }), {})).status, 204, 'the bare domain is production')
+  assert.equal(calls.length, 1)
+})
+
 test('custom data stays flat and small', async () => {
   await relay(post(event({ custom_data: { content_category: 'growth', nested: { a: 1 }, 'Bad Key': 'x', value: 3 } })), {})
   assert.deepEqual(calls[0].body.data[0].custom_data, { content_category: 'growth', value: 3 })

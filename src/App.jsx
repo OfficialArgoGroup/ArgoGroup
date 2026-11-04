@@ -16,12 +16,18 @@ import PrivacyPolicy from './pages/PrivacyPolicy'
 import CookiePolicy from './pages/CookiePolicy'
 import TermsOfService from './pages/TermsOfService'
 import { getConsent } from './lib/consent'
-import { initPixel } from './lib/pixel'
+import { startSiteTracking, trackPageView } from './lib/tracking'
 
 export function AppLayout({ showBanner, setShowBanner }) {
   const location = useLocation()
   const { lang } = useLang()
   const isThankYou = location.pathname === '/thank-you'
+
+  // A PageView per route. The first load also goes through here; the module
+  // keeps the same path from counting twice (StrictMode runs effects twice).
+  useEffect(() => {
+    trackPageView()
+  }, [location.pathname])
 
   return (
     <div className="min-h-screen">
@@ -55,7 +61,7 @@ export default function App() {
     // Read after hydration so the first render matches the prerendered HTML.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!getConsent()) setShowBanner(true)
-    return initPixel()
+    return startSiteTracking()
   }, [])
 
   return (

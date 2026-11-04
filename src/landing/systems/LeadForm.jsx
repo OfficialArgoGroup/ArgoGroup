@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { captureAttribution, metaIds, newEventId } from '../shared/attribution.js'
+import { getAttribution, metaIds, newEventId } from '../shared/attribution.js'
 import { crmPayload } from '../shared/crm.js'
 import { cleanPhone, EMAIL_RE } from '../shared/fields.js'
 import { sendLead } from '../shared/submit.js'
-import { setTrackingContext, track, trackingActive } from '../shared/tracking.js'
+import { pageEvent, trackLead } from '../shared/tracking.js'
+import { isTrackingEnabled } from '../../lib/tracking.js'
 import { useMetaConsentBox } from '../shared/useMetaConsentBox.js'
 import { form as copy, PRIVACY_URL, WHATSAPP_URL } from './copy.js'
 
@@ -19,7 +20,6 @@ const REQUIRED = ['name', 'email', 'whatsapp', 'consent']
 // The CRM's limit for `mensaje` (argo-planning, lib/crm-web.ts).
 const MAX_ANSWER = 5000
 const MIN_FILL_MS = 3000
-const ATTRIBUTION_KEY = 'argo_systems_attribution'
 const THANK_YOU = '/systems/thank-you'
 
 function errorFor(name, values) {
@@ -73,18 +73,15 @@ export default function LeadForm() {
 
   // Attribution and the lead's event_id exist only in the browser.
   useEffect(() => {
-    const attribution = captureAttribution(ATTRIBUTION_KEY)
-    const ids = metaIds(attribution)
-    setTrackingContext(ids)
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setContext({ attribution, ids, eventId: newEventId(), mountedAt: Date.now() })
+    setContext({ attribution: getAttribution(), eventId: newEventId(), mountedAt: Date.now() })
   }, [])
 
   // First touch of the form: stops the button's shine and sends FormStart.
   const markStarted = () => {
     if (started) return
     setStarted(true)
-    track('FormStart', { content_category: 'systems' })
+    pageEvent('FormStart')
   }
 
   const update = (name, value) => {
@@ -127,8 +124,7 @@ export default function LeadForm() {
       return
     }
 
-    // The pixel's _fbp cookie may have appeared since load (consent given).
-    const ids = metaIds(context.attribution)
+    const ids = metaIds()
     const payload = crmPayload({
       landing: 'systems',
       values,
@@ -143,9 +139,9 @@ export default function LeadForm() {
     try {
       const delivered = await sendLead(payload, { metaConsent })
       if (delivered) {
-        track('Lead', { content_category: 'systems' }, context.eventId)
+        trackLead(context.eventId)
         // Give the pixel a moment to send before the page unloads.
-        if (trackingActive()) await new Promise((resolve) => setTimeout(resolve, 300))
+        if (isTrackingEnabled()) await new Promise((resolve) => setTimeout(resolve, 300))
       }
       window.location.assign(THANK_YOU)
     } catch {
