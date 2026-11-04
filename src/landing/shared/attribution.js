@@ -5,15 +5,15 @@
 // nothing. One key for the whole site, so it survives a move between pages. The
 // last ad click is kept apart, because Meta's fbc wants the latest one.
 //
-// Where it is kept follows the visitor's country (region.js). In the EU/EEA, the
-// UK and Switzerland, and whenever the country is unknown, it reaches browser
-// storage only after Accept, and leaves it again on Reject. Until then it lives
+// It may be in browser storage exactly when the Meta Pixel may run (metaAllowed,
+// region.js). In the EU/EEA, the UK and Switzerland, and whenever the country is
+// unknown, that means after Accept. Elsewhere, from the moment the country is
+// known. Reject takes it out of storage everywhere. The rest of the time it lives
 // in the open page's memory, which is enough for the form to carry it: the URL
-// still has it after a reload. Elsewhere it goes to storage once the country is
-// known.
+// still has it after a reload.
 
 import { getConsent, onConsentChange } from '../../lib/consent.js'
-import { getRegion, onRegionChange, resolveRegion } from './region.js'
+import { metaAllowed, onRegionChange, resolveRegion } from './region.js'
 
 const KEY = 'argo_attribution'
 const PARAMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid']
@@ -27,8 +27,6 @@ const cookie = (name) => {
   return match ? decodeURIComponent(match[1]) : ''
 }
 
-const mayStore = () => getConsent() === 'accepted' || getRegion() === 'opt-out'
-
 function readStored() {
   try {
     return JSON.parse(window.sessionStorage.getItem(KEY) || 'null')
@@ -40,7 +38,7 @@ function readStored() {
 /** Puts browser storage in line with what the visitor's country and choice allow. */
 function syncStorage() {
   try {
-    if (mayStore()) window.sessionStorage.setItem(KEY, JSON.stringify(memory.get(window)))
+    if (metaAllowed()) window.sessionStorage.setItem(KEY, JSON.stringify(memory.get(window)))
     else window.sessionStorage.removeItem(KEY)
   } catch {
     // Storage blocked: the page's memory still has it.
@@ -69,9 +67,10 @@ export function getAttribution() {
   if (firstCall) {
     onConsentChange(syncStorage)
     onRegionChange(syncStorage)
-    // The landings always ask; the main site only needs the country when there
-    // is something to keep and no Accept yet to keep it under.
-    if (urlHasAny && !mayStore()) resolveRegion()
+    // The landings always ask. The main site only needs the country when there
+    // is something to keep and the visitor has not decided: after Accept it may
+    // be stored and after Reject it may not, wherever they are.
+    if (urlHasAny && !metaAllowed() && getConsent() !== 'rejected') resolveRegion()
   }
   syncStorage()
   return attribution
