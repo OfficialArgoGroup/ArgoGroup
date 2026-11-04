@@ -6,6 +6,8 @@
 // disk there is no /api/lead, so nothing is sent, the console says so, and
 // the visitor still reaches the thank-you page.
 
+import { isProductionVisit } from '../../lib/tracking.js'
+
 export const LEAD_ENDPOINT = '/api/lead'
 
 // `?.`: import.meta.env exists only under Vite; plain Node (the tests) has none.
@@ -16,6 +18,7 @@ export const reviewMode = () => Boolean(import.meta.env?.DEV) || window.location
  * failure. `metaConsent`: the visitor accepted Meta's cookies, so /api/lead
  * also sends the Lead to Meta from the server (server/lead.js). It
  * travels as a header, not in the body, because the body goes to the CRM as is.
+ * An internal browser or a preview still reaches the CRM, never Meta.
  */
 export async function sendLead(payload, { metaConsent = false } = {}) {
   if (reviewMode()) {
@@ -23,7 +26,7 @@ export async function sendLead(payload, { metaConsent = false } = {}) {
     return false
   }
   const headers = { 'Content-Type': 'application/json' }
-  if (metaConsent) headers['X-Argo-Meta-Consent'] = '1'
+  if (metaConsent && isProductionVisit()) headers['X-Argo-Meta-Consent'] = '1'
   const response = await fetch(LEAD_ENDPOINT, {
     method: 'POST',
     headers,

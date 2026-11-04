@@ -21,5 +21,5 @@ else createRoot(container).render(app)
 
 if (!isThankYou) {
   const variantKey = document.documentElement.getAttribute('data-variant') || '1b'
-  startPageTracking({ contentName: `v${variantKey}`, category: 'growth' })
+  startPageTracking({ contentName: 'growth', variant: variantKey })
 }

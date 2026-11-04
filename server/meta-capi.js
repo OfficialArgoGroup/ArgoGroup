@@ -1,7 +1,7 @@
-// Meta Conversions API relay for the landings (/growth, /systems), at /api/event.
+// Meta Conversions API relay for the whole site, at /api/event.
 //
-// The page calls it only after the visitor has accepted cookies
-// (src/landing/shared/tracking.js), with the same event_id the Pixel uses, so
+// The page calls it only when tracking may run for this visitor
+// (src/lib/tracking.js), with the same event_id the Pixel uses, so
 // Meta keeps one of the pair. This function adds what only a server knows,
 // the visitor's IP and user agent, and the token the browser must never see.
 //
@@ -13,7 +13,7 @@
 // Served at /api/event by server/worker.js. Environment: see server/meta.js. Without META_PIXEL_ID and
 // META_CAPI_TOKEN it answers 204 and contacts nobody.
 
-import { host, metaConfigured, postToMeta, shortText } from './meta.js'
+import { isProduction, metaConfigured, postToMeta, shortText } from './meta.js'
 
 const ALLOWED_EVENTS = new Set(['PageView', 'ViewContent', 'Scroll50', 'FormStart', 'Contact'])
 const MAX_BODY = 4 * 1024
@@ -31,10 +31,9 @@ function cleanCustomData(data) {
 export default async (request, context) => {
   if (request.method !== 'POST') return done(405)
 
-  // Only this site's own pages send events here.
-  const ownHost = host(request.url)
-  const origin = request.headers.get('origin')
-  if (origin && host(origin) !== ownHost) return done(403)
+  // Only the production site's own pages send events here: browsers always
+  // put Origin on a POST, and previews and workers.dev stop here.
+  if (!isProduction(request.headers.get('origin')) || !isProduction(request.url)) return done(403)
 
   if (!metaConfigured()) return done(204)
 
@@ -48,7 +47,7 @@ export default async (request, context) => {
   }
   if (!event || !ALLOWED_EVENTS.has(event.event_name)
     || typeof event.event_id !== 'string' || !/^[A-Za-z0-9-]{8,64}$/.test(event.event_id)
-    || host(event.event_source_url) !== ownHost) {
+    || !isProduction(event.event_source_url)) {
     return done(400)
   }
 

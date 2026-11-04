@@ -6,10 +6,12 @@
 //   META_PIXEL_ID          the Pixel the events go to
 //   META_CAPI_TOKEN        Conversions API access token from Events Manager
 //   META_TEST_EVENT_CODE   optional: sends to Events Manager → Test events
-//                          instead of live data (Deploy Previews only)
+//                          instead of live data. Only for short windows: while
+//                          it is set, every real visit goes there too.
 // Logs carry no personal data: status codes and event names only.
 
 import { createHash } from 'node:crypto'
+import { PRODUCTION_HOSTS } from '../src/site.js'
 
 export const GRAPH_VERSION = 'v21.0'
 const TIMEOUT_MS = 5_000
@@ -24,7 +26,10 @@ export const host = (url) => {
   }
 }
 
-export const shortText = (value) => (typeof value === 'string' && value !== '' && value.length <= 500 ? value : undefined)
+/** Previews share production's secrets: only this says whether Meta may hear about a request. */
+export const isProduction = (url) => PRODUCTION_HOSTS.includes(host(url))
+
+export const shortText =(value) => (typeof value === 'string' && value !== '' && value.length <= 500 ? value : undefined)
 
 /** Meta's format for personal data: SHA-256, lowercase hex, of the normalised value. */
 export const sha256 = (value) => createHash('sha256').update(value, 'utf8').digest('hex')

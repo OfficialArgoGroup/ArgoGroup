@@ -1,5 +1,5 @@
 // Cookie consent. The banner writes the visitor's choice here; the Meta Pixel
-// (pixel.js) reads it here and does nothing until it says 'accepted'. For
+// (tracking.js) reads it here and does nothing until it says 'accepted'. For
 // EU/EEA visitors that is a legal requirement, not a preference.
 
 export const CONSENT_KEY = 'argo_cookie_consent'

@@ -12,7 +12,7 @@ import vm from 'node:vm'
 import { createSiteServer } from '../scripts/serve.mjs'
 import { about, finalCta, form, hero, method, VARIANT_KEYS, work } from '../src/landing/growth/copy.js'
 import { cleanPhone, companyOrWebsite, emailType, normaliseWebsite } from '../src/landing/shared/fields.js'
-import { CAPI_ENDPOINT, PIXEL_ID } from '../src/landing/shared/tracking.js'
+import { CAPI_ENDPOINT, PIXEL_ID } from '../src/lib/tracking.js'
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const read = (...parts) => readFileSync(join(ROOT, ...parts), 'utf8')
@@ -137,9 +137,8 @@ test('email type separates free mailboxes from work domains', () => {
 
 // ── Tracking: the site's Pixel, the server half on this domain ─────────────
 
-test('Meta Pixel and CAPI point at the site Pixel and the own /api/event', async () => {
-  const { PIXEL_ID: SITE_PIXEL } = await import('../src/lib/pixel.js')
-  assert.equal(PIXEL_ID, SITE_PIXEL)
+test('Meta Pixel and CAPI point at the site Pixel and the own /api/event', () => {
+  assert.equal(PIXEL_ID, '3872072809596261')
   assert.equal(CAPI_ENDPOINT, '/api/event')
 })
 

@@ -1,49 +1,99 @@
-// Where the visitor came from, for a landing form's hidden fields and for Meta.
+// Where the visitor came from, for the forms' hidden data and for Meta.
 //
-// Captured once per session, under the key the landing passes: if they land
-// from an ad and then reload or come back without the query string, the
-// first-touch values are kept.
+// First touch of the session: the first link that carried campaign details wins,
+// so a later link in the same tab, a reload or a move to another page changes
+// nothing. One key for the whole site, so it survives a move between pages. The
+// last ad click is kept apart, because Meta's fbc wants the latest one.
+//
+// Where it is kept follows the visitor's country (region.js). In the EU/EEA, the
+// UK and Switzerland, and whenever the country is unknown, it reaches browser
+// storage only after Accept, and leaves it again on Reject. Until then it lives
+// in the open page's memory, which is enough for the form to carry it: the URL
+// still has it after a reload. Elsewhere it goes to storage once the country is
+// known.
 
+import { getConsent, onConsentChange } from '../../lib/consent.js'
+import { getRegion, onRegionChange, resolveRegion } from './region.js'
+
+const KEY = 'argo_attribution'
 const PARAMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid']
+const UTM = PARAMS.filter((name) => name.startsWith('utm_'))
+
+// One entry per page load: gone when the visitor leaves the page.
+const memory = new WeakMap()
 
 const cookie = (name) => {
   const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`))
   return match ? decodeURIComponent(match[1]) : ''
 }
 
-export function captureAttribution(key) {
+const mayStore = () => getConsent() === 'accepted' || getRegion() === 'opt-out'
+
+function readStored() {
+  try {
+    return JSON.parse(window.sessionStorage.getItem(KEY) || 'null')
+  } catch {
+    return null
+  }
+}
+
+/** Puts browser storage in line with what the visitor's country and choice allow. */
+function syncStorage() {
+  try {
+    if (mayStore()) window.sessionStorage.setItem(KEY, JSON.stringify(memory.get(window)))
+    else window.sessionStorage.removeItem(KEY)
+  } catch {
+    // Storage blocked: the page's memory still has it.
+  }
+}
+
+export function getAttribution() {
   const params = new URLSearchParams(window.location.search)
   const fromUrl = Object.fromEntries(PARAMS.map((name) => [name, params.get(name) || '']))
-  const hasAny = PARAMS.some((name) => fromUrl[name])
+  const urlHasAny = PARAMS.some((name) => fromUrl[name])
+  const firstCall = !memory.has(window)
+  const saved = firstCall ? readStored() : memory.get(window)
+  const savedHasAny = Boolean(saved) && PARAMS.some((name) => saved[name])
+  const now = Date.now()
 
-  let saved = null
-  try {
-    saved = JSON.parse(window.sessionStorage.getItem(key) || 'null')
-  } catch {
-    // Storage blocked or garbage: fall back to the URL alone.
+  const attribution = saved && (savedHasAny || !urlHasAny)
+    ? { ...saved }
+    : { ...fromUrl, landed_at: now, referrer: document.referrer || '' }
+
+  if (fromUrl.fbclid && attribution.click_id !== fromUrl.fbclid) {
+    attribution.click_id = fromUrl.fbclid
+    attribution.click_at = now
   }
+  memory.set(window, attribution)
 
-  const attribution = hasAny || !saved
-    ? { ...fromUrl, landed_at: Date.now(), referrer: document.referrer || '' }
-    : saved
-
-  try {
-    window.sessionStorage.setItem(key, JSON.stringify(attribution))
-  } catch {
-    // Not remembered across reloads; this page view still has it.
+  if (firstCall) {
+    onConsentChange(syncStorage)
+    onRegionChange(syncStorage)
+    // The landings always ask; the main site only needs the country when there
+    // is something to keep and no Accept yet to keep it under.
+    if (urlHasAny && !mayStore()) resolveRegion()
   }
+  syncStorage()
   return attribution
 }
 
+/** The UTMs that have a value, for the custom data of a Lead. */
+export function utmData(attribution) {
+  return Object.fromEntries(UTM.filter((name) => attribution[name]).map((name) => [name, attribution[name]]))
+}
+
 /**
- * Meta click identifiers. `fbc` is built from fbclid in Meta's documented
- * format when the pixel has not set the _fbc cookie; `fbp` only exists once the
- * pixel has run, which requires consent.
+ * Meta's identifiers as they stand right now: call it per event, because the
+ * cookies can appear at any moment after load. `fbc` is built from the last
+ * fbclid in Meta's documented format when the Pixel has not set the cookie;
+ * `fbp` only exists once the Pixel has run, which requires consent.
  */
-export function metaIds(attribution) {
-  const fbc = cookie('_fbc')
-    || (attribution.fbclid ? `fb.1.${attribution.landed_at}.${attribution.fbclid}` : '')
-  return { fbc, fbp: cookie('_fbp') }
+export function metaIds() {
+  const { click_id: clickId, click_at: clickAt } = getAttribution()
+  return {
+    fbc: cookie('_fbc') || (clickId ? `fb.1.${clickAt}.${clickId}` : ''),
+    fbp: cookie('_fbp'),
+  }
 }
 
 export function newEventId() {

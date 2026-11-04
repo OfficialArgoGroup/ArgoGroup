@@ -6,7 +6,7 @@ export default function CookieBanner({ showBanner, setShowBanner }) {
   const { t, lang } = useLang()
 
   const choose = (choice) => {
-    // Saves the choice and tells the pixel (src/lib/pixel.js) straight away.
+    // Saves the choice and tells the pixel (src/lib/tracking.js) straight away.
     setConsent(choice)
     setShowBanner(false)
   }
@@ -16,14 +16,14 @@ export default function CookieBanner({ showBanner, setShowBanner }) {
   const copy = lang === 'es'
     ? {
         title: 'Usamos cookies',
-        // Lo que de verdad hay detrás: solo el Píxel de Meta (src/lib/pixel.js).
+        // Lo que de verdad hay detrás: solo el Píxel de Meta (src/lib/tracking.js).
         body: 'Usamos el Píxel de Meta para medir qué anuncios nos traen visitas. No se activa nada hasta que aceptas. Más detalles en nuestra',
         accept: 'Aceptar',
         decline: 'Rechazar',
       }
     : {
         title: 'We use cookies',
-        // What is really behind it: the Meta Pixel only (src/lib/pixel.js).
+        // What is really behind it: the Meta Pixel only (src/lib/tracking.js).
         body: 'We use the Meta Pixel to measure which ads bring people here. Nothing is set unless you accept. Learn more in our',
         accept: 'Accept',
         decline: 'Decline',

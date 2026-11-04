@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
-import { captureAttribution, metaIds, newEventId } from '../shared/attribution.js'
+import { getAttribution, metaIds, newEventId } from '../shared/attribution.js'
 import { Vary } from './chrome.jsx'
 import { form as copy, PRIVACY_URL, WHATSAPP_URL } from './copy.js'
 import { crmPayload } from '../shared/crm.js'
 import { cleanPhone, EMAIL_RE } from '../shared/fields.js'
 import { sendLead } from '../shared/submit.js'
-import { setTrackingContext, track, trackingActive } from '../shared/tracking.js'
+import { pageEvent, trackLead } from '../shared/tracking.js'
+import { isTrackingEnabled } from '../../lib/tracking.js'
 import { useMetaConsentBox } from '../shared/useMetaConsentBox.js'
 import { thankYouUrl, useVariantKey } from './variant.js'
 
@@ -82,18 +83,15 @@ export default function LeadForm() {
 
   // Attribution and the lead's event_id exist only in the browser.
   useEffect(() => {
-    const attribution = captureAttribution('argo_growth_attribution')
-    const ids = metaIds(attribution)
-    setTrackingContext(ids)
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setContext({ attribution, ids, eventId: newEventId(), mountedAt: Date.now() })
+    setContext({ attribution: getAttribution(), eventId: newEventId(), mountedAt: Date.now() })
   }, [])
 
   // First touch of the form: stops the button's shine and sends FormStart.
   const markStarted = () => {
     if (started) return
     setStarted(true)
-    track('FormStart', { content_category: 'growth' })
+    pageEvent('FormStart')
   }
 
   const update = (name, value) => {
@@ -138,8 +136,7 @@ export default function LeadForm() {
       return
     }
 
-    // The pixel's _fbp cookie may have appeared since load (consent given).
-    const ids = metaIds(context.attribution)
+    const ids = metaIds()
     const payload = crmPayload({
       landing: 'growth',
       values,
@@ -155,9 +152,9 @@ export default function LeadForm() {
     try {
       const delivered = await sendLead(payload, { metaConsent })
       if (delivered) {
-        track('Lead', { content_category: 'growth', variant: variantKey }, context.eventId)
+        trackLead(context.eventId)
         // Give the pixel a moment to send before the page unloads.
-        if (trackingActive()) await new Promise((resolve) => setTimeout(resolve, 300))
+        if (isTrackingEnabled()) await new Promise((resolve) => setTimeout(resolve, 300))
       }
       window.location.assign(destination)
     } catch {

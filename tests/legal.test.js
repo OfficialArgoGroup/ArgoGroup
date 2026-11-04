@@ -33,7 +33,7 @@ test('the site fonts are served from this domain', () => {
 
 test('the cookie policy is published, in the sitemap and linked from every page footer', () => {
   const page = read('cookie-policy.html')
-  for (const name of ['argo_cookie_consent', 'argo-lang', 'argo_growth_variant', 'argo_growth_attribution', 'argo_systems_attribution', '_fbp', '_fbc']) {
+  for (const name of ['argo_cookie_consent', 'argo-lang', 'argo_growth_variant', 'argo_attribution', 'argo_internal', '_fbp', '_fbc']) {
     assert.ok(page.includes(name), `cookie policy lists ${name}`)
   }
   assert.ok(read('sitemap.xml').includes('/cookie-policy</loc>'))

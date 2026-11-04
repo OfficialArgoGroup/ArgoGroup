@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 import { SendIcon } from './icons'
-import { track } from '../lib/pixel'
-import { newEventId } from '../landing/shared/attribution.js'
+import { isTrackingEnabled, track } from '../lib/tracking'
+import { getAttribution, metaIds, newEventId, utmData } from '../landing/shared/attribution.js'
 import { cleanPhone } from '../landing/shared/fields.js'
 import { sendLead } from '../landing/shared/submit.js'
 
@@ -19,11 +19,6 @@ const EMPTY = { name: '', email: '', phone: '', company: '', subject: '', messag
 const MIN_FILL_MS = 3000
 
 const ATTRIBUTION = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'fbclid', 'gclid']
-
-const cookie = (name) => {
-  const match = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`))
-  return match ? decodeURIComponent(match[1]) : undefined
-}
 
 export default function ContactForm() {
   const navigate = useNavigate()
@@ -94,9 +89,9 @@ export default function ContactForm() {
       return
     }
 
-    // The campaign details come from this page's own link only; nothing is
-    // stored in the browser for it.
-    const params = new URLSearchParams(window.location.search)
+    // The session's first campaign link, wherever on the site it landed.
+    const attribution = getAttribution()
+    const ids = metaIds()
     const lead = {
       nombre: values.name.trim(),
       email: values.email.trim(),
@@ -113,19 +108,21 @@ export default function ContactForm() {
       id_envio: opened.current.id,
       idioma: lang,
       pagina: window.location.href,
-      referrer: document.referrer || undefined,
-      ...Object.fromEntries(ATTRIBUTION.map((name) => [name, params.get(name) || undefined])),
-      // Only there if the visitor accepted cookies (the Meta Pixel sets them).
-      fbc: cookie('_fbc'),
-      fbp: cookie('_fbp'),
+      referrer: attribution.referrer || undefined,
+      ...Object.fromEntries(ATTRIBUTION.map((name) => [name, attribution[name] || undefined])),
+      // fbp only exists if the visitor accepted cookies (the Meta Pixel sets it).
+      fbc: ids.fbc || undefined,
+      fbp: ids.fbp || undefined,
       web: '',
     }
 
     setLoading(true)
     setSubmitError(null)
     try {
-      const delivered = await sendLead(lead)
-      if (delivered) track('Lead')
+      const delivered = await sendLead(lead, { metaConsent: isTrackingEnabled() })
+      if (delivered) {
+        track('Lead', { content_name: 'contact', content_category: 'contact', ...utmData(attribution) }, { eventId: lead.id_envio })
+      }
       navigate('/thank-you')
     } catch {
       setSubmitError(f.err_generic)

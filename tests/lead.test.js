@@ -5,7 +5,7 @@
 import assert from 'node:assert/strict'
 import { afterEach, beforeEach, test } from 'node:test'
 
-globalThis.window = { location: { href: 'https://www.groupargous.com/growth?utm_source=facebook&fbclid=abc' } }
+globalThis.window = { location: { href: 'https://www.groupargous.com/growth?utm_source=facebook&fbclid=abc', hostname: 'www.groupargous.com', search: '?utm_source=facebook&fbclid=abc' } }
 const { crmPayload, CRM_FORMS } = await import('../src/landing/shared/crm.js')
 const { default: lead } = await import('../server/lead.js')
 
@@ -207,7 +207,7 @@ test('with Meta consent, a lead the CRM took becomes a server Lead with hashed c
   assert.equal(sent.user_data.client_user_agent, 'test-agent')
   assert.equal(sent.user_data.fbc, 'fb.1.x.abc')
   assert.equal(sent.user_data.fbp, 'fb.1.1.123')
-  assert.deepEqual(sent.custom_data, { content_category: 'growth', variant: '1b' })
+  assert.deepEqual(sent.custom_data, { content_name: 'growth', content_category: 'growth', variant: '1b', utm_source: 'facebook', utm_medium: 'paid', utm_campaign: 'c1' })
   assert.ok(!meta.init.body.includes('lola@argo.test'), 'no readable email reaches Meta')
   assert.ok(!meta.init.body.includes('600000101'), 'no readable phone reaches Meta')
 })
@@ -217,9 +217,29 @@ test('the systems landing sends its own category, and a full name splits into fi
   const payload = crmPayload({ landing: 'systems', values: { ...values, name: 'Lola  de la Vega' }, context, ids: {}, consentText: 'x' })
   await lead(post(payload, withConsent), {})
   const [sent] = JSON.parse(metaCalls()[0].init.body).data
-  assert.deepEqual(sent.custom_data, { content_category: 'systems' })
+  assert.deepEqual(sent.custom_data, { content_name: 'systems', content_category: 'systems', utm_source: 'facebook', utm_medium: 'paid', utm_campaign: 'c1' })
   assert.deepEqual(sent.user_data.fn, [sha('lola')])
   assert.deepEqual(sent.user_data.ln, [sha('vega')])
+})
+
+test('the main site contact form sends its Lead the same way', async () => {
+  enableMeta()
+  await lead(post({ ...landingLead(), formulario: 'web-contacto', variante: undefined }, withConsent), {})
+  const [sent] = JSON.parse(metaCalls()[0].init.body).data
+  assert.equal(sent.custom_data.content_name, 'contact')
+  assert.deepEqual(sent.user_data.em, [sha('lola@argo.test')])
+})
+
+test('a lead from a preview may reach the CRM, never Meta', async () => {
+  enableMeta()
+  const preview = 'https://fix-argo-web.sweet-poetry-73fa.workers.dev'
+  const request = new Request(`${preview}/api/lead`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Origin: preview, ...withConsent },
+    body: JSON.stringify({ ...landingLead(), pagina: `${preview}/growth` }),
+  })
+  assert.equal((await lead(request, {})).status, 200)
+  assert.equal(metaCalls().length, 0)
 })
 
 test('without Meta consent, nothing goes to Meta', async () => {
@@ -237,10 +257,10 @@ test('no Meta Lead for a lead the CRM refused, for other forms, or without the M
   assert.equal(metaCalls().length, 0, 'refused by the CRM')
 
   reply = () => new Response(JSON.stringify({ ok: true }), { status: 200 })
-  await lead(post({ ...landingLead(), formulario: 'web-contacto' }, withConsent), {})
+  await lead(post({ ...landingLead(), formulario: 'otro-formulario' }, withConsent), {})
   await lead(post({ ...landingLead(), pagina: 'https://evil.example/growth' }, withConsent), {})
   await lead(post({ ...landingLead(), id_envio: 'x' }, withConsent), {})
-  assert.equal(metaCalls().length, 0, 'not a landing lead we can vouch for')
+  assert.equal(metaCalls().length, 0, 'not a lead we can vouch for')
 
   delete process.env.META_CAPI_TOKEN
   await lead(post(landingLead(), withConsent), {})

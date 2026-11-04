@@ -19,4 +19,4 @@ const container = document.getElementById('root')
 if (container.firstElementChild) hydrateRoot(container, app)
 else createRoot(container).render(app)
 
-if (!isThankYou) startPageTracking({ contentName: 'systems', category: 'systems' })
+if (!isThankYou) startPageTracking({ contentName: 'systems' })

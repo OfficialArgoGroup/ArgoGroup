@@ -9,7 +9,7 @@ const EMAIL = 'info@groupargous.com'
 // list in step with the code: src/lib/consent.js, src/context/LangContext.jsx,
 // src/landing/growth/boot.js, src/landing/shared/attribution.js, the country
 // rule (src/landing/shared/region.js, server/geo.js) and the Meta
-// Pixel (src/lib/pixel.js, src/landing/shared/tracking.js).
+// Pixel (src/lib/tracking.js).
 const ITEMS = [
   {
     name: 'argo_cookie_consent',
@@ -36,12 +36,20 @@ const ITEMS = [
     consent: 'No: it only keeps the page consistent',
   },
   {
-    name: 'argo_growth_attribution, argo_systems_attribution',
+    name: 'argo_attribution',
     kind: 'Browser storage (session)',
-    by: 'Group ARGO, on the /growth and /systems landing pages',
-    purpose: 'Remembers the campaign details in the link that brought you (UTM parameters and ad click identifiers), so they reach us with the form if you send it. They are not shared with anyone else.',
-    duration: 'Until you close the tab',
-    consent: 'No',
+    by: 'Group ARGO',
+    purpose: 'Remembers the campaign details in the link that brought you (UTM parameters and ad click identifiers), so they reach us with a form if you send it. If you have allowed the Meta Pixel, they also reach Meta with that form. While it is not stored, these details stay only in the memory of the open page and still reach us with a form sent from it.',
+    duration: 'Until you close the tab, or until you reject cookies in the EU/EEA, the UK or Switzerland',
+    consent: 'Yes in the EU/EEA, the UK and Switzerland, and whenever we cannot tell your country: only stored after you accept. Elsewhere: no',
+  },
+  {
+    name: 'argo_internal',
+    kind: 'Browser storage (local)',
+    by: 'Group ARGO',
+    purpose: 'Only set when someone opens a special link our team uses for testing. It stops that browser from sending anything to Meta, so tests are not counted as visits.',
+    duration: 'Until the same link turns it off or you clear your browser data',
+    consent: 'No: it only turns measurement off',
   },
   {
     name: '_fbp',
@@ -75,7 +83,7 @@ export default function CookiePolicy() {
         <div>
           <h1>Cookie Policy</h1>
           <div className="legal-rule" />
-          <p className="legal-updated">Last updated: October 2026</p>
+          <p className="legal-updated">Last updated: November 2026</p>
         </div>
 
         <div>
@@ -96,6 +104,9 @@ export default function CookiePolicy() {
             </p>
             <p>
               Our landing pages (/growth and /systems) follow the rules of the country you visit from. To know which apply, the page asks our server for your country, which our hosting provider derives from your IP address; we do not store it. In the European Union and the European Economic Area, the United Kingdom and Switzerland, and whenever we cannot tell your country, everything works as described above. Everywhere else, the measurement cookies of the Meta Pixel are on by default: the Pixel loads when the page opens, and the banner tells you so, with an OK button and a Reject button. You can reject them at any time from that banner, which the "Cookies" link at the bottom of the page brings back. Once you reject, the Pixel stops sending anything to Meta on that visit and on later ones, and when you send a form our server does not tell Meta about it.
+            </p>
+            <p>
+              The same country check decides where we keep the campaign details of the link that brought you. On the rest of the site, the page only asks for your country when that link carries such details and you have not accepted cookies.
             </p>
             <p>
               You can change your choice at any time with the "Cookie Settings" link at the bottom of every page ("Cookies" on our landing pages), or by clearing your browser's data for this site. Withdrawing your consent does not affect what was done before.

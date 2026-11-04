@@ -36,16 +36,19 @@
 // pair the lead still reaches the CRM and nothing goes to Meta. Logs carry no
 // personal data: status codes and error names only.
 
-import { host, metaConfigured, postToMeta, sha256, shortText } from './meta.js'
+import { host, isProduction, metaConfigured, postToMeta, sha256, shortText } from './meta.js'
 
 const MAX_BODY = 16 * 1024
 const TIMEOUT_MS = 10_000
 
-// Only the two paid landings send a Meta Lead, each with its own category.
-const META_CATEGORY = {
+// The forms that send a Meta Lead, each with its own content name.
+const META_CONTENT = {
   'landing-marketing-digital': 'growth',
   'landing-sistemas-ia': 'systems',
+  'web-contacto': 'contact',
 }
+
+const UTM = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term']
 
 /** Meta's normalisation: trimmed, lowercase; phones as digits with country code. */
 const hashed = (value) => (value ? [sha256(value)] : undefined)
@@ -53,14 +56,15 @@ const lower = (value) => (typeof value === 'string' ? value.trim().toLowerCase()
 
 /**
  * The Lead as Meta's Conversions API expects it, from the CRM body the form
- * sent. Null when the body is not a landing lead we can vouch for.
+ * sent. Null when the body is not a lead we can vouch for.
  */
 export function metaLead(lead, request, context) {
-  const category = META_CATEGORY[lead?.formulario]
-  if (!category) return null
+  const content = META_CONTENT[lead?.formulario]
+  if (!content) return null
   if (typeof lead.id_envio !== 'string' || !/^[A-Za-z0-9-]{8,64}$/.test(lead.id_envio)) return null
-  // The page the lead was sent from, on this site only.
-  if (host(lead.pagina) !== host(request.url)) return null
+  // The page the lead was sent from: this site, in production. A preview's
+  // test lead may reach a CRM, never Meta.
+  if (!isProduction(request.url) || host(lead.pagina) !== host(request.url)) return null
 
   const email = lower(lead.email)
   const phone = typeof lead.telefono === 'string' ? lead.telefono.replace(/\D/g, '') : ''
@@ -85,7 +89,12 @@ export function metaLead(lead, request, context) {
       fbc: shortText(lead.fbc),
       fbp: shortText(lead.fbp),
     },
-    custom_data: variant ? { content_category: category, variant } : { content_category: category },
+    custom_data: {
+      content_name: content,
+      content_category: content,
+      ...(variant ? { variant } : {}),
+      ...Object.fromEntries(UTM.filter((name) => shortText(lead[name])).map((name) => [name, lead[name]])),
+    },
   }
 }
 

@@ -19,7 +19,7 @@ export default function PrivacyPolicy() {
         <div>
           <h1>Privacy Policy</h1>
           <div className="legal-rule" />
-          <p className="legal-updated">Last updated: October 2026</p>
+          <p className="legal-updated">Last updated: November 2026</p>
         </div>
 
         <div>
@@ -182,8 +182,9 @@ export default function PrivacyPolicy() {
               On our landing pages (/growth and /systems), that applies in the European Union and the European Economic Area, the United Kingdom and Switzerland, and whenever we cannot tell where you are visiting from (the page asks our server for your country, derived from your IP address and not stored). Everywhere else, the Meta Pixel's measurement cookies are on by default: they load when the page opens, the banner tells you so, and you can reject them at any time from that banner (the "Cookies" link at the bottom of the page brings it back). After you reject, nothing more is sent to Meta, on that visit or later ones.
             </p>
             <ul>
-              <li><span className="legal-term">Always:</span> your cookie choice, stored in your browser so we do not ask again, and, on our landing pages, the campaign details of your visit, kept in your browser only for that visit.</li>
-              <li><span className="legal-term">Only if you accept (or, outside the EU/EEA, the UK and Switzerland, on our landing pages, until you reject):</span> the Meta Pixel, which sets Meta's cookies (_fbp and _fbc, kept for up to 90 days) and tells Meta which pages you visited and whether you sent a form, so we can measure our ads. With your consent, we may also send the same events to Meta from our servers (Meta Conversions API). When you send one of our landing page forms while the Pixel is active for you, our server tells Meta about it together with your email address, phone number, name and country, converted into one-way codes (SHA-256 hashes) so Meta can match your request to the ad you saw. These details never reach Meta in readable form.</li>
+              <li><span className="legal-term">Always:</span> your cookie choice, stored in your browser so we do not ask again.</li>
+              <li><span className="legal-term">Campaign details of your visit:</span> if the link that brought you carries them, they reach us with a form if you send one. In the EU/EEA, the UK and Switzerland, and whenever we cannot tell where you are visiting from, we store them in your browser only after you accept, and until you close the tab or reject; until then they stay only in the memory of the open page. Elsewhere, we store them in your browser until you close the tab. On the rest of the site, the page only asks our server for your country when your link carries these details and you have not accepted cookies.</li>
+              <li><span className="legal-term">Only if you accept (or, outside the EU/EEA, the UK and Switzerland, on our landing pages, until you reject):</span> the Meta Pixel, which sets Meta's cookies (_fbp and _fbc, kept for up to 90 days) and tells Meta which pages you visited and whether you sent a form, so we can measure our ads. With your consent, we may also send the same events to Meta from our servers (Meta Conversions API). When you send one of our forms while the Pixel is active for you, our server tells Meta about it together with the campaign details of your visit and your email address, phone number, name and country, converted into one-way codes (SHA-256 hashes) so Meta can match your request to the ad you saw. These details never reach Meta in readable form.</li>
             </ul>
             <p>
               You can change your choice at any time with the "Cookie Settings" link at the bottom of every page ("Cookies" on our landing pages), or by clearing your browser's data for this site. Every cookie and stored item, with its purpose and duration, is listed in our <Link to="/cookie-policy">Cookie Policy</Link>. Meta's own use of this data is described in <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener">Meta's Privacy Policy</a>.
