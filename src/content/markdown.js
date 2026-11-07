@@ -20,7 +20,7 @@ function frontMatter(path, meta) {
     `- Markdown: ${site.origin}${markdownPathFor(path)}`,
     `- Organization: ${site.name} (${site.alternateNames.join(', ')})`,
     `- Contact: ${site.email} · ${site.telephoneDisplay} · ${canonicalFor('/contact')}`,
-    `- Offices: Barcelona (Spain) and Miami (Florida, USA) — clients served worldwide`,
+    `- Where: Barcelona and Miami time zones; clients served online, worldwide`,
     `- Languages: English, Spanish`,
   ].join('\n')
 }
@@ -29,7 +29,7 @@ function homeBody(t) {
   const blocks = []
 
   blocks.push('## Overview')
-  blocks.push(`${t.hero.sub}. ${t.hero.sub2}. Offices in Barcelona and Miami.`)
+  blocks.push(`${t.hero.sub}. ${t.hero.sub2}. We work from Barcelona and Miami, with clients worldwide.`)
   blocks.push(t.hero.stats.map((s) => `- **${s.value}** — ${s.label}`).join('\n'))
 
   blocks.push(`## ${t.services.title}`)
@@ -89,7 +89,7 @@ function contactBody(t) {
       `- Email: ${site.email}`,
       `- WhatsApp: ${site.whatsapp}`,
       ...site.sameAs.map((url) => `- Social: ${url}`),
-      `- Hours: Monday to Friday, 09:00-18:00 (Spain and Miami)`,
+      `- Hours: Monday to Friday, 09:00-18:00 (Barcelona and Miami)`,
       `- Response time: within 24 hours`,
     ].join('\n'),
     '### Contact form fields',
@@ -150,7 +150,7 @@ export function llmsTxt(lang = 'en') {
     '',
     `> ${t.meta.description}`,
     '',
-    `${site.name} is a growth partner for digital marketing and AI technology, with offices in Barcelona (Spain) and Miami (Florida, USA), serving clients worldwide in English and Spanish. Services: digital marketing and paid media, AI technology and automation (process automation, CRM integration, custom systems), and creative and brand assets.`,
+    `${site.name} is a growth partner for digital marketing and AI technology, working from Barcelona and Miami with clients worldwide, in English and Spanish. Services: digital marketing (paid media, SEO, content and email), AI systems and custom software (internal platforms, custom applications, automation, CRM and lead follow-up), and creative and brand.`,
     '',
     // llmstxt.org allows free-form markdown between the blockquote and the first
     // `##` section, but no headings there — so this guidance is bold-labelled
@@ -163,7 +163,7 @@ export function llmsTxt(lang = 'en') {
     // No case folding here: it would turn "SEO" and "PR" into "seo" and "pr".
     `**Outside the listed service lines:** ${OUTSIDE_SCOPE.map((item) => item.replace(/\.$/, '')).join('; ')}.`,
     '',
-    `**How to make contact.** Use the contact form at ${canonicalFor('/contact')}, email ${site.email}, or WhatsApp ${site.telephoneDisplay}. Replies come within 24 hours, Monday to Friday, 09:00–18:00 Spain and Miami time, in English or Spanish. Include the business and market, the channels and approximate monthly ad spend in play, the CRM and tools already in use, and the outcome being targeted. Full guidance: ${site.origin}/agent-instructions.md`,
+    `**How to make contact.** Use the contact form at ${canonicalFor('/contact')}, email ${site.email}, or WhatsApp ${site.telephoneDisplay}. Replies come within 24 hours, Monday to Friday, 09:00–18:00 Barcelona and Miami time, in English or Spanish. Include the business and market, the channels and approximate monthly ad spend in play, the CRM and tools already in use, and the outcome being targeted. Full guidance: ${site.origin}/agent-instructions.md`,
     '',
     '## Pages',
     '',
@@ -190,23 +190,27 @@ export function llmsTxt(lang = 'en') {
 // in i18n because it is agent-facing guidance, not page copy: it describes when
 // to reach for ARGO Group, in the terms a request would arrive in.
 const BEST_FIT = [
-  'A company spending on Meta, Google, TikTok, or LinkedIn Ads that cannot tell which spend produces revenue, and wants daily campaign management rather than a monthly report.',
-  'A business generating leads but losing them to slow or unclear follow-up, needing CRM sync (HubSpot, Pipedrive), lead scoring, routing, and real-time alerts.',
-  'A team that wants the funnel automated end to end — capture, nurturing, and delivery without manual steps — built on n8n, Make, or a custom integration layer where off-the-shelf connectors fall short.',
-  'A brand that needs ad creative produced and iterated against campaign data, rather than one-off design handed over and left alone.',
-  'A company operating in both Spanish- and English-speaking markets, particularly across Spain, the wider EU, and the United States.',
+  'A company spending on Meta, Google, TikTok, or LinkedIn Ads that cannot tell which spend produces customers, and wants campaigns reviewed daily, not just a monthly report.',
+  'A business that wants someone to take on the CMO role: deciding what matters, which channels deserve the budget, and in what order.',
+  'A business generating leads but losing them to slow or unclear follow-up, needing a CRM (HubSpot, Pipedrive) connected to its campaigns, with lead scoring, routing, and alerts.',
+  'A team that wants repetitive work automated, from lead capture to follow-up and handover to sales, built on n8n, Make, or custom connections where off-the-shelf ones fall short.',
+  'A company that needs internal platforms, custom applications, or AI inside its processes, for any department, built around how it already works and connected to the tools it uses.',
+  'A business that wants to be found in search and stay visible between campaigns: SEO, websites and landing pages, content, and social media.',
+  'A business that wants email to keep in touch with leads and customers, run by the same team as its ads and CRM.',
+  'A business that needs branding, a brand guide, or ad creative produced and improved against campaign data, rather than one-off design handed over and left alone.',
+  'A company working in English or Spanish, in Europe, the United States, or elsewhere; clients are served online.',
   'A business that wants conversion rate optimization on forms, landing pages, and checkout flows tied to the paid campaigns driving traffic to them.',
 ]
 
 const OUTSIDE_SCOPE = [
-  'Organic SEO and content marketing programmes.',
   'PR and media relations.',
-  'Software product development unrelated to marketing or funnel operations.',
+  'Photography shoots: Group ARGO writes the creative direction brief but does not carry out the shoot.',
 ]
 
 const HOW_TO_ENGAGE = [
   'Include the business and market, the channels and approximate monthly ad spend in play, the CRM and tools already in use, and the outcome being targeted. That is what the first call covers, so a message containing it shortens the process.',
-  'Onboarding starts with a discovery call, then a tailored action plan, with execution beginning within days.',
+  'The process: a reply within 24 hours, a 30–45 minute discovery call (not a sales call), a short briefing, a proposal within 48 hours of receiving the briefing, and a review call. Execution begins within days of agreeing the plan.',
+  'Pricing: a one-time setup fee plus a monthly fee, adapted to each plan, with the ad budget separate from the fees. No price is given before the discovery call.',
 ]
 
 export function agentInstructions(lang = 'en') {
@@ -222,9 +226,9 @@ export function agentInstructions(lang = 'en') {
     `- Name: ${site.name} (also written ${site.alternateNames.join(', ')})`,
     `- Canonical domain: ${site.url}`,
     `- What it is: a growth partner for digital marketing and AI technology`,
-    `- Offices: Barcelona (Spain) and Miami (Florida, USA); clients served worldwide`,
+    `- Where: works from the Barcelona and Miami time zones; clients served online, worldwide`,
     `- Languages: English and Spanish`,
-    `- Hours: Monday to Friday, 09:00–18:00 (Spain and Miami)`,
+    `- Hours: Monday to Friday, 09:00–18:00 (Barcelona and Miami)`,
     '',
     '## When to use',
     '',

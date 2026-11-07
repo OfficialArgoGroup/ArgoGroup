@@ -81,7 +81,7 @@ function Headline({ options }) {
  *   1. Hero + form     the ad's headline, three differentiators, the form
  *                      (phones: a shorter hero, a button down to the form)
  *   2. What we work on five areas, a line on each
- *   3. Method          decide first, four steps, the clinic as proof
+ *   3. Method          decide first, four steps, the proof block
  *   4. Who we are      how we work, Barcelona · Miami
  *   5. Close           final CTA, direct contact, legal
  *

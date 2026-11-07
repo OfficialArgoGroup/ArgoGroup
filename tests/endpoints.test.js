@@ -74,7 +74,7 @@ test('a trailing slash redirects to the canonical URL', async () => {
 
   const followed = await get('/contact', { accept: BROWSER_ACCEPT })
   assert.equal(followed.status, 200)
-  assert.match(await followed.text(), /Let&#x27;s Talk|Let's Talk/)
+  assert.match(await followed.text(), /Let&#x27;s talk|Let's talk/)
 })
 
 test('a redirect is passed through rather than answered with markdown', async () => {

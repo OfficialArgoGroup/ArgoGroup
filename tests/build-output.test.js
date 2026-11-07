@@ -88,7 +88,7 @@ test('every trust anchor page carries 500+ characters of its own content', () =>
 
 test('the about page states who, what and where in the raw HTML', () => {
   const text = visibleText(htmlFor('/about'))
-  for (const fragment of ['Barcelona', 'Miami', 'performance marketing', 'English and Spanish']) {
+  for (const fragment of ['Barcelona', 'Miami', 'digital marketing', 'English and Spanish']) {
     assert.ok(text.includes(fragment), `/about must mention ${fragment}`)
   }
   assert.match(htmlFor('/about'), /"@type": "AboutPage"/, '/about must be typed as AboutPage in JSON-LD')

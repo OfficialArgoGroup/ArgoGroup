@@ -84,7 +84,7 @@ export const method = {
   ],
   proof: {
     title: "Sometimes the answer isn't ads.",
-    body: 'A clinic came to us wanting campaigns. Two services, two names on the door, nothing clear to put in an ad yet. We told them to settle the name and the offer first. It cost us a quarter of fees. It would have cost them the year.',
+    body: "Requests usually arrive with the solution already chosen: more ads, a new website, an AI assistant. So we ask a lot of questions first. If the problem isn't the ads, we say so.",
   },
   meaningTitle: 'What that means for you.',
   meaning: 'Your agency sees your ads. We see your business.',
@@ -107,7 +107,7 @@ export const about = {
 // Close.
 export const finalCta = {
   title: 'Find out what to fix first.',
-  sub: "Tell us about your business. We'll get back to you",
+  sub: "Tell us about your business. We'll get back to you within 24 hours.",
   button: CTA,
   contactLead: 'Prefer to talk first?',
   whatsapp: 'WhatsApp +34 685 162 838',
@@ -175,7 +175,7 @@ export const chrome = {
   // already runs, so the banner informs and offers to reject.
   cookieInformative: 'We use cookies to measure and improve our ads.',
   ok: 'OK',
-  footer: { copyright: '© 2026 ARGO Group', privacy: 'Privacy Policy', terms: 'Terms of Service', cookies: 'Cookies' },
+  footer: { copyright: '© 2026 Group ARGO', privacy: 'Privacy Policy', terms: 'Terms of Service', cookies: 'Cookies' },
   whatsappLabel: 'WhatsApp',
   // Not in the brief, pending review: Close for the sheet; the phone-only
   // "See more" under each folded section (GrowthPage.jsx).
@@ -191,7 +191,7 @@ export const thankYou = {
   steps: [
     // Was "your answers and your website": both are optional on the form now.
     'We review what you sent us.',
-    'We get in touch to set up your free discovery call, within two working days.',
+    'We reply within 24 hours and set up your free discovery call within two working days.',
     'If it makes sense to work together, we design your proposal, with phases and budget.',
   ],
 }

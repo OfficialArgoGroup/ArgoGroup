@@ -73,7 +73,7 @@ export const work = {
   },
   // [title, text]
   items: [
-    ['Your own internal platform.', 'Departments, processes and data in one environment, organised the way your company already works.'],
+    ['Your own internal platform.', 'Departments, processes and data in one environment, organized the way your company already works.'],
     ['Custom applications.', 'For what no software on the market covers.'],
     ['AI inside your processes.', 'Systems that read, draft, sort and file as part of the work, not as a separate tool.'],
     // The brief's fourth block ends in a cut-off fragment ("nd cash in one
@@ -177,7 +177,7 @@ export const chrome = {
   // already runs, so the banner informs and offers to reject.
   cookieInformative: 'We use cookies to measure and improve our ads.',
   ok: 'OK',
-  footer: { copyright: '© 2026 ARGO Group', privacy: 'Privacy Policy', terms: 'Terms of Service', cookies: 'Cookies' },
+  footer: { copyright: '© 2026 Group ARGO', privacy: 'Privacy Policy', terms: 'Terms of Service', cookies: 'Cookies' },
   whatsappLabel: 'WhatsApp',
   // Not in the brief, pending review: Close for the sheet; the phone-only
   // "See more" under each folded section (SystemsPage.jsx).
@@ -195,7 +195,7 @@ export const thankYou = {
   steps: [
     // Was "your answers and your website": both are optional on the form now.
     'We review what you sent us.',
-    'We get in touch to set up your free discovery call, within two working days.',
+    'We reply within 24 hours and set up your free discovery call within two working days.',
     'If it makes sense to work together, we design your proposal, with phases and budget.',
   ],
 }
