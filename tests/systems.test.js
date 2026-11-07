@@ -80,7 +80,7 @@ test("every line of the brief is on the page, word for word", () => {
     method.title, method.intro, ...method.steps.flat(), method.meaningTitle, ...method.meaning.flat(),
     about.title, about.intro, ...about.rows.flat(), about.closing, about.cities,
     finalCta.title, finalCta.sub, finalCta.button, finalCta.contactLead, finalCta.whatsapp, finalCta.email,
-    '© 2026 ARGO Group', 'Privacy Policy', 'Terms of Service', 'Cookies',
+    '© 2026 Group ARGO', 'Privacy Policy', 'Terms of Service', 'Cookies',
   ]
   for (const line of lines) assert.ok(text.includes(line), `missing: ${line}`)
 
