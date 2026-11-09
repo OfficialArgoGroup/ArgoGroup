@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 import Reveal from '../components/Reveal'
+import WhyArgo from '../components/WhyArgo'
 
 export default function About() {
   const { t } = useLang()
   const a = t.about
 
   return (
-    <main id="main" className="page">
+    <main id="main" className="page about-page">
       <div className="container">
         <Reveal className="section-head center">
           <h1 className="section-title">{a.title}</h1>
@@ -19,7 +20,11 @@ export default function About() {
             <Reveal as="p" delay={index * 90} key={paragraph}>{paragraph}</Reveal>
           ))}
         </div>
+      </div>
 
+      <WhyArgo />
+
+      <div className="container">
         {/* Same card treatment as the Why ARGO grid. */}
         <div className="about-cards">
           {a.sections.map((section, index) => (

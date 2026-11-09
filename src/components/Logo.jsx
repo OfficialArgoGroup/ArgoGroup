@@ -16,8 +16,9 @@ const SYMBOL = {
 /**
  * The crescent symbol (brandbook 02): the G and the A in one stroke. Header,
  * favicon, avatars. Use it alone only where the name ARGO is also on screen.
+ * Extra props go to the <svg>; `pathProps` to the shape, for an animated stroke.
  */
-export function ArgoSymbol({ className, title }) {
+export function ArgoSymbol({ className, title, pathProps, ...svgProps }) {
   return (
     <svg
       className={className}
@@ -25,8 +26,9 @@ export function ArgoSymbol({ className, title }) {
       fill="currentColor"
       {...(title ? { role: 'img', 'aria-label': title } : { 'aria-hidden': true })}
       focusable="false"
+      {...svgProps}
     >
-      <path d={SYMBOL.d} />
+      <path d={SYMBOL.d} {...pathProps} />
     </svg>
   )
 }

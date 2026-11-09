@@ -67,7 +67,11 @@ body {
   font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.65;
+  /* clip, not hidden: it trims sideways overflow without making body a scroll
+     container, which would stop the home hero's position: sticky. hidden stays
+     as the fallback for browsers without clip. */
   overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -298,6 +302,62 @@ ul, ol { list-style: none; }
   transform-origin: left;
 }
 
+/* "Services" and its three landings (Navbar.jsx). */
+.nav-menu { position: relative; }
+.nav-menu-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+.nav-menu.open .nav-menu-button { color: var(--text); }
+.nav-chevron {
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-top: -0.2rem;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform var(--dur-fast) var(--ease-out), margin-top var(--dur-fast) var(--ease-out);
+}
+.nav-menu.open .nav-chevron { margin-top: 0.2rem; transform: rotate(225deg); }
+/* The padding bridges the gap to the button, so the hover is never lost. */
+.nav-menu-panel {
+  position: absolute;
+  top: 100%;
+  left: -1rem;
+  padding-top: 0.6rem;
+  min-width: 19rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out), visibility var(--dur-fast);
+}
+.nav-menu.open .nav-menu-panel { opacity: 1; visibility: visible; transform: none; }
+.nav-menu-panel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0.4rem;
+  background: var(--menu-bg, var(--bg));
+  border: 1px solid var(--border);
+  box-shadow: 0 22px 44px -22px rgba(0, 0, 0, 0.45);
+}
+.nav-menu-panel a {
+  display: block;
+  padding: 0.75rem 0.9rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--text);
+  text-decoration: none;
+  transition: background-color var(--dur-fast), color var(--dur-fast);
+}
+.nav-menu-panel a:hover,
+.nav-menu-panel a:focus-visible,
+.nav-menu-panel a[aria-current="page"] { background: var(--gold-08); color: var(--gold); }
+
 .nav-actions { display: flex; align-items: center; gap: 0.9rem; }
 
 .social-btn {
@@ -390,6 +450,18 @@ ul, ol { list-style: none; }
   padding: 0.8rem 0;
   border-bottom: 1px solid var(--border-soft);
 }
+.mobile-submenu { padding-top: 0.8rem; border-bottom: 1px solid var(--border-soft); }
+.mobile-submenu-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.mobile-menu .mobile-submenu .nav-link {
+  padding: 0.65rem 0;
+  border-bottom: 0;
+  color: var(--text);
+}
 .mobile-menu-footer {
   display: flex;
   align-items: center;
@@ -400,115 +472,98 @@ ul, ol { list-style: none; }
 }
 
 /* ---------- Hero ---------- */
+/* Serious on purpose: an ink panel, no decoration that moves, the content set
+   left on a straight line. The site's tokens are redefined here, so everything
+   inside follows them whatever the page's theme is. */
 .hero {
+  --bg: #0f0e0b;
+  --surface: #191712;
+  --border: #2c2921;
+  --border-soft: rgba(242, 237, 228, 0.14);
+  --cream: #f2ede4;
+  --text: #f2ede4;
+  --text-soft: #dcd7ce;
+  --text-muted: #a8a399;
+  --gold: #d4af37;
+  --gold-light: #ddbe55;
+  --gold-dark: #b8962e;
+  --gold-08: rgba(212, 175, 55, 0.08);
+  --gold-15: rgba(212, 175, 55, 0.15);
+  --gold-25: rgba(212, 175, 55, 0.25);
+  --gold-40: rgba(212, 175, 55, 0.4);
   position: relative;
+  isolation: isolate;
   min-height: 100svh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
   padding-top: 96px;
-  padding-bottom: 3.5rem;
+  background: var(--bg);
+  color: var(--text);
   overflow: hidden;
 }
 
-.hero-bg {
+/* The brand's symbol, large and barely there. */
+.hero-mark {
   position: absolute;
-  inset: 0;
-  z-index: -2;
-  background:
-    radial-gradient(ellipse 60% 45% at 50% 0%, rgba(212, 175, 55, 0.06), transparent 70%),
-    radial-gradient(ellipse 45% 38% at 82% 88%, rgba(212, 175, 55, 0.035), transparent 70%),
-    var(--bg);
-}
-/* Auroras doradas que derivan lentamente */
-.hero-bg::before,
-.hero-bg::after {
-  content: "";
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-}
-.hero-bg::before {
-  width: 58vw;
-  height: 58vw;
-  top: -22%;
-  left: -14%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.07), transparent 62%);
-  animation: aurora-a 26s ease-in-out infinite alternate;
-}
-.hero-bg::after {
-  width: 48vw;
-  height: 48vw;
-  right: -16%;
-  bottom: -28%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.07), transparent 60%);
-  animation: aurora-b 32s ease-in-out infinite alternate;
-}
-@keyframes aurora-a {
-  to { transform: translate3d(7vw, 5vh, 0) scale(1.15); }
-}
-@keyframes aurora-b {
-  to { transform: translate3d(-6vw, -6vh, 0) scale(1.2); }
-}
-
-#heroParticles {
-  position: absolute;
-  inset: 0;
   z-index: -1;
+  right: -7vw;
+  top: 50%;
+  height: min(122%, 62rem);
+  width: auto;
+  transform: translateY(-50%);
+  color: var(--gold);
+  opacity: 0.055;
   pointer-events: none;
 }
 
 .hero-content {
-  transform: translate3d(0, calc(var(--hero-scroll, 0) * 140px), 0);
-  opacity: calc(1 - var(--hero-scroll, 0) * 0.9);
-  text-align: center;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  justify-content: space-between;
+  gap: clamp(2.5rem, 6vh, 4.5rem);
+}
+.hero-main {
+  margin-block: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-/* Tracked label between two gold hairlines, as on the brandbook pages. */
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.9rem;
   font-size: 0.74rem;
   letter-spacing: 0.32em;
-  text-indent: 0.32em;
   text-transform: uppercase;
   color: var(--gold);
   font-weight: 500;
 }
-.hero-badge::before,
-.hero-badge::after {
+.hero-badge::before {
   content: "";
-  width: 1.75rem;
+  width: 2.5rem;
   height: 1px;
-  background: var(--gold-40);
+  background: var(--gold);
 }
 
 /* Hero wordmark, brandbook 04: GROUP in tracked Inter, a gold hairline, ARGO
-   in Playfair SemiBold. It enters once: the whole line rises while ARGO's
-   letters close up, then the hairline draws itself. */
+   in Playfair SemiBold. */
 .hero-title {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.3em;
-  margin-top: 1.5rem;
+  gap: 0.28em;
+  margin-top: 1.6rem;
   font-family: var(--font-display);
-  font-size: clamp(3.3rem, 12vw, 8.75rem);
+  font-size: clamp(3.1rem, 10.5vw, 7.75rem);
   font-weight: 600;
   line-height: 1;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.14em;
   color: var(--cream);
-  filter: drop-shadow(0 12px 44px rgba(212, 175, 55, 0.16));
-  opacity: 0;
-  animation: title-in 1.15s var(--ease-out) 0.15s forwards;
+  animation: hero-rise 0.9s var(--ease-out) both;
 }
 .hero-wm-group {
   font-family: var(--font-body);
-  font-size: max(0.17em, 0.66rem); /* stays legible on phones */
+  font-size: max(0.16em, 0.66rem); /* stays legible on phones */
   font-weight: 500;
   letter-spacing: 0.34em;
   margin-right: -0.34em; /* the trailing tracking would push the hairline away */
@@ -520,88 +575,19 @@ ul, ol { list-style: none; }
   height: 0.66em;
   background: var(--gold);
   transform: scaleY(0);
-  animation: rule-grow 0.9s var(--ease-out) 0.75s forwards;
-}
-.hero-wm-argo { margin-right: -0.2em; } /* same, at the end of the line */
-@keyframes title-in {
-  from {
-    opacity: 0;
-    transform: translateY(26px) scale(0.985);
-    letter-spacing: 0.4em;
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    letter-spacing: 0.2em;
-  }
+  animation: rule-grow 0.8s var(--ease-out) 0.35s forwards;
 }
 @keyframes rule-grow {
   to { transform: scaleY(1); }
 }
 
-/* ---------- Ondas de seda doradas ---------- */
-.hero-waves {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0;
-  animation: waves-in 1.6s ease-out 0.2s forwards;
-  will-change: transform;
-  transition: transform 0.3s ease-out;
-  /* Desvanecido suave hacia el borde superior: sin cortes con el header */
-  -webkit-mask-image: linear-gradient(180deg, transparent 6%, #000 34%);
-  mask-image: linear-gradient(180deg, transparent 6%, #000 34%);
-}
-@keyframes waves-in {
-  to { opacity: 1; }
-}
-.wave-line {
-  fill: none;
-  stroke: var(--gold);
-}
-.wave-line.bright { stroke-width: 1.4; opacity: 0.26; }
-.wave-line.soft { stroke: var(--cream); stroke-width: 1; opacity: 0.08; }
-.wave-line.thin { stroke-width: 1; opacity: 0.16; }
-
-/* Destello de luz que recorre el borde de la onda */
-.wave-glint {
-  fill: none;
-  stroke: var(--cream);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  stroke-dasharray: 0.14 0.86;
-  stroke-dashoffset: 1.14;
-  opacity: 0.45;
-  mix-blend-mode: screen;
-  animation: glint 7s linear 2s infinite;
-}
-.wave-glint.delay {
-  stroke-width: 2;
-  animation-delay: 5.5s;
-}
-@keyframes glint {
-  to { stroke-dashoffset: -1; }
-}
-
-/* Deriva lenta de cada capa (respiración de la seda) */
-.wave-back { animation: drift-a 30s ease-in-out infinite alternate; }
-.wave-mid { animation: drift-b 24s ease-in-out infinite alternate; }
-.wave-front { animation: drift-c 28s ease-in-out infinite alternate; }
-@keyframes drift-a { to { transform: translate(-18px, 6px); } }
-@keyframes drift-b { to { transform: translate(14px, -8px); } }
-@keyframes drift-c { to { transform: translate(-22px, 4px); } }
-
-/* The brand line, set as the brandbook's cover headline. */
 .hero-sub {
-  max-width: 40rem;
+  max-width: 38rem;
   font-family: var(--font-display);
-  font-size: clamp(1.3rem, 2.8vw, 1.8rem);
-  font-weight: 600;
+  font-size: clamp(1.45rem, 3vw, 2.15rem);
+  font-weight: 500;
   color: var(--text);
-  line-height: 1.3;
+  line-height: 1.25;
   margin-top: 2.2rem;
   text-wrap: balance;
 }
@@ -612,12 +598,10 @@ ul, ol { list-style: none; }
   text-transform: uppercase;
   color: var(--text-muted);
 }
-.hero-sub2 strong { color: var(--gold); font-weight: 600; }
 
 .hero-ctas {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: 1rem;
   margin-top: 2.4rem;
 }
@@ -625,48 +609,38 @@ ul, ol { list-style: none; }
 .hero-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--border-soft);
-  border: 1px solid var(--border-soft);
-  border-radius: var(--radius);
-  overflow: hidden;
-  margin-top: clamp(3rem, 7vh, 5rem);
-  width: min(100%, 52rem);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+  border-top: 1px solid var(--border-soft);
+  margin-bottom: 1.5rem;
 }
-.hero-stat {
-  background: rgba(26, 26, 26, 0.6);
-  padding: 1.5rem 1rem;
-  text-align: center;
-  transition: background-color var(--dur-med);
+.hero-stat { padding: 1.5rem 2rem 1.5rem 0; }
+.hero-stat + .hero-stat {
+  padding-left: 2rem;
+  border-left: 1px solid var(--border-soft);
 }
-.hero-stat:hover { background: rgba(212, 175, 55, 0.06); }
 .hero-stat .value {
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 3vw, 1.8rem);
-  font-weight: 700;
-  color: var(--gold);
-  letter-spacing: 0.03em;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  font-weight: 600;
+  color: var(--text);
 }
 .hero-stat .label {
-  margin-top: 0.35rem;
+  margin-top: 0.3rem;
   font-size: 0.82rem;
   color: var(--text-muted);
 }
 
-.hero-scroll {
-  position: absolute;
-  bottom: 1.6rem;
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--text-muted);
-  opacity: 0.7;
-}
-.hero-scroll svg { animation: float-down 2.4s ease-in-out infinite; }
-@keyframes float-down {
-  0%, 100% { transform: translateY(0); opacity: 0.5; }
-  50% { transform: translateY(7px); opacity: 1; }
+/* Over the ink panel the navbar uses the panel's inks until it turns solid. */
+.nav.over-ink {
+  --text: #f2ede4;
+  --cream: #f2ede4;
+  --text-soft: #dcd7ce;
+  --text-muted: #c4bfb5;
+  --border: rgba(242, 237, 228, 0.22);
+  --border-soft: rgba(242, 237, 228, 0.14);
+  --surface: rgba(242, 237, 228, 0.06);
+  --gold: #d4af37;
+  --gold-08: rgba(212, 175, 55, 0.1);
+  --menu-bg: #191712;
 }
 
 /* ---------- Marquee "Confían en nosotros" ---------- */
@@ -713,111 +687,54 @@ ul, ol { list-style: none; }
 /* ---------- Servicios ---------- */
 .services { background: var(--bg); }
 
-.service-tabs {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  margin-bottom: 2.75rem;
-}
-.service-tab {
-  flex: 1 1 220px;
-  text-align: left;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  border-radius: var(--radius);
-  padding: 1.2rem 1.4rem;
-  transition: border-color var(--dur-med), background-color var(--dur-med), transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-med);
-  min-height: 44px;
-}
-.service-tab:hover { transform: translateY(-3px); border-color: var(--gold-25); }
-.service-tab.active {
-  border-color: var(--gold-40);
-  background: linear-gradient(160deg, var(--gold-08), var(--surface) 55%);
-  box-shadow: 0 14px 34px -20px var(--gold-40);
-}
-.service-tab .num {
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
-  color: var(--gold);
-  font-weight: 600;
-}
-.service-tab .name {
-  display: block;
-  margin-top: 0.4rem;
-  font-family: var(--font-display);
-  font-size: 1.18rem;
-  font-weight: 600;
-  color: var(--text);
-  line-height: 1.25;
-}
-.service-tab .desc {
-  display: block;
-  margin-top: 0.35rem;
-  font-size: 0.83rem;
-  color: var(--text-muted);
-  line-height: 1.45;
-}
-
-.service-panel { position: relative; }
-.service-pane {
-  display: none;
-  animation: pane-in 0.45s var(--ease-out);
-}
-.service-pane.active { display: block; }
-@keyframes pane-in {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.service-intro {
-  font-family: var(--font-display);
-  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
-  color: var(--text-soft);
-  max-width: 46rem;
-  margin-bottom: 2.25rem;
-}
-.service-intro::before { content: "— "; color: var(--gold); }
-
-.section-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr));
-  gap: 1.25rem;
-}
-/* Dos de los tres servicios traen cuatro tarjetas, y auto-fit las repartía
-   3 + 1: una tarjeta sola en la segunda fila con dos tercios vacíos al lado.
-   Con exactamente cuatro, un 2x2. El guardado de anchura importa: por debajo
-   ya caben dos columnas por sí solas y forzarlo estropearía el movil. */
-@media (min-width: 1024px) {
-  .section-grid:has(> :nth-child(4):last-child) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.feature-card {
+/* The services by name, as a list of large lines. */
+.service-names { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.service-names li { border-bottom: 1px solid var(--border); }
+.service-name {
   position: relative;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  padding: 1.8rem 1.6rem;
-  overflow: hidden;
-  transition: border-color var(--dur-med), transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med);
+  display: grid;
+  grid-template-columns: 4.5rem 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding-block: clamp(1.5rem, 3.4vw, 2.5rem);
+  color: var(--text);
+  text-decoration: none;
 }
-.feature-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--gold-25);
-  box-shadow: 0 22px 44px -26px rgba(0, 0, 0, 0.9), 0 0 0 1px var(--gold-15);
-}
-/* Spotlight que sigue el ratón */
-.feature-card::before {
+.service-name::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), var(--gold-08), transparent 65%);
-  opacity: 0;
-  transition: opacity var(--dur-med);
-  pointer-events: none;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-slow) var(--ease-out);
 }
-.feature-card:hover::before { opacity: 1; }
+.service-name:hover::after, .service-name:focus-visible::after { transform: scaleX(1); }
+.service-name .num {
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+  color: var(--gold);
+}
+.service-name .name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4.6vw, 3.25rem);
+  font-weight: 500;
+  line-height: 1.12;
+  transition: transform var(--dur-med) var(--ease-out), color var(--dur-med);
+}
+.service-name:hover .name { transform: translateX(0.6rem); color: var(--gold-dark); }
+.service-name > svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--gold);
+  transition: transform var(--dur-med) var(--ease-out);
+}
+.service-name:hover > svg { transform: translateX(0.4rem); }
 
 .feature-icon {
   width: 46px; height: 46px;
@@ -831,76 +748,6 @@ ul, ol { list-style: none; }
   margin-bottom: 1.1rem;
 }
 .feature-icon svg { width: 22px; height: 22px; }
-
-.feature-card h4 {
-  font-size: 1.08rem;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: 0.01em;
-}
-.feature-card .tagline {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  color: var(--gold);
-  margin-top: 0.4rem;
-  line-height: 1.4;
-}
-.feature-card ul { margin-top: 1rem; display: grid; gap: 0.65rem; }
-.feature-card li {
-  position: relative;
-  padding-left: 1.5rem;
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  line-height: 1.55;
-}
-.feature-card li svg {
-  position: absolute;
-  left: 0; top: 0.25em;
-  width: 15px; height: 15px;
-  color: var(--gold);
-}
-
-/* ---------- Metodología (Cómo Operamos) ---------- */
-.method { background: var(--surface); border-block: 1px solid var(--border-soft); }
-
-.method-list {
-  position: relative;
-  display: grid;
-  gap: 0;
-  max-width: 56rem;
-  margin-inline: auto;
-}
-.method-item {
-  position: relative;
-  display: grid;
-  grid-template-columns: 5.5rem 1fr;
-  gap: 1.5rem;
-  padding: 2.1rem 0;
-  border-bottom: 1px solid var(--border-soft);
-}
-.method-item:last-child { border-bottom: none; }
-
-.method-num {
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 5vw, 3.2rem);
-  font-weight: 700;
-  line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1px var(--gold-40);
-  transition: color var(--dur-slow) var(--ease-out), -webkit-text-stroke-color var(--dur-slow);
-}
-.method-item:hover .method-num,
-.method-item.visible .method-num {
-  color: var(--gold);
-  -webkit-text-stroke-color: transparent;
-}
-.method-body h3 {
-  font-size: 1.28rem;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 0.5rem;
-}
-.method-body p { color: var(--text-muted); max-width: 42rem; }
 
 /* ---------- Why ARGO ---------- */
 .why-grid {
@@ -1533,7 +1380,6 @@ ul, ol { list-style: none; }
   .contact-card { grid-template-columns: 1fr; }
   .t-slide { flex-basis: 100%; }
   .footer-grid { grid-template-columns: 1fr; gap: 2.25rem; }
-  .method-item { grid-template-columns: 3.6rem 1fr; gap: 1.1rem; }
 }
 
 @media (max-width: 640px) {
@@ -1542,10 +1388,9 @@ ul, ol { list-style: none; }
   .why-cards { grid-template-columns: 1fr; }
   .hero-ctas { flex-direction: column; width: 100%; }
   .hero-ctas .btn { width: 100%; }
-  .service-tabs { flex-direction: column; }
-  /* Stacked, the 220px flex-basis becomes a height and leaves ~120px of
-     dead space inside every tab. Let them size to their own text. */
-  .service-tab { flex: 0 0 auto; }
+  .hero-stat, .hero-stat + .hero-stat { padding: 1rem 0; border-left: 0; }
+  .hero-stat + .hero-stat { border-top: 1px solid var(--border-soft); }
+  .service-name { grid-template-columns: 2.6rem 1fr auto; }
 }
 
 /* ---------- Modo estático (testing / sin animaciones) ---------- */
@@ -1566,8 +1411,6 @@ html.no-anim .reveal-scale { filter: none !important; }
 html.no-anim .split-char,
 html.no-anim .section-head .eyebrow,
 html.no-anim .section-head .section-sub { opacity: 1 !important; transform: none !important; }
-html.no-anim .hero-waves { opacity: 1 !important; }
-html.no-anim .wave-glint { display: none; }
 
 /* Altura fija del héroe solo en modo test (capturas de página completa) */
 html.static-test .hero { min-height: 820px; }
@@ -1585,11 +1428,9 @@ html.static-test .hero { min-height: 820px; }
   .hero-title { opacity: 1; transform: none; animation: none; }
   .hero-wm-rule { transform: none; animation: none; }
   .reveal, .reveal-scale { filter: none; }
-  .split-char, .hero-sub .split-char { transform: none; animation: none; }
+  .split-char { transform: none; animation: none; }
   .section-head .eyebrow, .section-head .section-sub { opacity: 1; transform: none; }
   .contact::after { animation: none; }
-  .hero-waves { opacity: 1; animation: none; }
-  .wave-glint { display: none; }
 }
 
 /* ---------- Aviso de cookies ---------- */
@@ -1668,7 +1509,10 @@ html.static-test .hero { min-height: 820px; }
 .page { padding-top: clamp(8rem, 14vw, 11rem); padding-bottom: var(--section-y); }
 .page .section-head { margin-bottom: 3rem; }
 
-.about-intro p { color: var(--text-muted); max-width: 52rem; margin-bottom: 1rem; }
+.about-intro { max-width: 52rem; margin-inline: auto; text-align: center; }
+.about-intro p { color: var(--text-muted); margin-bottom: 1rem; }
+.about-page .why { margin-top: var(--section-y); background: var(--surface); }
+.about-page .about-cards { margin-top: var(--section-y); }
 .about-cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1798,4 +1642,333 @@ html.static-test .hero { min-height: 820px; }
 @media (pointer: coarse) {
   .form-consent input { width: 22px; height: 22px; margin-top: 0; }
   .legal-back { min-height: 44px; }
+}
+
+/* ---------- Páginas de servicio ---------- */
+/* Just under the menu: the page opens on the title, the first section and the
+   whole visual, with nothing to scroll for. */
+.svc-page { padding-top: 6.5rem; padding-bottom: 0; }
+.svc-head { margin-bottom: 2rem; }
+.svc-head .section-title { font-size: clamp(2rem, 4.2vw, 3rem); }
+.svc-back { display: inline-block; text-decoration: none; margin-bottom: 1rem; }
+.svc-page .section-sub { margin-top: 0.8rem; }
+
+.svc-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: clamp(2.5rem, 6vw, 5.5rem);
+  align-items: start;
+}
+.svc-section {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: 2.5rem;
+  border-top: 1px solid var(--border);
+}
+/* The first one starts right under the title, on screen from the start. */
+.svc-section:first-of-type { min-height: 0; justify-content: flex-start; }
+/* Tall enough that the sticky visual is still in place when this one is read. */
+.svc-section:last-child { min-height: calc(100svh - 6.5rem); }
+.svc-section .num {
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+  color: var(--gold);
+}
+.svc-section h2 {
+  margin-top: 0.7rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+  font-weight: 600;
+  line-height: 1.18;
+  color: var(--text);
+}
+.svc-section .tagline {
+  margin-top: 0.7rem;
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  line-height: 1.4;
+  color: var(--gold-dark);
+}
+.svc-section ul { list-style: none; margin: 1.4rem 0 0; padding: 0; display: grid; gap: 0.8rem; }
+.svc-section li {
+  position: relative;
+  padding-left: 1.6rem;
+  color: var(--text-muted);
+  font-size: 0.97rem;
+  line-height: 1.55;
+}
+.svc-section li svg {
+  position: absolute;
+  left: 0;
+  top: 0.28em;
+  width: 15px;
+  height: 15px;
+  color: var(--gold);
+}
+
+/* The visual: always on ink, whatever the page's theme. */
+.svc-visual, .svc-visual-inline {
+  --sv-ink: #0f0e0b;
+  --sv-gold: #d4af37;
+  --sv-text: #f2ede4;
+  --sv-line: rgba(242, 237, 228, 0.2);
+  --sv-soft: rgba(242, 237, 228, 0.1);
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 45%, rgba(212, 175, 55, 0.09), transparent 75%),
+    var(--sv-ink);
+}
+.svc-visual {
+  position: sticky;
+  top: 6.5rem;
+  /* Whole on screen under the menu, with the same margin below. */
+  height: min(calc(100svh - 8rem), 46rem);
+  overflow: hidden;
+}
+.svc-scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  transform: scale(0.97);
+  transition: opacity 0.6s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.svc-scene.is-active { opacity: 1; transform: none; }
+.svc-scene:not(.is-active) * { animation-play-state: paused !important; }
+
+.svc-caption {
+  margin: 0;
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--sv-soft);
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 237, 228, 0.72);
+}
+.svc-caption span { color: var(--sv-gold); margin-right: 0.9rem; }
+
+.svc-visual-inline { display: none; margin-bottom: 1.5rem; }
+
+
+.svc-others { margin-block: clamp(3rem, 6vw, 5rem) var(--section-y); }
+
+@media (max-width: 900px) {
+  .svc-grid { grid-template-columns: 1fr; }
+  .svc-visual { display: none; }
+  .svc-visual-inline { display: block; }
+  .svc-section, .svc-section:last-child { min-height: 0; }
+  .svc-page { padding-top: 6rem; }
+}
+
+/* ---------- Visuales de las páginas de servicio (components/ServiceScene.jsx) ---------- */
+/* The report's own typefaces, the same files the landings use (public/fonts). */
+@font-face { font-family: 'Cormorant Garamond'; font-weight: 500; font-display: swap; src: url('/fonts/cormorant-garamond-latin-500-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-weight: 600; font-display: swap; src: url('/fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2'); }
+@font-face { font-family: 'DM Sans'; font-weight: 300 700; font-display: swap; src: url('/fonts/dm-sans-latin-wght-normal.woff2') format('woff2'); }
+
+.scene { position: relative; width: 100%; }
+.svc-scene > .scene { flex: 1; min-height: 0; }
+
+/* ----- The monthly report, a page at a time ----- */
+.rp {
+  --paper: #faf7f0; --paper2: #f2ede2; --line: #e4dcc9;
+  --gold: #c9a843; --gold-deep: #a9852d;
+  --ink: #1c1710; --muted: #6b6353; --warn: #a4513a; --ok: #5e7a4a;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'DM Sans', Inter, system-ui, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1.5rem 1.5rem 0;
+  overflow: hidden;
+}
+.rp-page {
+  position: relative;
+  width: 100%;
+  max-width: 34rem;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 2.8rem 1.5rem 2.4rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  box-shadow: 0 34px 70px -34px rgba(0, 0, 0, 0.9);
+  animation: rp-read 22s ease-in-out 1.5s infinite alternate;
+}
+@keyframes rp-read { from { transform: translateY(0); } to { transform: translateY(calc(-1 * var(--over, 0px))); } }
+.rp .hdr, .rp .ftr {
+  position: absolute;
+  left: 1.5rem; right: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--sans);
+  font-size: 0.5rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rp .hdr { top: 0.9rem; border-bottom: 1px solid var(--line); padding-bottom: 0.35rem; }
+.rp .hdr b { font-weight: 500; color: var(--ink); letter-spacing: 0.3em; }
+.rp .hdr b span { color: var(--muted); font-weight: 300; }
+.rp .ftr { bottom: 0.9rem; border-top: 1px solid var(--line); padding-top: 0.35rem; letter-spacing: 0.14em; }
+.rp .ftr .g { color: var(--gold-deep); }
+.rp .sec { display: flex; align-items: baseline; gap: 0.8rem; border-bottom: 1px solid var(--gold); padding-bottom: 0.6rem; margin-bottom: 1rem; }
+.rp .sec .n { font-family: var(--serif); font-size: 2.4rem; font-weight: 500; color: var(--gold); line-height: 1; }
+.rp .sec .t { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; color: var(--gold-deep); line-height: 1; }
+.rp .sec .t i { font-style: italic; font-weight: 500; }
+.rp h2 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--gold-deep); line-height: 1.1; margin: 1rem 0 0.4rem; }
+.rp h2 i { font-style: italic; font-weight: 500; }
+.rp p { margin: 0 0 0.5rem; }
+.rp p.lead { font-size: 0.82rem; line-height: 1.5; margin-bottom: 0.7rem; }
+.rp .label {
+  font-family: var(--sans);
+  font-size: 0.52rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 0.4rem;
+}
+.rp .kpis { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--gold); border-bottom: 1px solid var(--line); margin: 0.3rem 0 0.9rem; }
+.rp .kpis > div { padding: 0.6rem 0.5rem 0.55rem 0; border-right: 1px solid var(--line); }
+.rp .kpis > div + div { padding-left: 0.5rem; }
+.rp .kpis > div:last-child { border-right: 0; }
+.rp .kpis .v { font-family: var(--serif); font-size: 1.55rem; font-weight: 600; color: var(--gold-deep); line-height: 1; font-variant-numeric: tabular-nums; }
+.rp .kpis .v small { font-size: 0.8rem; }
+.rp .kpis .k { font-family: var(--sans); font-size: 0.5rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); font-weight: 500; margin: 0.35rem 0 0.15rem; }
+.rp .kpis .d { font-size: 0.66rem; color: var(--muted); line-height: 1.3; }
+.rp .kpis .d b { font-family: var(--sans); font-size: 0.56rem; font-weight: 500; display: block; margin-top: 0.1rem; }
+.rp .up { color: var(--ok); }
+.rp .down { color: var(--warn); }
+.rp table { width: 100%; border-collapse: collapse; margin: 0.2rem 0 0.7rem; }
+.rp th { font-family: var(--sans); font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-deep); font-weight: 500; text-align: left; padding: 0.35rem 0.4rem 0.35rem 0; border-bottom: 1px solid var(--gold); }
+.rp td { font-size: 0.72rem; line-height: 1.35; padding: 0.4rem 0.4rem 0.4rem 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
+.rp th.r, .rp td.r { text-align: right; padding-right: 0; padding-left: 0.8rem; white-space: nowrap; }
+.rp td.num { font-family: var(--serif); font-size: 1rem; font-weight: 600; color: var(--ink); }
+.rp td.num.g { color: var(--gold-deep); }
+.rp td .sub { display: block; color: var(--muted); font-size: 0.64rem; }
+.rp tr.total td { border-top: 1px solid var(--gold); border-bottom: 0; font-weight: 600; }
+.rp tr.total td.num { font-size: 1.2rem; color: var(--gold-deep); }
+.rp .tag { display: inline-block; font-family: var(--sans); font-size: 0.46rem; letter-spacing: 0.14em; text-transform: uppercase; border: 1px solid rgba(201, 168, 67, 0.6); color: var(--gold-deep); border-radius: 0.6rem; padding: 0.05rem 0.35rem; margin-left: 0.3rem; vertical-align: 0.1rem; background: rgba(201, 168, 67, 0.08); }
+.rp .tag.ok { border-color: rgba(94, 122, 74, 0.5); color: var(--ok); background: rgba(94, 122, 74, 0.06); }
+.rp .tag.warn { border-color: rgba(164, 81, 58, 0.5); color: var(--warn); background: rgba(164, 81, 58, 0.06); }
+.rp .stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0.3rem 0 0.7rem; }
+.rp .stats > div { padding: 0.55rem 0.45rem; border-right: 1px solid var(--line); }
+.rp .stats > div:first-child { padding-left: 0; }
+.rp .stats > div:last-child { border-right: 0; }
+.rp .stats .v { font-family: var(--serif); font-size: 1.3rem; color: var(--gold-deep); font-weight: 600; line-height: 1; }
+.rp .stats .k { font-size: 0.62rem; color: var(--muted); line-height: 1.3; margin-top: 0.25rem; }
+.rp .stats .k b { color: var(--ink); font-weight: 600; }
+.rp .callout { background: var(--paper2); border-left: 2px solid var(--gold); padding: 0.6rem 0.8rem 0.3rem; margin: 0.6rem 0; }
+.rp .callout p { font-size: 0.72rem; line-height: 1.45; }
+.rp .note { font-family: var(--sans); font-size: 0.56rem; color: var(--muted); letter-spacing: 0.03em; }
+.rp .charts { display: grid; gap: 0.6rem; margin: 0.3rem 0 0.6rem; }
+.rp .charts.c2 { grid-template-columns: 1fr 1fr; }
+.rp .chart { background: var(--paper2); border-top: 1px solid var(--gold); padding: 0.55rem 0.65rem 0.5rem; margin-top: 0.6rem; }
+.rp .chart .label { margin-bottom: 0.3rem; }
+.rp .chart .cap { font-size: 0.64rem; color: var(--muted); line-height: 1.35; margin-top: 0.4rem; }
+.rp .sw { display: inline-block; width: 0.55rem; height: 0.55rem; vertical-align: -0.05rem; margin: 0 0.35rem 0 0.1rem; background: var(--gold); }
+.rp .sw.google { background: rgba(201, 168, 67, 0.4); }
+.rp .bars { display: flex; align-items: flex-end; justify-content: space-around; height: 5.2rem; border-bottom: 1px solid var(--line); gap: 0.5rem; }
+.rp .bars > div { flex: 0 0 2rem; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; }
+.rp .bars span { font-family: var(--serif); font-size: 0.82rem; font-weight: 600; color: var(--ink); line-height: 1; margin-bottom: 0.2rem; white-space: nowrap; }
+.rp .bars i { display: block; width: 100%; background: rgba(201, 168, 67, 0.45); min-height: 2px; transform-origin: bottom; }
+.rp .bars > div:last-child i { background: var(--gold); }
+.rp .bars.stacked i.meta { background: var(--gold); }
+.rp .bars.stacked i.google { background: rgba(201, 168, 67, 0.4); }
+.rp .bars.stacked > div:last-child i.google { background: rgba(201, 168, 67, 0.4); }
+.rp .months { display: flex; justify-content: space-around; gap: 0.5rem; font-family: var(--sans); font-size: 0.48rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding-top: 0.25rem; }
+.rp .months span { flex: 0 0 2rem; text-align: center; }
+.rp .funnel { display: grid; gap: 0.2rem; margin: 0.4rem 0 0.2rem; }
+.rp .funnel > div { margin-inline: auto; display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; padding: 0.22rem 0.55rem; background: rgba(201, 168, 67, 0.16); border-top: 1px solid var(--gold); font-family: var(--sans); font-size: 0.54rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+.rp .funnel > div b { font-family: var(--serif); font-size: 0.85rem; letter-spacing: 0; text-transform: none; font-weight: 600; color: var(--gold-deep); }
+
+/* What moves on the page, once it is on show (.is-live). */
+.rp tbody tr, .rp .funnel > div, .rp .stats > div, .rp .callout { opacity: 0; transform: translateY(6px); }
+.rp .bars i { transform: scaleY(0); }
+.rp.is-live tbody tr, .rp.is-live .funnel > div, .rp.is-live .stats > div, .rp.is-live .callout {
+  animation: rp-in 0.55s var(--ease-out) forwards;
+  animation-delay: calc(0.35s + var(--i, 2) * 0.14s);
+}
+.rp.is-live .bars i { animation: rp-grow 0.9s var(--ease-out) forwards; animation-delay: calc(0.5s + var(--i, 0) * 0.18s); }
+@keyframes rp-in { to { opacity: 1; transform: none; } }
+@keyframes rp-grow { to { transform: scaleY(1); } }
+
+/* ----- The platform, in a window ----- */
+.shot { display: flex; flex-direction: column; padding: 1.5rem 1.5rem 0; }
+.shot-bar {
+  display: flex; align-items: center; gap: 0.4rem;
+  padding: 0.55rem 0.8rem;
+  background: #1b1914;
+  border: 1px solid rgba(242, 237, 228, 0.14);
+  border-bottom: 0;
+}
+.shot-bar i { width: 0.5rem; height: 0.5rem; border-radius: 50%; background: rgba(242, 237, 228, 0.2); }
+.shot-bar span { margin-left: 0.5rem; font-family: var(--font-body); font-size: 0.66rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(242, 237, 228, 0.62); }
+.shot-view { flex: 1; min-height: 0; overflow: hidden; border: 1px solid rgba(242, 237, 228, 0.14); background: #0f0e0b; }
+.shot-view img {
+  display: block; width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: 0% var(--fy, 50%);
+  animation: shot-pan 24s ease-in-out infinite alternate;
+}
+@keyframes shot-pan { from { object-position: 0% var(--fy, 50%); } to { object-position: 100% var(--fy, 50%); } }
+
+/* ----- Pieces from the portfolio ----- */
+.pf {
+  display: flex; gap: 0.75rem;
+  padding: 0 1.5rem;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(transparent, #000 7%, #000 93%, transparent);
+}
+.pf-col { flex: 1; min-width: 0; animation: pf-drift var(--t, 30s) linear infinite; }
+.pf-col img { display: block; width: 100%; height: auto; margin-bottom: 0.75rem; box-shadow: 0 18px 40px -22px rgba(0, 0, 0, 0.9); }
+/* Each column is its pieces twice: half a turn is a whole set, so the loop has no seam. */
+@keyframes pf-drift {
+  from { transform: translateY(calc((var(--dir, 1) - 1) * 25%)); }
+  to { transform: translateY(calc((var(--dir, 1) + 1) * -25%)); }
+}
+.pf-fan { display: block; padding: 1.5rem; -webkit-mask-image: none; mask-image: none; }
+.pf-fan img {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 44%;
+  transform: translate(-50%, -50%) translateX(calc((var(--i) - 1) * 66%)) rotate(calc((var(--i) - 1) * 7deg));
+  box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.95);
+  animation: pf-breathe 6s ease-in-out infinite alternate;
+  animation-delay: calc(var(--i) * -2s);
+}
+.pf-fan img:nth-child(2) { z-index: 1; width: 48%; }
+@keyframes pf-breathe { from { translate: 0 6px; } to { translate: 0 -6px; } }
+
+/* Inline on phones: the scene above its own section. */
+.svc-visual-inline .rp { padding: 1rem; }
+.svc-visual-inline .rp-page { animation: none; }
+.svc-visual-inline .shot { padding: 1rem; }
+.svc-visual-inline .shot-view { aspect-ratio: 4 / 3; }
+.svc-visual-inline .pf { height: 22rem; padding: 0 1rem; }
+.svc-visual-inline .pf-fan { height: 24rem; padding: 1rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-scene { transition: none; }
+  .rp-page, .shot-view img, .pf-col, .pf-fan img { animation: none !important; }
+  .rp tbody tr, .rp .funnel > div, .rp .stats > div, .rp .callout { opacity: 1; transform: none; animation: none !important; }
+  .rp .bars i { transform: none; animation: none !important; }
+}
+
+/* Inline on phones the page is narrow: two tiles per row, one chart per row. */
+@media (max-width: 900px) {
+  .svc-visual-inline .rp-page { padding-inline: 1.1rem; }
+  .svc-visual-inline .rp .hdr, .svc-visual-inline .rp .ftr { left: 1.1rem; right: 1.1rem; }
+  .svc-visual-inline .rp .kpis, .svc-visual-inline .rp .stats { grid-template-columns: repeat(2, 1fr); }
+  .svc-visual-inline .rp .kpis > div:nth-child(2n), .svc-visual-inline .rp .stats > div:nth-child(2n) { border-right: 0; }
+  .svc-visual-inline .rp .kpis > div:nth-child(n + 3), .svc-visual-inline .rp .stats > div:nth-child(n + 3) { border-top: 1px solid var(--line); }
+  .svc-visual-inline .rp .kpis > div:nth-child(3), .svc-visual-inline .rp .stats > div:nth-child(3) { padding-left: 0; }
+  .svc-visual-inline .rp .charts.c2 { grid-template-columns: 1fr; }
+  .svc-visual-inline .rp th.r, .svc-visual-inline .rp td.r { white-space: normal; padding-left: 0.5rem; }
+  .svc-visual-inline .rp .funnel > div { white-space: normal; }
 }

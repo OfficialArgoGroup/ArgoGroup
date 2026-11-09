@@ -1,0 +1,164 @@
+/* ArgoHero — scoped styles. Every class is prefixed "ah-" so nothing collides with
+   Tailwind or the rest of the site. Fonts: Playfair Display 400 (+ italic) and
+   Inter 300/400/500 must be loaded by the site (see INTEGRATION.md). */
+
+.ah-track {
+  /* The scroll runway. The hero stays pinned (sticky) for this whole height while
+     the camera dives; when the runway ends, the hero scrolls away and the next
+     section of the page follows naturally. 320vh ≈ 2.2 screens of choreography. */
+  position: relative;
+  height: 320vh;
+  height: 320svh;
+  background: #0d0d0d;
+}
+.ah-hero {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  min-height: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  background: #0d0d0d;
+  color: #f2ede4;
+  font-family: Inter, system-ui, sans-serif;
+}
+.ah-hero *, .ah-menu * { box-sizing: border-box; }
+.ah-hero :focus-visible, .ah-menu :focus-visible { outline: 2px solid #d4af37; outline-offset: 3px; border-radius: 999px; }
+.ah-canvas { position: absolute; inset: 0; z-index: 1; display: block; width: 100%; height: 100%; }
+
+/* nav */
+.ah-nav { position: absolute; top: 0; left: 0; right: 0; z-index: 30; height: 84px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 clamp(24px, 3.3vw, 48px); }
+.ah-brand { display: inline-flex; align-items: center; height: 44px; justify-self: start; }
+.ah-brand img { height: 22px; width: auto; display: block; }
+.ah-links { display: flex; gap: 36px; list-style: none; margin: 0; padding: 0; }
+.ah-links a { font: 400 14px/1 Inter, system-ui, sans-serif; color: rgba(242, 237, 228, 0.72); text-decoration: none; letter-spacing: 0.01em; padding: 14px 2px; transition: color 0.25s; }
+.ah-links a:hover { color: #f2ede4; }
+.ah-nav-right { display: flex; justify-content: flex-end; align-items: center; gap: 12px; }
+.ah-btn-sm { display: inline-flex; align-items: center; height: 44px; padding: 0 22px; border: 1px solid rgba(212, 175, 55, 0.55); border-radius: 999px; font: 500 13px/1 Inter, system-ui, sans-serif; color: #d4af37; text-decoration: none; letter-spacing: 0.02em; transition: background 0.25s, color 0.25s, border-color 0.25s; }
+.ah-btn-sm:hover { background: #d4af37; color: #0d0d0d; border-color: #d4af37; }
+.ah-burger { display: none; width: 44px; height: 44px; border: 0; background: transparent; cursor: pointer; flex-direction: column; justify-content: center; align-items: center; gap: 6px; padding: 0; }
+.ah-burger span { display: block; width: 22px; height: 1.5px; background: #f2ede4; }
+
+/* centre content */
+.ah-content { position: relative; z-index: 20; width: 100%; max-width: 1120px; margin: 0 auto; padding: 112px clamp(24px, 4vw, 48px); display: flex; flex-direction: column; align-items: center; text-align: center; will-change: transform, opacity; }
+.ah-logo { position: relative; perspective: 900px; margin-bottom: 34px; }
+.ah-logo-halo { position: absolute; left: 50%; top: 40%; width: 420px; height: 320px; transform: translate(-50%, -55%); background: radial-gradient(ellipse at center, rgba(212, 175, 55, 0.22) 0%, rgba(212, 175, 55, 0.06) 42%, rgba(13, 13, 13, 0) 70%); pointer-events: none; }
+.ah-logo-inner { position: relative; transform-style: preserve-3d; }
+.ah-mark { display: block; height: clamp(76px, 8.5vw, 118px); width: auto; overflow: visible; }
+.ah-shine { animation: ah-sweep 5.6s cubic-bezier(0.4, 0, 0.2, 1) infinite; transform: translateX(-300px) skewX(-22deg); }
+@keyframes ah-sweep { 0% { transform: translateX(-300px) skewX(-22deg); } 22%, 100% { transform: translateX(560px) skewX(-22deg); } }
+.ah-pill { display: inline-flex; align-items: center; height: 34px; padding: 0 18px; border: 1px solid rgba(212, 175, 55, 0.6); border-radius: 999px; font: 500 11.5px/1 Inter, system-ui, sans-serif; letter-spacing: 0.3em; text-transform: uppercase; color: #d4af37; margin-bottom: 34px; white-space: nowrap; }
+/* 90px max: at 112px "Growth-driven marketing" is ~1260px wide and breaks the 1024px measure */
+.ah-title { margin: 0 0 28px; font-family: "Playfair Display", Georgia, serif; font-weight: 400; font-size: clamp(48px, 5.9vw, 90px); line-height: 0.95; letter-spacing: -0.015em; color: #f2ede4; text-wrap: balance; }
+.ah-title em { font-style: italic; font-weight: 400; }
+/* The site declares its upright Playfair face at 600–800 only (src/styles/fonts.css),
+   so other text keeps its SemiBold; a weight of 400 is clamped up to 600 by that
+   range. The file itself runs 400–900, so the hero asks the axis directly. */
+.ah-title, .ah-card-v, .ah-menu-links a { font-variation-settings: "wght" 400; }
+.ah-lede { margin: 0 0 44px; max-width: 576px; font: 300 clamp(16px, 1.25vw, 18px)/1.6 Inter, system-ui, sans-serif; color: rgba(242, 237, 228, 0.75); }
+.ah-ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+.ah-btn { display: inline-flex; align-items: center; justify-content: center; height: 54px; padding: 0 32px; border-radius: 999px; font: 500 15px/1 Inter, system-ui, sans-serif; text-decoration: none; letter-spacing: 0.01em; transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), background 0.3s, border-color 0.3s, color 0.3s; }
+.ah-btn:hover { transform: translateY(-2px); }
+.ah-btn-gold { background: #d4af37; color: #0d0d0d; border: 1px solid #d4af37; }
+.ah-btn-gold:hover { background: #e4c456; border-color: #e4c456; color: #0d0d0d; }
+.ah-btn-glass { background: rgba(242, 237, 228, 0.06); color: #f2ede4; border: 1px solid rgba(242, 237, 228, 0.2); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.ah-btn-glass:hover { border-color: rgba(242, 237, 228, 0.45); color: #f2ede4; }
+
+/* floating data cards (positioned every frame by GlobeScene) */
+.ah-card { position: absolute; left: 0; top: 0; z-index: 15; background: #1a1a1a; border: 1px solid rgba(212, 175, 55, 0.22); padding: 12px 16px 13px 14px; opacity: 0; pointer-events: none; will-change: transform, opacity; }
+.ah-card-k { display: block; font: 500 10px/1 Inter, system-ui, sans-serif; letter-spacing: 0.26em; white-space: nowrap; text-transform: uppercase; color: #9ca3af; margin-bottom: 8px; }
+.ah-card-v { display: block; font: 400 22px/1 "Playfair Display", Georgia, serif; color: #f2ede4; white-space: nowrap; }
+.ah-card-v b { font-weight: 400; color: #d4af37; }
+.ah-card-c { display: block; margin-top: 8px; font: 400 11px/1 Inter, system-ui, sans-serif; color: rgba(242, 237, 228, 0.5); white-space: nowrap; }
+
+/* footer line */
+.ah-foot { position: absolute; left: 0; right: 0; bottom: 0; z-index: 20; height: 88px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 clamp(24px, 3.3vw, 48px); }
+.ah-label { font: 500 11.5px/1 Inter, system-ui, sans-serif; letter-spacing: 0.3em; text-transform: uppercase; color: #9ca3af; margin: 0; }
+.ah-scroll { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.ah-scroll .ah-label { color: rgba(242, 237, 228, 0.5); }
+.ah-scroll-line { position: relative; width: 1px; height: 44px; background: rgba(242, 237, 228, 0.12); overflow: hidden; }
+.ah-scroll-line i { position: absolute; left: 0; top: 0; width: 1px; height: 100%; background: #d4af37; animation: ah-scan 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+@keyframes ah-scan { 0% { transform: translateY(-100%); } 60%, 100% { transform: translateY(100%); } }
+@keyframes ah-scanx { 0% { transform: translateX(-100%); } 60%, 100% { transform: translateX(100%); } }
+
+/* one-time entrance, staggered */
+.ah-in { opacity: 0; animation: ah-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+.ah-d1 { animation-delay: 0.05s; } .ah-d2 { animation-delay: 0.2s; } .ah-d3 { animation-delay: 0.32s; }
+.ah-d4 { animation-delay: 0.46s; } .ah-d5 { animation-delay: 0.6s; } .ah-d6 { animation-delay: 0.9s; }
+@keyframes ah-rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* mobile menu (full screen, translucent ink) */
+.ah-menu { position: fixed; inset: 0; z-index: 100; background: rgba(13, 13, 13, 0.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); display: flex; flex-direction: column; padding: 0 clamp(24px, 3.3vw, 48px) 48px; color: #f2ede4; font-family: Inter, system-ui, sans-serif; }
+.ah-menu-head { height: 84px; display: flex; align-items: center; justify-content: space-between; }
+.ah-menu-head img { height: 22px; width: auto; }
+.ah-menu-close { width: 44px; height: 44px; border: 0; background: transparent; color: #f2ede4; font: 300 30px/1 Inter, system-ui, sans-serif; cursor: pointer; padding: 0; }
+.ah-menu-links { list-style: none; margin: auto 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.ah-menu-links a { display: block; font: 400 clamp(34px, 8vw, 48px)/1.2 "Playfair Display", Georgia, serif; color: #f2ede4; text-decoration: none; padding: 8px 0; }
+.ah-menu-links a:hover { color: #d4af37; }
+.ah-menu-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .ah-nav { grid-template-columns: auto 1fr; }
+  .ah-links { display: none; }
+  .ah-burger { display: flex; }
+  .ah-nav .ah-btn-sm { display: none; }
+}
+@media (max-width: 640px) {
+  .ah-content { padding: 132px 24px 120px; }
+  .ah-title { font-size: 48px; }
+  .ah-pill { font-size: 10.5px; letter-spacing: 0.22em; padding: 0 14px; }
+  .ah-ctas { flex-direction: column; align-items: stretch; width: 100%; max-width: 360px; }
+  .ah-btn { width: 100%; }
+  .ah-foot { grid-template-columns: 1fr 1fr; height: 76px; }
+  .ah-foot .ah-label { letter-spacing: 0.2em; white-space: nowrap; }
+  .ah-foot .ah-scroll { grid-column: 2; justify-self: end; flex-direction: row; gap: 10px; }
+  .ah-foot .ah-scroll-line { width: 40px; height: 1px; }
+  .ah-foot .ah-scroll-line i { width: 100%; height: 1px; animation-name: ah-scanx; }
+  .ah-card { display: none; }
+  .ah-logo-halo { width: 300px; height: 220px; }
+}
+
+/* cream theme (theme="cream"): ARGO cream (#F2EDE4) with the cream site's inks —
+   dark ink #171510 for type and the deeper gold #A8842A for anything gold, so gold
+   never sits light on cream. The canvas colours are in globeScene.js (PALETTES). */
+.ah-cream.ah-track, .ah-cream .ah-hero { background: #f2ede4; }
+.ah-cream .ah-hero, .ah-menu.ah-cream { color: #171510; }
+.ah-cream .ah-hero :focus-visible, .ah-menu.ah-cream :focus-visible { outline-color: #a8842a; }
+.ah-cream .ah-brand img, .ah-menu.ah-cream .ah-menu-head img { filter: brightness(0.12); }
+.ah-cream .ah-links a { color: rgba(23, 21, 16, 0.72); }
+.ah-cream .ah-links a:hover { color: #171510; }
+.ah-cream .ah-btn-sm { border-color: rgba(168, 132, 42, 0.6); color: #8a6c1f; }
+.ah-cream .ah-btn-sm:hover { background: #a8842a; color: #fbf9f5; border-color: #a8842a; }
+.ah-cream .ah-burger span { background: #171510; }
+.ah-cream .ah-logo-halo { background: radial-gradient(ellipse at center, rgba(168, 132, 42, 0.16) 0%, rgba(168, 132, 42, 0.05) 42%, rgba(242, 237, 228, 0) 70%); }
+.ah-cream .ah-pill { border-color: rgba(168, 132, 42, 0.6); color: #8a6c1f; }
+.ah-cream .ah-title { color: #171510; }
+.ah-cream .ah-lede { color: rgba(23, 21, 16, 0.72); }
+.ah-cream .ah-btn-gold, .ah-menu.ah-cream .ah-btn-gold { background: #a8842a; border-color: #a8842a; color: #fbf9f5; }
+.ah-cream .ah-btn-gold:hover, .ah-menu.ah-cream .ah-btn-gold:hover { background: #bf9a3a; border-color: #bf9a3a; color: #fbf9f5; }
+.ah-cream .ah-btn-glass { background: rgba(251, 249, 245, 0.55); color: #171510; border-color: rgba(23, 21, 16, 0.2); }
+.ah-cream .ah-btn-glass:hover { border-color: rgba(23, 21, 16, 0.45); color: #171510; }
+.ah-cream .ah-card { background: #fbf9f5; border-color: rgba(168, 132, 42, 0.3); box-shadow: 0 14px 30px -20px rgba(23, 21, 16, 0.35); }
+.ah-cream .ah-card-k, .ah-cream .ah-label { color: #67625a; }
+.ah-cream .ah-card-v { color: #171510; }
+.ah-cream .ah-card-v b { color: #a8842a; }
+.ah-cream .ah-card-c { color: rgba(23, 21, 16, 0.55); }
+.ah-cream .ah-scroll .ah-label { color: rgba(23, 21, 16, 0.5); }
+.ah-cream .ah-scroll-line { background: rgba(23, 21, 16, 0.12); }
+.ah-cream .ah-scroll-line i { background: #a8842a; }
+.ah-menu.ah-cream { background: rgba(242, 237, 228, 0.94); }
+.ah-menu.ah-cream .ah-menu-close, .ah-menu.ah-cream .ah-menu-links a { color: #171510; }
+.ah-menu.ah-cream .ah-menu-links a:hover { color: #a8842a; }
+.ah-menu.ah-cream .ah-label { color: #67625a; }
+
+/* reduced motion: static globe, no pinned runway, no animation */
+@media (prefers-reduced-motion: reduce) {
+  .ah-track { height: auto; }
+  .ah-hero { position: relative; }
+  .ah-in { animation: none; opacity: 1; }
+  .ah-shine, .ah-scroll-line i { animation: none; }
+  .ah-btn { transition: none; }
+}

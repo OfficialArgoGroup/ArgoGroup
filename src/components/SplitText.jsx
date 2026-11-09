@@ -34,22 +34,6 @@ export default function SplitText({ title, accent }) {
   )
 }
 
-/**
- * Same masked rise, one word at a time, for running text that is not a
- * heading. Words stay readable as words, so no aria juggling is needed.
- */
-export function SplitWords({ text }) {
-  return text.split(/(\s+)/).map((word, index) =>
-    /^\s*$/.test(word) ? (
-      word
-    ) : (
-      <span className="split-word" key={index}>
-        <span className="split-char" style={{ '--i': index / 2 }}>{word}</span>
-      </span>
-    ),
-  )
-}
-
 // Title + accent word -> segments of words -> letters, each letter numbered
 // across the whole title so the stagger runs left to right through the accent.
 function splitTitle(title, accent) {

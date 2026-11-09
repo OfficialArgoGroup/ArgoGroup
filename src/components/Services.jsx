@@ -1,23 +1,34 @@
-import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
-import SectionTitle from './SectionTitle'
+import { SERVICE_PATHS } from '../site.js'
+import { ArrowIcon } from './icons'
 import Reveal from './Reveal'
-import { CheckIcon } from './icons'
-import { icons } from './iconSet'
+import SectionTitle from './SectionTitle'
 
-// Icons per service, per section, positionally. They live here rather than in
-// i18n because they are presentation, not copy — and both languages share the
-// same service structure.
-const SERVICE_ICONS = [
-  ['target', 'sliders', 'trending'],
-  ['cpu', 'database', 'workflow', 'chart'],
-  ['gem', 'layers', 'monitor', 'sparkles'],
-]
+/**
+ * The services by name only: the detail lives on each service's own page
+ * (pages/ServicePage.jsx). `skip` leaves one out, for the links under a service.
+ */
+export function ServiceNames({ skip }) {
+  const { t } = useLang()
+
+  return (
+    <ul className="service-names">
+      {t.services.items.map((service, index) => (index === skip ? null : (
+        <Reveal as="li" delay={index * 90} key={service.title}>
+          <Link className="service-name" to={SERVICE_PATHS[index]}>
+            <span className="num" aria-hidden="true">0{index + 1}</span>
+            <h3 className="name">{service.title}</h3>
+            <ArrowIcon />
+          </Link>
+        </Reveal>
+      )))}
+    </ul>
+  )
+}
 
 export default function Services() {
   const { t } = useLang()
-  const [active, setActive] = useState(0)
-  const services = t.services.items
 
   return (
     <section className="section services" id="services">
@@ -27,74 +38,8 @@ export default function Services() {
           title={t.services.title}
           accent={t.services.accent}
         />
-
-        <div className="service-tabs" role="tablist" aria-label={t.services.title}>
-          {services.map((service, index) => (
-            <button
-              key={service.title}
-              className={index === active ? 'service-tab active' : 'service-tab'}
-              role="tab"
-              id={`serviceTab${index}`}
-              aria-selected={index === active}
-              aria-controls={`servicePane${index}`}
-              onClick={() => setActive(index)}
-            >
-              <span className="num">0{index + 1}</span>
-              <span className="name">{service.title}</span>
-              <span className="desc">{service.subtitle}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Every pane stays in the DOM: the inactive ones are still the page's
-            copy, and crawlers that do not click tabs should read all of it. */}
-        <div className="service-panel">
-          {services.map((service, index) => (
-            <div
-              key={service.title}
-              className={index === active ? 'service-pane active' : 'service-pane'}
-              role="tabpanel"
-              id={`servicePane${index}`}
-              aria-labelledby={`serviceTab${index}`}
-            >
-              <p className="service-intro">{service.subtitle}</p>
-              <div className="section-grid">
-                {service.sections.map((section, sectionIndex) => (
-                  <FeatureCard
-                    key={section.heading}
-                    icon={SERVICE_ICONS[index]?.[sectionIndex]}
-                    section={section}
-                    order={sectionIndex}
-                  />
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <ServiceNames />
       </div>
     </section>
-  )
-}
-
-function FeatureCard({ icon, section, order }) {
-  // The gold spotlight in .feature-card::before follows these two properties.
-  const trackPointer = (event) => {
-    const rect = event.currentTarget.getBoundingClientRect()
-    event.currentTarget.style.setProperty('--mx', `${event.clientX - rect.left}px`)
-    event.currentTarget.style.setProperty('--my', `${event.clientY - rect.top}px`)
-  }
-
-  return (
-    // Cards arrive one after another, as the reference's service row does.
-    <Reveal as="article" className="feature-card" delay={order * 110} onPointerMove={trackPointer}>
-      <div className="feature-icon">{icons[icon] ?? icons.sparkles}</div>
-      <h4>{section.heading}</h4>
-      <p className="tagline">{section.headline}</p>
-      <ul>
-        {section.items.map((item) => (
-          <li key={item}><CheckIcon />{item}</li>
-        ))}
-      </ul>
-    </Reveal>
   )
 }

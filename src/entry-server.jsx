@@ -8,10 +8,12 @@ import { StaticRouter } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { AppLayout } from './App.jsx'
 import { LangProvider } from './context/LangContext.jsx'
+import { SERVICE_PATHS } from './site.js'
 import About from './pages/About.jsx'
 import ContactPage from './pages/ContactPage.jsx'
 import Home from './pages/Home.jsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
+import ServicePage from './pages/ServicePage.jsx'
 import CookiePolicy from './pages/CookiePolicy.jsx'
 import TermsOfService from './pages/TermsOfService.jsx'
 import ThankYou from './pages/ThankYou.jsx'
@@ -24,6 +26,7 @@ const PAGES = {
   '/': Home,
   '/about': About,
   '/contact': ContactPage,
+  ...Object.fromEntries(SERVICE_PATHS.map((path, index) => [path, () => <ServicePage index={index} />])),
   '/thank-you': ThankYou,
   '/privacy-policy': PrivacyPolicy,
   '/cookie-policy': CookiePolicy,

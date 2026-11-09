@@ -20,6 +20,21 @@ export const translations = {
           description:
             'Talk to the Group ARGO team about growth, digital marketing and AI technology for your business.',
         },
+        '/digital-marketing': {
+          title: 'Digital Marketing | Group ARGO',
+          description:
+            'Performance campaigns on Meta, Google, TikTok and LinkedIn Ads that turn ad spend into predictable revenue.',
+        },
+        '/ai-technology': {
+          title: 'AI Technology & Automation | Group ARGO',
+          description:
+            'AI-powered funnel automation and integration: custom AI, CRM and lead capture, full-funnel automation and ROI reporting.',
+        },
+        '/creative-brand': {
+          title: 'Creative & Brand Assets | Group ARGO',
+          description:
+            'Brand foundations, ad creative, social media and website design, built to perform inside your campaigns.',
+        },
         '/thank-you': {
           title: 'Thank You | Group ARGO',
           description:
@@ -44,7 +59,6 @@ export const translations = {
     },
     nav: {
       services: 'Services',
-      method: 'How We Operate',
       why: 'Why ARGO',
       testimonials: 'Testimonials',
       faq: 'FAQ',
@@ -57,7 +71,7 @@ export const translations = {
       sub: 'A growth partner for digital marketing and AI technology, built around transparency, speed, and direct access.',
       intro: [
         'ARGO Group is a growth partner for digital marketing and AI technology. We work with companies that want their advertising spend to turn into predictable revenue, and we keep paid media, funnel automation, and creative production inside a single team so strategy, execution, and measurement never sit in separate silos.',
-        'We are based in Barcelona, Spain and Miami, Florida, and we operate online-first with on-ground support in both locations. That lets us work with clients across time zones, in English and Spanish, without the handoffs and delays that distance usually introduces.',
+        'We work from the Miami and Barcelona time zones and serve our clients online. That lets us work with companies all over the world and adapt to their time zones, in English and Spanish, without the handoffs and delays that distance usually introduces.',
         'We are deliberately not a volume agency. Every client works with a dedicated account manager who knows the account, and you talk to the people doing the work rather than to a layer of account handlers.',
       ],
       sections: [
@@ -81,7 +95,7 @@ export const translations = {
       factsTitle: 'At a glance',
       facts: [
         { label: 'Offices',       value: 'Barcelona, Spain · Miami, Florida' },
-        { label: 'Clients',       value: 'Served worldwide, across time zones' },
+        { label: 'Clients',       value: 'Worldwide, online, adapting to their time zones' },
         { label: 'Languages',     value: 'English and Spanish' },
         { label: 'Hours',         value: 'Monday to Friday, 09:00–18:00 (Spain and Miami)' },
         { label: 'Response time', value: 'Within 24 hours' },
@@ -101,6 +115,27 @@ export const translations = {
         { value: '1-on-1', label: 'Dedicated Account Management' },
         { value: 'Transparent', label: 'No Hidden Fees or Surprises' },
         { value: 'Adaptable', label: 'Flexible & Scalable Solutions' },
+      ],
+    },
+    // The home hero (src/components/ArgoHero). Hero.jsx still reads `hero`.
+    // The card figures are the design's examples, not client results: swap them
+    // for real case figures before this goes live. Same order in both languages:
+    // each card is pinned to a city on the globe (src/pages/Home.jsx).
+    argoHero: {
+      ariaLabel: 'Group ARGO — growth-driven marketing and AI automation',
+      markLabel: 'Group ARGO symbol',
+      pill: 'AI automation · Paid media · CRM',
+      title: 'Growth-driven marketing',
+      titleAccent: '& AI automation.',
+      lede: 'Paid media, CRM and automation systems that turn ad spend into predictable revenue.',
+      book: 'Book a call',
+      work: 'See our work',
+      locations: 'Barcelona · Miami',
+      scroll: 'Scroll',
+      cards: [
+        { label: 'Barcelona · Ads', before: 'ROAS ', gold: '4.2x', after: '', caption: 'Meta + Google · 90 days' },
+        { label: 'Miami · CRM', before: '', gold: '+38%', after: ' leads', caption: 'HubSpot pipeline' },
+        { label: 'London · AI', before: 'CPL ', gold: '−27%', after: '', caption: 'n8n + Make workflows' },
       ],
     },
     services: {
@@ -229,17 +264,6 @@ export const translations = {
         },
       ],
     },
-    methodology: {
-      eyebrow: 'Our process',
-      title: 'How We Operate',
-      accent: 'Operate',
-      items: [
-        { number: '01', title: 'Full Transparency',            desc: 'Full visibility into what\'s working and what\'s not. You\'ll know exactly how your investment is being managed, why decisions are made, and receive clear optimization steps whenever something needs to improve.' },
-        { number: '02', title: 'Direct Communication',         desc: 'Direct access to our team 9AM–6PM (Spain & Miami) via WhatsApp, email, and Slack.' },
-        { number: '03', title: 'Full-Funnel Optimization',     desc: 'Analyze friction points throughout the entire funnel, applying continuous optimizations that drive growth and profitability.' },
-        { number: '04', title: 'Automation & Growth Systems',  desc: 'Develop and integrate systems that automate critical processes; improving efficiency, control, and conversion.' },
-      ],
-    },
     whyArgo: {
       eyebrow: 'What sets us apart',
       title: 'Why ARGO',
@@ -247,7 +271,7 @@ export const translations = {
       intro: [
         'Unlike traditional agencies, we function as a close, flexible partner deeply invested in your success.',
         'Direct communication isn\'t optional; it\'s essential. Questions and challenges arise throughout any project, and addressing them quickly makes all the difference.',
-        'Based in Spain and Miami, we maintain an online-first approach with on-ground support across both locations; serving clients across time zones, worldwide.',
+        'We work from the Miami and Barcelona time zones and serve clients online, worldwide, adapting to the time zone of each one.',
       ],
       items: [
         { title: 'Agile & Efficient Execution',    desc: 'We integrate as an extension of your team; moving fast, cutting bureaucracy, and delivering with precision.' },
@@ -377,6 +401,21 @@ export const translations = {
           description:
             'Habla con el equipo de ARGO Group sobre crecimiento, marketing digital y tecnología de IA para tu negocio. Respondemos en 24 horas.',
         },
+        '/digital-marketing': {
+          title: 'Marketing Digital | Group ARGO',
+          description:
+            'Campañas de performance en Meta, Google, TikTok y LinkedIn Ads que convierten inversión publicitaria en ingresos predecibles.',
+        },
+        '/ai-technology': {
+          title: 'Tecnología IA y Automatización | Group ARGO',
+          description:
+            'Automatización e integración del funnel con IA: IA a medida, CRM y captación de leads, automatización completa y reporting de ROI.',
+        },
+        '/creative-brand': {
+          title: 'Creatividad y Activos de Marca | Group ARGO',
+          description:
+            'Bases de marca, creatividades para anuncios, redes sociales y diseño web, pensados para rendir dentro de tus campañas.',
+        },
         '/thank-you': {
           title: 'Gracias | ARGO Group',
           description:
@@ -401,7 +440,6 @@ export const translations = {
     },
     nav: {
       services: 'Servicios',
-      method: 'Cómo Operamos',
       why: 'Por qué ARGO',
       testimonials: 'Testimonios',
       faq: 'FAQ',
@@ -414,7 +452,7 @@ export const translations = {
       sub: 'Un partner de crecimiento en marketing digital y tecnología de IA, construido sobre transparencia, rapidez y acceso directo.',
       intro: [
         'ARGO Group es un partner de crecimiento en marketing digital y tecnología de IA. Trabajamos con empresas que quieren que su inversión publicitaria se convierta en ingresos predecibles, y mantenemos paid media, automatización del funnel y producción creativa dentro de un mismo equipo, para que estrategia, ejecución y medición nunca queden en compartimentos separados.',
-        'Tenemos sede en Barcelona (España) y Miami (Florida), y operamos con un enfoque digital y soporte presencial en ambas ubicaciones. Eso nos permite trabajar con clientes en distintas zonas horarias, en inglés y español, sin las transferencias y demoras que suele introducir la distancia.',
+        'Trabajamos desde las zonas horarias de Miami y Barcelona y atendemos a nuestros clientes online. Eso nos permite trabajar con empresas de todo el mundo y adaptarnos a sus zonas horarias, en inglés y español, sin las transferencias y demoras que suele introducir la distancia.',
         'No somos una agencia de volumen, y es deliberado. Cada cliente trabaja con un account manager dedicado que conoce la cuenta, y hablas con las personas que hacen el trabajo, no con una capa de intermediarios.',
       ],
       sections: [
@@ -438,7 +476,7 @@ export const translations = {
       factsTitle: 'De un vistazo',
       facts: [
         { label: 'Oficinas',            value: 'Barcelona, España · Miami, Florida' },
-        { label: 'Clientes',            value: 'En todo el mundo, en distintas zonas horarias' },
+        { label: 'Clientes',            value: 'En todo el mundo, online, adaptándonos a sus zonas horarias' },
         { label: 'Idiomas',             value: 'Inglés y español' },
         { label: 'Horario',             value: 'Lunes a viernes, 09:00–18:00 (España y Miami)' },
         { label: 'Tiempo de respuesta', value: 'Menos de 24 horas' },
@@ -458,6 +496,23 @@ export const translations = {
         { value: '1-on-1', label: 'Gestión de Cuenta Dedicada' },
         { value: 'Transparente', label: 'Sin Costes Ocultos ni Sorpresas' },
         { value: 'Adaptable', label: 'Soluciones Flexibles y Escalables' },
+      ],
+    },
+    argoHero: {
+      ariaLabel: 'Group ARGO — marketing de crecimiento y automatización con IA',
+      markLabel: 'Símbolo de Group ARGO',
+      pill: 'Automatización IA · Paid media · CRM',
+      title: 'Marketing de crecimiento',
+      titleAccent: 'y automatización con IA.',
+      lede: 'Paid media, CRM y sistemas de automatización que convierten la inversión publicitaria en ingresos predecibles.',
+      book: 'Agenda una llamada',
+      work: 'Ver nuestro trabajo',
+      locations: 'Barcelona · Miami',
+      scroll: 'Desliza',
+      cards: [
+        { label: 'Barcelona · Ads', before: 'ROAS ', gold: '4,2x', after: '', caption: 'Meta + Google · 90 días' },
+        { label: 'Miami · CRM', before: '', gold: '+38%', after: ' leads', caption: 'Pipeline en HubSpot' },
+        { label: 'Londres · IA', before: 'CPL ', gold: '−27%', after: '', caption: 'Flujos con n8n + Make' },
       ],
     },
     services: {
@@ -584,17 +639,6 @@ export const translations = {
         },
       ],
     },
-    methodology: {
-      eyebrow: 'Nuestro proceso',
-      title: 'Cómo Operamos',
-      accent: 'Operamos',
-      items: [
-        { number: '01', title: 'Transparencia Total',                   desc: 'Visibilidad total sobre qué está funcionando y qué no. Sabrás exactamente cómo se gestiona tu inversión, por qué se toman las decisiones y recibirás pasos claros de optimización cuando algo necesite mejorar.' },
-        { number: '02', title: 'Comunicación Directa',                   desc: 'Acceso directo a nuestro equipo de 9h a 18h (España y Miami) por WhatsApp, email y Slack.' },
-        { number: '03', title: 'Optimización Full-Funnel',               desc: 'Analizamos los puntos de fricción de todo el funnel, aplicando optimizaciones continuas que impulsan el crecimiento y la rentabilidad.' },
-        { number: '04', title: 'Sistemas de Automatización y Crecimiento', desc: 'Desarrollamos e integramos sistemas que automatizan procesos críticos, mejorando la eficiencia, el control y la conversión.' },
-      ],
-    },
     whyArgo: {
       eyebrow: 'Nuestra diferencia',
       title: '¿Por qué ARGO?',
@@ -602,7 +646,7 @@ export const translations = {
       intro: [
         'A diferencia de las agencias tradicionales, funcionamos como un partner cercano y flexible, profundamente comprometido con tu éxito.',
         'La comunicación directa no es opcional; es esencial. Las preguntas y los desafíos surgen a lo largo de cualquier proyecto, y abordarlos rápidamente marca la diferencia.',
-        'Con sede en España y Miami, mantenemos un enfoque digital con soporte presencial en ambas ubicaciones; atendiendo a clientes en todas las zonas horarias, a nivel mundial.',
+        'Trabajamos desde las zonas horarias de Miami y Barcelona y atendemos online a clientes de todo el mundo, adaptándonos a la zona horaria de cada uno.',
       ],
       items: [
         { title: 'Ejecución Ágil y Eficiente',        desc: 'Nos integramos como una extensión de tu equipo; avanzando rápido, eliminando burocracia y entregando con precisión.' },

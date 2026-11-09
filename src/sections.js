@@ -3,7 +3,6 @@
 // drift apart.
 export const SECTIONS = [
   { id: 'services', key: 'services' },
-  { id: 'how-we-operate', key: 'method' },
   { id: 'why-argo', key: 'why' },
   { id: 'faq', key: 'faq' },
 ]
@@ -12,7 +11,6 @@ export const SECTIONS = [
 // shared with them still land on the right section (ScrollToTop.jsx).
 export const OLD_ANCHORS = {
   servicios: 'services',
-  proceso: 'how-we-operate',
   'por-que-argo': 'why-argo',
   contacto: 'contact',
 }

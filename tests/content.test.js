@@ -4,7 +4,7 @@ import { test } from 'node:test'
 import { htmlToMarkdown } from '../src/content/htmlToMarkdown.js'
 import { llmsTxt, markdownFor } from '../src/content/markdown.js'
 import { buildJsonLd, serializeJsonLd } from '../src/seo/jsonld.js'
-import { canonicalFor, markdownPathFor, routes, site } from '../src/site.js'
+import { canonicalFor, markdownPathFor, routes, SERVICE_PATHS, site } from '../src/site.js'
 import { translations } from '../src/i18n.js'
 
 // ── htmlToMarkdown ─────────────────────────────────────────────────────────
@@ -58,18 +58,28 @@ test('every route builds markdown with a title, summary and canonical URL', () =
   }
 })
 
-test('homepage markdown carries the full service and FAQ content', () => {
+test('homepage markdown names the services and carries the FAQ, like the page', () => {
   const markdown = markdownFor('/')
   const t = translations.en
 
-  for (const service of t.services.items) {
-    assert.ok(markdown.includes(service.title), `missing service: ${service.title}`)
-  }
+  t.services.items.forEach((service, index) => {
+    assert.ok(markdown.includes(`[${service.title}](${canonicalFor(SERVICE_PATHS[index])})`), `missing link to: ${service.title}`)
+  })
   for (const item of t.faq.items) {
     assert.ok(markdown.includes(item.q), `missing FAQ question: ${item.q}`)
     assert.ok(markdown.includes(item.a), `missing FAQ answer for: ${item.q}`)
   }
-  assert.ok(markdown.length > 4000, 'homepage markdown should be substantial')
+  assert.ok(markdown.length > 3000, 'homepage markdown should be substantial')
+})
+
+test('each service page markdown carries that service in full', () => {
+  translations.en.services.items.forEach((service, index) => {
+    const markdown = markdownFor(SERVICE_PATHS[index])
+    for (const section of service.sections) {
+      assert.ok(markdown.includes(section.heading), `missing section: ${section.heading}`)
+      for (const item of section.items) assert.ok(markdown.includes(item), `missing item: ${item}`)
+    }
+  })
 })
 
 test('markdownFor rejects unknown routes', () => {

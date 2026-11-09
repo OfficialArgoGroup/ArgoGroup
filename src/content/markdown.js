@@ -3,7 +3,7 @@
 // so the markdown can never drift from the rendered page; the legal pages keep
 // their copy in JSX, so their markdown is converted from the SSR output.
 
-import { site, canonicalFor, markdownPathFor, routes } from '../site.js'
+import { site, canonicalFor, markdownPathFor, routes, SERVICE_PATHS } from '../site.js'
 import { translations } from '../i18n.js'
 import { htmlToMarkdown } from './htmlToMarkdown.js'
 
@@ -33,18 +33,7 @@ function homeBody(t) {
   blocks.push(t.hero.stats.map((s) => `- **${s.value}** — ${s.label}`).join('\n'))
 
   blocks.push(`## ${t.services.title}`)
-  for (const service of t.services.items) {
-    blocks.push(`### ${service.title}`)
-    blocks.push(`_${service.subtitle}_`)
-    for (const section of service.sections) {
-      if (section.heading) blocks.push(`#### ${section.heading}`)
-      if (section.headline) blocks.push(`${section.headline}`)
-      blocks.push(section.items.map((item) => `- ${item}`).join('\n'))
-    }
-  }
-
-  blocks.push(`## ${t.methodology.title}`)
-  blocks.push(t.methodology.items.map((item) => `### ${item.number}. ${item.title}\n\n${item.desc}`).join('\n\n'))
+  blocks.push(t.services.items.map((service, index) => `- [${service.title}](${canonicalFor(SERVICE_PATHS[index])})`).join('\n'))
 
   blocks.push(`## ${t.whyArgo.title}`)
   blocks.push(t.whyArgo.intro.join('\n\n'))
@@ -71,12 +60,32 @@ function aboutBody(t) {
     `## ${a.title}`,
     a.sub,
     ...a.intro,
+    `## ${t.whyArgo.title}`,
+    ...t.whyArgo.intro,
+    ...t.whyArgo.items.map((item) => `### ${item.title}\n\n${item.desc}`),
     ...a.sections.map((section) => `### ${section.title}\n\n${section.desc}`),
     `### ${a.factsTitle}`,
     a.facts.map((fact) => `- **${fact.label}:** ${fact.value}`).join('\n'),
     `### ${a.ctaTitle}`,
     `${a.ctaSub} ${canonicalFor('/contact')}`,
   ]
+}
+
+function serviceBody(index) {
+  return (t) => {
+    const service = t.services.items[index]
+    return [
+      `## ${service.title}`,
+      service.subtitle,
+      ...service.sections.flatMap((section) => [
+        `### ${section.heading}`,
+        section.headline,
+        section.items.map((item) => `- ${item}`).join('\n'),
+      ]),
+      `### ${t.about.ctaTitle}`,
+      `${t.about.ctaSub} ${canonicalFor('/contact')}`,
+    ]
+  }
 }
 
 function contactBody(t) {
@@ -117,6 +126,7 @@ function thankYouBody(t) {
 const BUILDERS = {
   '/': homeBody,
   '/about': aboutBody,
+  ...Object.fromEntries(SERVICE_PATHS.map((path, index) => [path, serviceBody(index)])),
   '/contact': contactBody,
   '/thank-you': thankYouBody,
 }

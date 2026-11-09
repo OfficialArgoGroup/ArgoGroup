@@ -13,8 +13,8 @@
   --surface-3: #e6dfd0;
   --border: #e0d8c7;
   --border-soft: rgba(23, 21, 16, 0.08);
-  /* --cream is the light ink of the black site (logo, the hero's ARGO, the
-     waves): on cream it becomes the dark ink. */
+  /* --cream is the light ink of the black site (the logo, ARGO in the hero's
+     wordmark): on cream it becomes the dark ink. */
   --cream: #171510;
   --text: #171510;
   --text-soft: #3a362f;
@@ -34,15 +34,10 @@
 }
 
 :root[data-theme="cream"] .mobile-menu { background: rgba(251, 249, 245, 0.97); }
-:root[data-theme="cream"] .hero-stat { background: rgba(243, 238, 228, 0.7); }
-
-:root[data-theme="cream"] .feature-card:hover {
-  box-shadow: 0 22px 44px -26px rgba(23, 21, 16, 0.35), 0 0 0 1px var(--gold-15);
-}
 
 :root[data-theme="cream"] .cookie-inner { box-shadow: 0 24px 60px -20px rgba(23, 21, 16, 0.3); }
 
 :root[data-theme="cream"] .btn-ghost { border-color: rgba(23, 21, 16, 0.22); }
+/* The first screen stays on ink. */
+:root[data-theme="cream"] .hero .btn-ghost { border-color: rgba(242, 237, 228, 0.32); }
 :root[data-theme="cream"] .channel { background: rgba(255, 255, 255, 0.45); }
-/* The glint along the wave was a light streak; a dark one reads as a crack. */
-:root[data-theme="cream"] .wave-glint { stroke: var(--gold-light); }

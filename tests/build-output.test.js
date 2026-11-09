@@ -7,7 +7,7 @@ import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { test } from 'node:test'
 
-import { canonicalFor, markdownPathFor, routes, site } from '../src/site.js'
+import { canonicalFor, markdownPathFor, routes, SERVICE_PATHS, site } from '../src/site.js'
 import { translations } from '../src/i18n.js'
 
 const DIST = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'dist')
@@ -138,6 +138,47 @@ test('the homepage renders its service and FAQ copy into the raw HTML', () => {
     assert.ok(text.includes(service.title), `raw HTML is missing service: ${service.title}`)
   }
   assert.ok(text.includes(translations.en.faq.items[0].q), 'raw HTML is missing the FAQ')
+})
+
+test('the homepage only names the services, and each name leads to its own page', () => {
+  const html = htmlFor('/')
+  const text = visibleText(html)
+  translations.en.services.items.forEach((service, index) => {
+    assert.ok(html.includes(`href="${SERVICE_PATHS[index]}"`), `${service.title} must link to ${SERVICE_PATHS[index]}`)
+    assert.ok(!text.includes(service.sections[0].heading), `the homepage must not explain ${service.title}`)
+  })
+  assert.ok(!html.includes('id="how-we-operate"'), 'How We Operate is gone')
+})
+
+test('the three service landings can be reached from the menu of every page', () => {
+  for (const route of routes.filter((r) => r.path !== '/thank-you')) {
+    const html = htmlFor(route.path)
+    assert.match(html, /id="servicesMenu"/, `${route.path} must have the services menu`)
+    for (const path of SERVICE_PATHS) {
+      assert.ok(html.includes(`href="${path}"`), `${route.path} must link to ${path}`)
+    }
+  }
+})
+
+test('every service page carries its sections in the raw HTML, in both markup and markdown', () => {
+  translations.en.services.items.forEach((service, index) => {
+    const path = SERVICE_PATHS[index]
+    const text = visibleText(htmlFor(path))
+    const markdown = read(`${path.slice(1)}.md`)
+    assert.ok(text.includes(service.title), `${path} must name the service`)
+    for (const section of service.sections) {
+      assert.ok(text.includes(section.heading), `${path} must carry ${section.heading}`)
+      assert.ok(text.includes(section.items[0]), `${path} must carry the items of ${section.heading}`)
+      assert.ok(markdown.includes(section.heading), `${path} markdown must carry ${section.heading}`)
+    }
+  })
+})
+
+test('the about page holds Why ARGO and says how the time zones work', () => {
+  const text = visibleText(htmlFor('/about'))
+  assert.ok(text.includes(translations.en.whyArgo.items[0].title), '/about must carry Why ARGO')
+  assert.ok(text.includes('Miami and Barcelona time zones'), '/about must name the time zones')
+  assert.ok(read('about.md').includes(translations.en.whyArgo.items[0].title), 'about.md must carry Why ARGO')
 })
 
 test('the app still mounts on a root node with the prerendered markup inside', () => {

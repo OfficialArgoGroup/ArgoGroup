@@ -8,9 +8,11 @@ import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
 import CookieBanner from './components/CookieBanner'
 import { useLang } from './context/LangContext'
+import { SERVICE_PATHS } from './site.js'
 import Home from './pages/Home'
 import About from './pages/About'
 import ContactPage from './pages/ContactPage'
+import ServicePage from './pages/ServicePage'
 import ThankYou from './pages/ThankYou'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import CookiePolicy from './pages/CookiePolicy'
@@ -41,6 +43,9 @@ export function AppLayout({ showBanner, setShowBanner }) {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        {SERVICE_PATHS.map((path, index) => (
+          <Route path={path} element={<ServicePage index={index} key={path} />} key={path} />
+        ))}
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/thank-you" element={<ThankYou />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

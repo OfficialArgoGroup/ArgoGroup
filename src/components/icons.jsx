@@ -18,10 +18,6 @@ export const SendIcon = () => (
   </svg>
 )
 
-export const ChevronDown = ({ size = 20 }) => (
-  <svg {...box} width={size} height={size} {...stroke}><polyline points="6 9 12 15 18 9" /></svg>
-)
-
 export const ChevronLeft = ({ size = 18 }) => (
   <svg {...box} width={size} height={size} {...stroke}><polyline points="15 18 9 12 15 6" /></svg>
 )
