@@ -10,6 +10,17 @@ Está hecha con React + Vite. Se publica como un Worker de Cloudflare (`argo-web
 
 Necesitas [Node.js 22](https://nodejs.org/) y Git.
 
+### En Mac (una sola vez)
+
+1. **Git:** abre la app Terminal y escribe `git --version`. Si no está instalado, macOS ofrece instalar las «herramientas de línea de comandos»: acepta y espera a que termine.
+2. **Node.js 22:** descarga el instalador para macOS (versión 22) de https://nodejs.org/en/download e instálalo como cualquier app. Comprueba con `node -v` en una ventana nueva de Terminal.
+3. **Editor:** [Visual Studio Code](https://code.visualstudio.com) para abrir la carpeta y editar los archivos (tiene su propia Terminal: menú *Terminal → New Terminal*).
+4. **Iniciar sesión en GitHub:** al primer `git push` GitHub no acepta la contraseña de la cuenta. Lo más fácil es instalar [GitHub Desktop](https://desktop.github.com) e iniciar sesión con la cuenta de ARGO: desde ahí se puede clonar, cambiar de rama, hacer commit y subir sin comandos. Si prefieres la Terminal, instala [GitHub CLI](https://cli.github.com) y ejecuta `gh auth login` una vez.
+
+### Descargar y arrancar
+
+En la Terminal (en Mac, por ejemplo dentro de `~/Documents`):
+
 ```bash
 git clone https://github.com/OfficialArgoGroup/ArgoGroup.git
 cd ArgoGroup
