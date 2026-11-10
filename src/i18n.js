@@ -100,7 +100,7 @@ export const translations = {
       stats: [
         { value: 'Direct', label: 'No account managers in between' },
         { value: 'Transparent', label: 'No hidden fees or surprises' },
-        { value: '30–45 min', label: 'First call. Not a sales call' },
+        { value: 'Adaptable', label: 'Flexible and scalable solutions' },
       ],
     },
     services: {
@@ -456,7 +456,7 @@ export const translations = {
       stats: [
         { value: 'Directo', label: 'Sin account managers de por medio' },
         { value: 'Transparente', label: 'Sin costes ocultos ni sorpresas' },
-        { value: '30–45 min', label: 'Primera llamada. No es de venta' },
+        { value: 'Adaptable', label: 'Soluciones flexibles y escalables' },
       ],
     },
     services: {
