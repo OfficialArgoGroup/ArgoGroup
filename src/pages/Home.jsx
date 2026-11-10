@@ -1,6 +1,6 @@
 import ArgoHero from '../components/ArgoHero/ArgoHero'
-import Clients from '../components/Clients'
 import Services from '../components/Services'
+import HowWeOperate from '../components/HowWeOperate'
 import WhyArgo from '../components/WhyArgo'
 import FAQ from '../components/FAQ'
 import Contact from '../components/Contact'
@@ -12,7 +12,7 @@ import { useLang } from '../context/LangContext'
 const CARD_PLACES = [
   { city: 'Barcelona', side: 1, hang: 'below' },
   { city: 'Miami', side: -1, hang: 'mid' },
-  { city: 'London', side: 1, hang: 'above' },
+  { city: 'London', side: 1, hang: 'above' }, // the 'worldwide, online' card,
 ]
 
 export default function Home() {
@@ -22,18 +22,19 @@ export default function Home() {
   return (
     <main id="main">
       {/* The site's Navbar is the navigation here too (see App.jsx). The hero
-          releases its scroll onto whatever follows it. */}
+          releases its scroll onto whatever follows it. No booking button in
+          the hero: the form closes the page. */}
       <ArgoHero
         showNav={false}
         theme="cream"
-        bookHref="/#contact"
+        bookHref={null}
         workHref="/#services"
         copy={t.argoHero}
         cards={cards}
       />
-      <Clients />
       <Services />
-      <WhyArgo />
+      <HowWeOperate />
+      <WhyArgo aboutLink />
       <FAQ />
       <Contact />
     </main>

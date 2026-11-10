@@ -77,7 +77,9 @@ test('each service page markdown carries that service in full', () => {
     const markdown = markdownFor(SERVICE_PATHS[index])
     for (const section of service.sections) {
       assert.ok(markdown.includes(section.heading), `missing section: ${section.heading}`)
-      for (const item of section.items) assert.ok(markdown.includes(item), `missing item: ${item}`)
+      for (const item of section.items) {
+        assert.ok(markdown.includes(item.name) && markdown.includes(item.desc), `missing item: ${item.name}`)
+      }
     }
   })
 })

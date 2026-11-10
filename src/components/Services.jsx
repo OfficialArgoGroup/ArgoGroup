@@ -7,14 +7,14 @@ import SectionTitle from './SectionTitle'
 
 /**
  * The services by name only: the detail lives on each service's own page
- * (pages/ServicePage.jsx). `skip` leaves one out, for the links under a service.
+ * (pages/ServicePage.jsx).
  */
-export function ServiceNames({ skip }) {
+export function ServiceNames() {
   const { t } = useLang()
 
   return (
     <ul className="service-names">
-      {t.services.items.map((service, index) => (index === skip ? null : (
+      {t.services.items.map((service, index) => (
         <Reveal as="li" delay={index * 90} key={service.title}>
           <Link className="service-name" to={SERVICE_PATHS[index]}>
             <span className="num" aria-hidden="true">0{index + 1}</span>
@@ -22,7 +22,7 @@ export function ServiceNames({ skip }) {
             <ArrowIcon />
           </Link>
         </Reveal>
-      )))}
+      ))}
     </ul>
   )
 }

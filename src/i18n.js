@@ -1,34 +1,34 @@
 export const translations = {
   en: {
     meta: {
-      title: 'Group ARGO | Growth, Digital Marketing & AI Technology',
+      title: 'Group ARGO | Growth Digital Marketing & AI Technology',
       description:
         'A growth partner, not an agency: digital marketing and AI technology, built around your business. Book a call.',
       pages: {
         '/': {
-          title: 'Group ARGO | Growth, Digital Marketing & AI Technology',
+          title: 'Group ARGO | Growth Digital Marketing & AI Technology',
           description:
             'A growth partner, not an agency: digital marketing and AI technology, built around your business. Book a call.',
         },
         '/about': {
-          title: 'About Group ARGO | Growth, Digital Marketing & AI Technology',
+          title: 'About Group ARGO | Growth Digital Marketing & AI Technology',
           description:
             'Group ARGO is a growth partner for digital marketing and AI technology, working with businesses worldwide from Barcelona and Miami.',
         },
         '/contact': {
-          title: 'Contact Group ARGO | Growth, Digital Marketing & AI Technology',
+          title: 'Contact Group ARGO | Growth Digital Marketing & AI Technology',
           description:
             'Talk to the Group ARGO team about growth, digital marketing and AI technology for your business.',
         },
         '/digital-marketing': {
           title: 'Digital Marketing | Group ARGO',
           description:
-            'Performance campaigns on Meta, Google, TikTok and LinkedIn Ads that turn ad spend into predictable revenue.',
+            'Organic and paid in one plan: content, social media, SEO, landing pages and campaigns on Meta, Google, TikTok and LinkedIn Ads.',
         },
         '/ai-technology': {
           title: 'AI Technology & Automation | Group ARGO',
           description:
-            'AI-powered funnel automation and integration: custom AI, CRM and lead capture, full-funnel automation and ROI reporting.',
+            'Internal platforms and custom software, automated systems, database and CRM management, and automatic reports, documents and invoices.',
         },
         '/creative-brand': {
           title: 'Creative & Brand Assets | Group ARGO',
@@ -59,6 +59,7 @@ export const translations = {
     },
     nav: {
       services: 'Services',
+      how: 'How we operate',
       why: 'Why ARGO',
       testimonials: 'Testimonials',
       faq: 'FAQ',
@@ -67,37 +68,15 @@ export const translations = {
       cta: 'Get in Touch',
     },
     about: {
-      title: 'About ARGO Group',
-      sub: 'A growth partner for digital marketing and AI technology, built around transparency, speed, and direct access.',
-      intro: [
-        'ARGO Group is a growth partner for digital marketing and AI technology. We work with companies that want their advertising spend to turn into predictable revenue, and we keep paid media, funnel automation, and creative production inside a single team so strategy, execution, and measurement never sit in separate silos.',
-        'We work from the Miami and Barcelona time zones and serve our clients online. That lets us work with companies all over the world and adapt to their time zones, in English and Spanish, without the handoffs and delays that distance usually introduces.',
-        'We are deliberately not a volume agency. Every client works with a dedicated account manager who knows the account, and you talk to the people doing the work rather than to a layer of account handlers.',
-      ],
-      sections: [
-        {
-          title: 'What we do',
-          desc: 'Three connected practices: performance marketing across Meta, Google, TikTok, and LinkedIn Ads; AI process automation that links your CRM, forms, and internal tools into one funnel; and creative and brand assets built to be tested and iterated inside those campaigns.',
-        },
-        {
-          title: 'How we work',
-          desc: 'Full visibility into what your budget is doing and why. Campaigns are reviewed daily rather than reported monthly, decisions are explained as they are made, and you receive concrete optimization steps whenever something needs to improve.',
-        },
-        {
-          title: 'How we communicate',
-          desc: 'Direct access to the team from 9:00 to 18:00 in both Spain and Miami, over WhatsApp, email, or Slack. Questions get answered the same day, and new enquiries receive a reply within 24 hours.',
-        },
-        {
-          title: 'What we build on',
-          desc: 'We work with the platforms you already use and build what is missing: HubSpot and Pipedrive for CRM, n8n and Make for automation, and custom integration layers where off-the-shelf connectors fall short.',
-        },
-      ],
+      title: 'About Group ARGO',
+      sub: 'Growth Digital Marketing & AI Technology. A growth partner, built around transparency, speed and direct access.',
       factsTitle: 'At a glance',
       facts: [
-        { label: 'Offices',       value: 'Barcelona, Spain · Miami, Florida' },
-        { label: 'Clients',       value: 'Worldwide, online, adapting to their time zones' },
+        { label: 'Founders',      value: 'Hugo and Arnau' },
+        { label: 'Based in',      value: 'Barcelona, Spain · Miami, Florida' },
+        { label: 'Clients',       value: 'Worldwide, served remotely and online' },
         { label: 'Languages',     value: 'English and Spanish' },
-        { label: 'Hours',         value: 'Monday to Friday, 09:00–18:00 (Spain and Miami)' },
+        { label: 'Hours',         value: 'Monday to Friday, 09:00–18:00 (Barcelona and Miami)' },
         { label: 'Response time', value: 'Within 24 hours' },
       ],
       ctaTitle: 'Want to talk?',
@@ -107,35 +86,35 @@ export const translations = {
     hero: {
       badge: 'Barcelona · Miami',
       headline: 'ARGO',
-      sub: 'We scale your business with digital marketing and AI technology',
-      sub2: 'Growth, Digital Marketing & AI Technology',
-      cta1: 'Talk to Our Team',
+      sub: 'One team for your marketing and the systems behind it',
+      sub2: 'Growth Digital Marketing & AI Technology',
+      cta1: 'Get in touch',
       cta2: 'Services',
       stats: [
-        { value: '1-on-1', label: 'Dedicated Account Management' },
-        { value: 'Transparent', label: 'No Hidden Fees or Surprises' },
-        { value: 'Adaptable', label: 'Flexible & Scalable Solutions' },
+        { value: 'Direct', label: 'No account managers in between' },
+        { value: 'Transparent', label: 'No hidden fees or surprises' },
+        { value: 'Worldwide', label: 'From Barcelona and Miami, online' },
       ],
     },
     // The home hero (src/components/ArgoHero). Hero.jsx still reads `hero`.
-    // The card figures are the design's examples, not client results: swap them
-    // for real case figures before this goes live. Same order in both languages:
-    // each card is pinned to a city on the globe (src/pages/Home.jsx).
+    // The message is the one the published site carries (main). Same order in
+    // both languages: each card is pinned to a city on the globe
+    // (src/pages/Home.jsx); the third is the 'worldwide, online' one.
     argoHero: {
-      ariaLabel: 'Group ARGO — growth-driven marketing and AI automation',
+      ariaLabel: 'Group ARGO — Growth Digital Marketing & AI Technology',
       markLabel: 'Group ARGO symbol',
-      pill: 'AI automation · Paid media · CRM',
-      title: 'Growth-driven marketing',
-      titleAccent: '& AI automation.',
-      lede: 'Paid media, CRM and automation systems that turn ad spend into predictable revenue.',
-      book: 'Book a call',
-      work: 'See our work',
-      locations: 'Barcelona · Miami',
+      pill: 'Growth Digital Marketing & AI Technology',
+      title: 'One team for your marketing',
+      titleAccent: 'and the systems behind it.',
+      lede: 'A growth partner, not an agency: digital marketing and AI technology, built around your business.',
+      book: 'Get in touch',
+      work: 'Our services',
+      locations: 'Barcelona · Miami · Clients worldwide, online',
       scroll: 'Scroll',
       cards: [
-        { label: 'Barcelona · Ads', before: 'ROAS ', gold: '4.2x', after: '', caption: 'Meta + Google · 90 days' },
-        { label: 'Miami · CRM', before: '', gold: '+38%', after: ' leads', caption: 'HubSpot pipeline' },
-        { label: 'London · AI', before: 'CPL ', gold: '−27%', after: '', caption: 'n8n + Make workflows' },
+        { label: 'Barcelona', before: '', gold: 'Direct', after: '', caption: 'No account managers in between' },
+        { label: 'Miami', before: '', gold: 'Transparent', after: '', caption: 'No hidden fees or surprises' },
+        { label: 'Worldwide · Online', before: '', gold: 'Remote', after: '', caption: 'Clients in any time zone' },
       ],
     },
     services: {
@@ -147,78 +126,92 @@ export const translations = {
       items: [
         {
           title: 'Digital Marketing',
-          subtitle: 'We run performance campaigns that turn ad spend into predictable revenue',
+          subtitle: 'Organic and paid, run as one plan and measured on what each customer costs, not each lead',
           sections: [
             {
-              heading: 'Paid Media & Channel Strategy',
-              headline: 'The right message, on the right platform, in front of the right people',
+              heading: 'Paid / Performance',
+              headline: 'Which channels deserve your budget, and what to stop doing',
               items: [
-                'Meta Ads, Google Ads, TikTok Ads, and LinkedIn Ads; we pick the channels that match your audience',
-                'Full alignment with your marketing objectives, commercial calendars, and product launches',
-                'Scaling plans built to grow revenue without sacrificing profitability',
+                { name: 'Campaign setup', desc: 'Meta, Google, TikTok and LinkedIn Ads, chosen for your customers' },
+                { name: 'Tracking from day one', desc: 'So every lead can be followed to the sale' },
+                { name: 'Daily optimization', desc: 'Budget, audiences and structure, adjusted as the data comes in' },
+                { name: 'Ongoing testing', desc: 'Ads, messages and audiences tested to find what brings customers' },
+                { name: 'Qualified leads', desc: 'Campaigns aimed at lead quality, not at a bigger lead count' },
               ],
             },
             {
-              heading: 'Campaign Optimization',
-              headline: 'We\'re inside your campaigns every day so you don\'t have to be',
+              heading: 'Organic',
+              headline: 'Being found and remembered, without paying for every click',
               items: [
-                'Continuous optimization of campaign structure, audience segmentation, and budget allocation',
-                'Real-time, data-driven decisions; no waiting for monthly reports to fix what\'s broken',
-                'A/B testing across creatives, copy, and targeting to find what converts fastest',
-              ],
-            },
-            {
-              heading: 'Conversion & Growth',
-              headline: 'More clicks mean nothing without conversions',
-              items: [
-                'Conversion rate optimization for forms, landing pages, and checkout flows',
-                'Advanced lead generation strategies focused on quality, not just volume',
-                'Sustainable growth planning with profitability as the north star',
+                { name: 'Content creation', desc: 'For your channels, matched to your brand and to the people you sell to' },
+                { name: 'Social media management', desc: 'Publishing, community and day-to-day upkeep' },
+                { name: 'Content calendars', desc: 'Organic calendars planned around your goals and your sales calendar' },
+                { name: 'SEO', desc: 'Brings people in without paying for every click' },
+                { name: 'Landing pages', desc: 'Built to turn visits into customers' },
+                { name: 'Website optimization', desc: 'Speed, clarity and conversion' },
               ],
             },
           ],
+          howWeOperate: {
+            title: 'How we operate in digital marketing',
+            items: [
+              { title: 'Diagnose', desc: 'Goals, offer, channels and budget leaks' },
+              { title: 'Plan', desc: 'Which channels first, organic and paid' },
+              { title: 'Launch', desc: 'Content, landings, campaigns, tracking' },
+              { title: 'Optimize', desc: 'Daily, measured in customers' },
+            ],
+          },
         },
         {
           title: 'AI Technology & Automation',
-          subtitle: 'AI-Powered Funnel Automation & Integration',
+          subtitle: 'Your methodology, built into software',
           sections: [
             {
-              heading: 'Custom AI Integration',
-              headline: 'Bridging your tech stack at the infrastructure level',
+              heading: 'Internal platforms & custom software',
+              headline: 'For what no software on the market covers',
               items: [
-                'We architect the integration layer between your platforms.',
-                'Intelligent Document & Data Processing: extract, validate, and route structured data.',
-                'App & Platform Configuration: From configuring your existing stack to building what doesn\'t exist yet.',
+                { name: 'Custom apps', desc: 'Built for the way your business works' },
+                { name: 'Internal platforms', desc: 'Your departments, processes and data in one place' },
+                { name: 'Your own methodologies', desc: 'Internal systems designed around your business, not around a template' },
               ],
             },
             {
-              heading: 'CRM & Lead Capture',
-              headline: 'Every lead captured, synced, and ready to close',
+              heading: 'Automated systems',
+              headline: 'Fewer manual steps, from the first click to the closed deal',
               items: [
-                'Instant CRM sync with HubSpot, Pipedrive, and more; zero leads fall through the cracks',
-                'Real-time alerts so your sales team acts at the right moment',
-                'Automatic lead scoring and segmentation out of the box',
+                { name: 'Workflow automation', desc: 'Processes automated end to end, with no one copying data by hand' },
+                { name: 'Connected tools', desc: 'With n8n, Make and custom integrations; no data stuck in between' },
+                { name: 'AI inside the work', desc: 'Reads, drafts, sorts and files as part of the work, not as a separate tool' },
               ],
             },
             {
-              heading: 'Full-Funnel Automation',
-              headline: 'From first click to closed deal; fully automated',
+              heading: 'Database & CRM management',
+              headline: 'Every client and every lead, in order and up to date',
               items: [
-                'End-to-end workflows: lead capture, nurturing, and delivery without manual steps',
-                'Instant personalization: AI generates custom content and communications at scale',
-                'Connected systems: your entire tech stack works together, automatically',
+                { name: 'Automatic CRM', desc: 'Client management in HubSpot, Pipedrive and others' },
+                { name: 'Lead follow-up', desc: 'Leads scored and sorted, so your team knows who to call first' },
+                { name: 'Clean client data', desc: 'Connected, with no duplicates and no spreadsheets passed around' },
               ],
             },
             {
-              heading: 'Reporting & ROI Visibility',
-              headline: 'Always know what\'s working and why',
+              heading: 'Data, reporting & documents',
+              headline: 'Reports, documents and invoices that put themselves together',
               items: [
-                'Custom dashboards: real-time view of ad spend, lead costs, and campaign ROI',
-                'One centralized report for all your metrics; no more spreadsheet juggling',
-                'Predictive analytics to anticipate growth and adjust strategy before it\'s too late',
+                { name: 'Automatic reports', desc: 'Live dashboards: spend, cost per customer, revenue' },
+                { name: 'Documentation', desc: 'Generated and filed from the data you already have' },
+                { name: 'Invoicing', desc: 'Invoices created, sent and tracked without manual work' },
               ],
             },
           ],
+          howWeOperate: {
+            title: 'How we operate in AI and software',
+            items: [
+              { title: 'Map', desc: 'How you work, where time gets lost' },
+              { title: 'Design', desc: 'Your methodology, not a template' },
+              { title: 'Build', desc: 'On your tools, or from scratch' },
+              { title: 'Run and improve', desc: 'Adjusted as your business changes' },
+            ],
+          },
         },
         {
           title: 'Creative & Brand Assets',
@@ -228,57 +221,72 @@ export const translations = {
               heading: 'Brand Foundations That Perform',
               headline: 'A consistent brand is the baseline for any campaign that scales',
               items: [
-                'Logo, color systems, typography, and brand guide built to perform across paid and organic channels',
-                'Visual identity designed with conversion in mind',
-                'Brand foundations that make every ad, landing page, and post instantly recognizable',
+                { name: 'Logo & brand guide', desc: 'Color and typography built to perform in paid and organic channels' },
+                { name: 'Visual identity', desc: 'Designed with conversion in mind' },
+                { name: 'Recognizable foundations', desc: 'Every ad, landing page, and post instantly recognizable' },
               ],
             },
             {
               heading: 'Creative Built for Paid Media',
               headline: 'Ad creatives designed to be tested, iterated, and optimized',
               items: [
-                'Static and motion creatives tailored for Ads',
-                'Visuals aligned with audience, funnel stage, and campaign objective',
-                'Iterative design process integrated with our performance team: we create, test, and double down on what works',
+                { name: 'Static & motion creatives', desc: 'Tailored for Ads' },
+                { name: 'Aligned visuals', desc: 'Matched to audience, funnel stage, and campaign objective' },
+                { name: 'Iterative design', desc: 'With our performance team: create, test, double down on what works' },
               ],
             },
             {
               heading: 'Social Media & Website Design',
               headline: 'The digital surfaces where your audience meets your brand',
               items: [
-                'Social media feed setup and launch content aligned with your brand guide',
-                'Website design or redesign focused on clarity, speed, and conversion',
-                'Seamless integration with our performance marketing and automation workflows',
+                { name: 'Social media feed', desc: 'Setup and launch content aligned with your brand guide' },
+                { name: 'Website design', desc: 'Design or redesign focused on clarity, speed, and conversion' },
+                { name: 'Seamless integration', desc: 'With our performance marketing and automation workflows' },
               ],
             },
             {
               heading: 'Additional Creative Services',
               headline: 'Everything else your brand might need along the way',
               items: [
-                'Merchandise design, editorial, and packaging',
-                'Custom creative for product launches, events, and seasonal campaigns',
-                'Project-based creative work tailored to specific commercial goals',
+                { name: 'Print & product design', desc: 'Merchandise design, editorial, and packaging' },
+                { name: 'Launch & event creative', desc: 'Custom creative for product launches, events, and seasonal campaigns' },
+                { name: 'Project-based work', desc: 'Creative work tailored to specific commercial goals' },
               ],
             },
           ],
         },
       ],
     },
+    // Template for How we operate on the home (components/HowWeOperate.jsx).
+    // Each service page carries its own steps (services.items[i].howWeOperate).
+    methodology: {
+      eyebrow: 'Our method',
+      title: 'How we operate',
+      accent: 'operate',
+      items: [
+        { title: 'Diagnose',             desc: 'Your goals, then your offer, funnel, tracking and where the money leaks. Lots of questions.' },
+        { title: 'Decide and design',    desc: 'Which channels deserve the budget, what changes first, what to stop. If the problem isn\'t the ads, we say so.' },
+        { title: 'Build',                desc: 'Campaigns, website, content and the systems underneath, in the order the decision calls for.' },
+        { title: 'Measure and optimize', desc: 'Measured in customers, each lead tracked to the sale. The plan changes with your business.' },
+      ],
+    },
+    // Why ARGO and About, merged into one section (components/WhyArgo.jsx),
+    // shown on the home and on /about.
     whyArgo: {
-      eyebrow: 'What sets us apart',
-      title: 'Why ARGO',
-      accent: 'ARGO',
+      eyebrow: 'Why ARGO',
+      title: 'A growth partner, not an agency',
+      accent: 'agency',
+      // One paragraph, two or three lines: who we are, who leads, where from.
       intro: [
-        'Unlike traditional agencies, we function as a close, flexible partner deeply invested in your success.',
-        'Direct communication isn\'t optional; it\'s essential. Questions and challenges arise throughout any project, and addressing them quickly makes all the difference.',
-        'We work from the Miami and Barcelona time zones and serve clients online, worldwide, adapting to the time zone of each one.',
+        'We take on the CMO role and keep digital marketing (organic and performance marketing), AI systems and custom software, and brand in one team. Hugo and Arnau lead ARGO equally, Arnau on AI and systems, Hugo on marketing and brand, and you talk to them directly. Based in Barcelona and Miami, we work remotely with clients all over the world, in English and Spanish.',
       ],
       items: [
-        { title: 'Agile & Efficient Execution',    desc: 'We integrate as an extension of your team; moving fast, cutting bureaucracy, and delivering with precision.' },
-        { title: 'Creative-First Performance',      desc: 'Creativity drives our strategy. Strong scripting, deep audience insight, and campaigns built to convert.' },
-        { title: 'Transparency & Data Control',    desc: 'Full visibility into your KPIs at all times. You always know what\'s working, what isn\'t, and what\'s next.' },
-        { title: 'Scalable Infrastructure',        desc: 'Systems built to grow with you; stable, efficient, and ready for whatever comes next.' },
+        { title: 'Direct, active communication',  desc: 'You talk to the people doing the work, with no go-betweens. We write first when we spot something.' },
+        { title: 'A plan built for you',          desc: 'No closed packages: every plan starts from your goals and adapts to your business.' },
+        { title: 'Nothing hidden',                desc: 'Every number we see: spend, cost per customer, revenue. What works and what\'s next.' },
+        { title: 'The CMO role, not a task list', desc: 'Involved in your growth as a partner, not a supplier of tasks. The plan changes with your business.' },
       ],
+      more: 'More about us',
     },
     testimonials: {
       eyebrow: 'Real results',
@@ -304,7 +312,7 @@ export const translations = {
       items: [
         {
           q: 'How does the onboarding process work?',
-          a: 'We start with a discovery call to understand your business, goals, and current systems. From there, we design a tailored action plan and begin execution within days. No lengthy onboarding processes or unnecessary back-and-forth.',
+          a: 'The first step is to write to us through the contact form. We reply within 24 hours with the next steps: what we need to understand your business, your goals and your current systems. From there, we design a tailored action plan and begin execution within days. No lengthy onboarding processes or unnecessary back-and-forth.',
         },
         {
           q: 'Who will I be working with day-to-day?',
@@ -369,7 +377,8 @@ export const translations = {
       cta:      'Back to Home',
     },
     footer: {
-      tagline:      'We scale your business with digital marketing and AI technology.',
+      tagline:      'One team for your marketing and the systems behind it.',
+      locations:    'Barcelona · Miami — working with clients worldwide, remotely and online.',
       navTitle:     'Navigation',
       contactTitle: 'Contact',
       copy:         '© 2026 ARGO Group. All rights reserved.',
@@ -382,34 +391,34 @@ export const translations = {
 
   es: {
     meta: {
-      title: 'ARGO Group | Crecimiento, Marketing Digital y Tecnología IA',
+      title: 'Group ARGO | Marketing digital de crecimiento y tecnología de IA',
       description:
         'Un partner de crecimiento, no una agencia: marketing digital y tecnología de IA, a medida de tu negocio. Consigue una llamada.',
       pages: {
         '/': {
-          title: 'ARGO Group | Crecimiento, Marketing Digital y Tecnología IA',
+          title: 'Group ARGO | Marketing digital de crecimiento y tecnología de IA',
           description:
             'Un partner de crecimiento, no una agencia: marketing digital y tecnología de IA, a medida de tu negocio. Consigue una llamada.',
         },
         '/about': {
-          title: 'Sobre ARGO Group | Crecimiento, Marketing Digital y Tecnología IA',
+          title: 'Sobre Group ARGO | Marketing digital de crecimiento y tecnología de IA',
           description:
             'ARGO Group es un partner de crecimiento en marketing digital y tecnología de IA, con oficinas en Barcelona y Miami, que atiende clientes en todo el mundo en inglés y español.',
         },
         '/contact': {
-          title: 'Contacta con ARGO Group | Crecimiento, Marketing Digital y Tecnología IA',
+          title: 'Contacta con Group ARGO | Marketing digital de crecimiento y tecnología de IA',
           description:
             'Habla con el equipo de ARGO Group sobre crecimiento, marketing digital y tecnología de IA para tu negocio. Respondemos en 24 horas.',
         },
         '/digital-marketing': {
           title: 'Marketing Digital | Group ARGO',
           description:
-            'Campañas de performance en Meta, Google, TikTok y LinkedIn Ads que convierten inversión publicitaria en ingresos predecibles.',
+            'Orgánico y de pago en un solo plan: contenido, redes sociales, SEO, landings y campañas en Meta, Google, TikTok y LinkedIn Ads.',
         },
         '/ai-technology': {
           title: 'Tecnología IA y Automatización | Group ARGO',
           description:
-            'Automatización e integración del funnel con IA: IA a medida, CRM y captación de leads, automatización completa y reporting de ROI.',
+            'Plataformas internas y software a medida, sistemas automatizados, gestión de bases de datos y CRM, e informes, documentos y facturas automáticos.',
         },
         '/creative-brand': {
           title: 'Creatividad y Activos de Marca | Group ARGO',
@@ -440,6 +449,7 @@ export const translations = {
     },
     nav: {
       services: 'Servicios',
+      how: 'Cómo trabajamos',
       why: 'Por qué ARGO',
       testimonials: 'Testimonios',
       faq: 'FAQ',
@@ -448,37 +458,15 @@ export const translations = {
       cta: 'Contáctanos',
     },
     about: {
-      title: 'Sobre ARGO Group',
-      sub: 'Un partner de crecimiento en marketing digital y tecnología de IA, construido sobre transparencia, rapidez y acceso directo.',
-      intro: [
-        'ARGO Group es un partner de crecimiento en marketing digital y tecnología de IA. Trabajamos con empresas que quieren que su inversión publicitaria se convierta en ingresos predecibles, y mantenemos paid media, automatización del funnel y producción creativa dentro de un mismo equipo, para que estrategia, ejecución y medición nunca queden en compartimentos separados.',
-        'Trabajamos desde las zonas horarias de Miami y Barcelona y atendemos a nuestros clientes online. Eso nos permite trabajar con empresas de todo el mundo y adaptarnos a sus zonas horarias, en inglés y español, sin las transferencias y demoras que suele introducir la distancia.',
-        'No somos una agencia de volumen, y es deliberado. Cada cliente trabaja con un account manager dedicado que conoce la cuenta, y hablas con las personas que hacen el trabajo, no con una capa de intermediarios.',
-      ],
-      sections: [
-        {
-          title: 'Qué hacemos',
-          desc: 'Tres prácticas conectadas: performance marketing en Meta, Google, TikTok y LinkedIn Ads; automatización de procesos con IA que conecta tu CRM, formularios y herramientas internas en un único funnel; y creatividades y activos de marca diseñados para testarse e iterarse dentro de esas campañas.',
-        },
-        {
-          title: 'Cómo trabajamos',
-          desc: 'Visibilidad total sobre qué hace tu presupuesto y por qué. Revisamos las campañas a diario en lugar de reportar una vez al mes, explicamos las decisiones según se toman y recibes pasos concretos de optimización cuando algo necesita mejorar.',
-        },
-        {
-          title: 'Cómo nos comunicamos',
-          desc: 'Acceso directo al equipo de 9:00 a 18:00 tanto en España como en Miami, por WhatsApp, email o Slack. Las preguntas se responden el mismo día, y las consultas nuevas reciben respuesta en menos de 24 horas.',
-        },
-        {
-          title: 'Sobre qué construimos',
-          desc: 'Trabajamos con las plataformas que ya usas y construimos lo que falta: HubSpot y Pipedrive para CRM, n8n y Make para automatización, y capas de integración a medida donde los conectores estándar se quedan cortos.',
-        },
-      ],
+      title: 'Sobre Group ARGO',
+      sub: 'Growth Digital Marketing & AI Technology. Un socio de crecimiento construido sobre transparencia, rapidez y acceso directo.',
       factsTitle: 'De un vistazo',
       facts: [
-        { label: 'Oficinas',            value: 'Barcelona, España · Miami, Florida' },
-        { label: 'Clientes',            value: 'En todo el mundo, online, adaptándonos a sus zonas horarias' },
+        { label: 'Fundadores',          value: 'Hugo y Arnau' },
+        { label: 'Base',                value: 'Barcelona, España · Miami, Florida' },
+        { label: 'Clientes',            value: 'En todo el mundo, en remoto y online' },
         { label: 'Idiomas',             value: 'Inglés y español' },
-        { label: 'Horario',             value: 'Lunes a viernes, 09:00–18:00 (España y Miami)' },
+        { label: 'Horario',             value: 'Lunes a viernes, 09:00–18:00 (Barcelona y Miami)' },
         { label: 'Tiempo de respuesta', value: 'Menos de 24 horas' },
       ],
       ctaTitle: '¿Hablamos?',
@@ -488,31 +476,31 @@ export const translations = {
     hero: {
       badge: 'Barcelona · Miami',
       headline: 'ARGO',
-      sub: 'Escalamos tu negocio con marketing digital y tecnología de IA',
-      sub2: 'Crecimiento, Marketing Digital y Tecnología IA',
-      cta1: 'Habla con Nuestro Equipo',
+      sub: 'Un solo equipo para tu marketing y los sistemas que lo sostienen',
+      sub2: 'Growth Digital Marketing & AI Technology',
+      cta1: 'Contáctanos',
       cta2: 'Servicios',
       stats: [
-        { value: '1-on-1', label: 'Gestión de Cuenta Dedicada' },
-        { value: 'Transparente', label: 'Sin Costes Ocultos ni Sorpresas' },
-        { value: 'Adaptable', label: 'Soluciones Flexibles y Escalables' },
+        { value: 'Directo', label: 'Sin account managers de por medio' },
+        { value: 'Transparente', label: 'Sin costes ocultos ni sorpresas' },
+        { value: 'En todo el mundo', label: 'Desde Barcelona y Miami, online' },
       ],
     },
     argoHero: {
-      ariaLabel: 'Group ARGO — marketing de crecimiento y automatización con IA',
+      ariaLabel: 'Group ARGO — Growth Digital Marketing & AI Technology',
       markLabel: 'Símbolo de Group ARGO',
-      pill: 'Automatización IA · Paid media · CRM',
-      title: 'Marketing de crecimiento',
-      titleAccent: 'y automatización con IA.',
-      lede: 'Paid media, CRM y sistemas de automatización que convierten la inversión publicitaria en ingresos predecibles.',
-      book: 'Agenda una llamada',
-      work: 'Ver nuestro trabajo',
-      locations: 'Barcelona · Miami',
+      pill: 'Growth Digital Marketing & AI Technology',
+      title: 'Un solo equipo para tu marketing',
+      titleAccent: 'y los sistemas que lo sostienen.',
+      lede: 'Un socio de crecimiento, no una agencia: marketing digital y tecnología de IA, a medida de tu negocio.',
+      book: 'Contáctanos',
+      work: 'Nuestros servicios',
+      locations: 'Barcelona · Miami · Clientes en todo el mundo, online',
       scroll: 'Desliza',
       cards: [
-        { label: 'Barcelona · Ads', before: 'ROAS ', gold: '4,2x', after: '', caption: 'Meta + Google · 90 días' },
-        { label: 'Miami · CRM', before: '', gold: '+38%', after: ' leads', caption: 'Pipeline en HubSpot' },
-        { label: 'Londres · IA', before: 'CPL ', gold: '−27%', after: '', caption: 'Flujos con n8n + Make' },
+        { label: 'Barcelona', before: '', gold: 'Directo', after: '', caption: 'Sin account managers de por medio' },
+        { label: 'Miami', before: '', gold: 'Transparente', after: '', caption: 'Sin costes ocultos ni sorpresas' },
+        { label: 'Todo el mundo · Online', before: '', gold: 'En remoto', after: '', caption: 'Clientes en cualquier zona horaria' },
       ],
     },
     services: {
@@ -522,78 +510,92 @@ export const translations = {
       items: [
         {
           title: 'Marketing Digital',
-          subtitle: 'Gestionamos campañas de performance que convierten inversión publicitaria en ingresos predecibles',
+          subtitle: 'Orgánico y de pago, llevados como un solo plan y medidos por lo que cuesta cada cliente, no cada contacto',
           sections: [
             {
-              heading: 'Paid Media y Estrategia de Canales',
-              headline: 'El mensaje correcto, en la plataforma correcta, frente a las personas correctas',
+              heading: 'Paid / Performance',
+              headline: 'Qué canales merecen tu presupuesto, y qué dejar de hacer',
               items: [
-                'Meta Ads, Google Ads, TikTok Ads y LinkedIn Ads; elegimos los canales que encajan con tu audiencia',
-                'Alineación total con tus objetivos de marketing, calendarios comerciales y lanzamientos de producto',
-                'Planes de escalado diseñados para crecer en ingresos sin sacrificar rentabilidad',
+                { name: 'Setup de campañas', desc: 'Meta, Google, TikTok y LinkedIn Ads, elegidos para tus clientes' },
+                { name: 'Medición desde el primer día', desc: 'Para seguir cada contacto hasta la venta' },
+                { name: 'Optimización diaria', desc: 'Presupuesto, audiencias y estructura, ajustados con cada dato' },
+                { name: 'Test continuo', desc: 'Anuncios, mensajes y audiencias, a prueba: gana lo que trae clientes' },
+                { name: 'Contactos de calidad', desc: 'Campañas orientadas a la calidad de los contactos, no a sumar más' },
               ],
             },
             {
-              heading: 'Optimización de Campañas',
-              headline: 'Estamos dentro de tus campañas cada día para que tú no tengas que estarlo',
+              heading: 'Orgánico',
+              headline: 'Que te encuentren y te recuerden, sin pagar por cada clic',
               items: [
-                'Optimización continua de estructura de campañas, segmentación de audiencias y asignación de presupuesto',
-                'Decisiones en tiempo real basadas en datos; sin esperar informes mensuales para arreglar lo que falla',
-                'A/B testing en creatividades, copy y segmentación para encontrar lo que convierte más rápido',
-              ],
-            },
-            {
-              heading: 'Conversión y Crecimiento',
-              headline: 'Más clics no significan nada sin conversiones',
-              items: [
-                'Optimización de la tasa de conversión en formularios, landing pages y flujos de compra',
-                'Estrategias avanzadas de generación de leads enfocadas en calidad, no solo en volumen',
-                'Planificación de crecimiento sostenible con la rentabilidad como norte',
+                { name: 'Creación de contenido', desc: 'Para tus canales, a medida de tu marca y de quienes te compran' },
+                { name: 'Gestión de redes sociales', desc: 'Publicación, comunidad y mantenimiento del día a día' },
+                { name: 'Calendarios de contenido', desc: 'Planificados según tus objetivos y tu calendario comercial' },
+                { name: 'SEO', desc: 'Atrae visitas sin pagar por cada clic' },
+                { name: 'Landings', desc: 'Pensadas para convertir visitas en clientes' },
+                { name: 'Optimización de la web', desc: 'Velocidad, claridad y conversión' },
               ],
             },
           ],
+          howWeOperate: {
+            title: 'Cómo trabajamos en marketing digital',
+            items: [
+              { title: 'Diagnosticar', desc: 'Objetivos, oferta, canales y fugas' },
+              { title: 'Planificar', desc: 'Qué canales primero, orgánico y pago' },
+              { title: 'Lanzar', desc: 'Contenido, landings y campañas' },
+              { title: 'Optimizar', desc: 'A diario, medido en clientes, no clics' },
+            ],
+          },
         },
         {
           title: 'Tecnología IA y Automatización',
-          subtitle: 'Automatización avanzada del funnel con IA e integración de sistemas',
+          subtitle: 'Tu metodología, convertida en software',
           sections: [
             {
-              heading: 'Integración IA a Medida',
-              headline: 'Conectamos tu stack tecnológico a nivel de infraestructura',
+              heading: 'Plataformas internas y software a medida',
+              headline: 'Para lo que ningún software del mercado cubre',
               items: [
-                'Diseñamos la capa de integración entre tus plataformas.',
-                'Procesamiento Inteligente de Documentos y Datos: extrae, valida y enruta datos estructurados.',
-                'Configuración de Apps y Plataformas: Desde configurar tu stack actual hasta construir lo que aún no existe.',
+                { name: 'Apps a medida', desc: 'Hechas para la forma en que trabaja tu negocio' },
+                { name: 'Plataformas internas', desc: 'Tus departamentos, procesos y datos en un solo sitio' },
+                { name: 'Metodologías propias', desc: 'Sistemas internos diseñados a partir de tu negocio, no de una plantilla' },
               ],
             },
             {
-              heading: 'CRM y Captación de Leads',
-              headline: 'Cada lead capturado, sincronizado y listo para cerrar',
+              heading: 'Sistemas automatizados',
+              headline: 'Menos pasos manuales, del primer clic a la venta cerrada',
               items: [
-                'Sincronización instantánea con HubSpot, Pipedrive y más; cero leads perdidos',
-                'Alertas en tiempo real para que tu equipo actúe en el momento exacto',
-                'Puntuación y segmentación automática de leads desde el primer día',
+                { name: 'Automatización de procesos', desc: 'Flujos de principio a fin, sin nadie copiando datos a mano' },
+                { name: 'Herramientas conectadas', desc: 'Con n8n, Make e integraciones a medida; sin datos atascados' },
+                { name: 'IA dentro del trabajo', desc: 'Lee, redacta, ordena y archiva dentro del trabajo, no aparte' },
               ],
             },
             {
-              heading: 'Automatización Full-Funnel',
-              headline: 'Del primer clic al cierre; completamente automatizado',
+              heading: 'Gestión de bases de datos y CRM',
+              headline: 'Cada cliente y cada contacto, en orden y al día',
               items: [
-                'Flujos end-to-end: captación, nurturing y entrega del lead sin pasos manuales',
-                'Personalización instantánea: la IA genera contenido y comunicaciones a escala',
-                'Sistemas conectados: todo tu stack tecnológico trabajando junto, automáticamente',
+                { name: 'CRM automático', desc: 'Gestión de clientes en HubSpot, Pipedrive y otros' },
+                { name: 'Seguimiento de contactos', desc: 'Puntuados y ordenados, para saber a quién llamar primero' },
+                { name: 'Datos de clientes limpios', desc: 'Conectados, sin duplicados y sin hojas de cálculo de mano en mano' },
               ],
             },
             {
-              heading: 'Reporting y Visibilidad del ROI',
-              headline: 'Siempre sabrás qué funciona y por qué',
+              heading: 'Datos, reporting y documentos',
+              headline: 'Informes, documentos y facturas que se preparan solos',
               items: [
-                'Dashboards personalizados: vista en tiempo real de inversión, coste por lead y ROI',
-                'Un informe centralizado para todas tus métricas; sin más hojas de cálculo',
-                'Analítica predictiva para anticipar el crecimiento y ajustar la estrategia a tiempo',
+                { name: 'Informes automáticos', desc: 'Paneles en directo: inversión, coste por cliente, ingresos' },
+                { name: 'Documentación', desc: 'Generada y archivada a partir de los datos que ya tienes' },
+                { name: 'Facturación', desc: 'Facturas creadas, enviadas y controladas sin trabajo manual' },
               ],
             },
           ],
+          howWeOperate: {
+            title: 'Cómo trabajamos en IA y software',
+            items: [
+              { title: 'Entender', desc: 'Cómo trabajáis y dónde se pierde tiempo' },
+              { title: 'Diseñar', desc: 'Tu metodología, no una plantilla' },
+              { title: 'Construir', desc: 'Sobre tus herramientas, o desde cero' },
+              { title: 'Mantener y mejorar', desc: 'Se ajusta cuando cambia tu negocio' },
+            ],
+          },
         },
         {
           title: 'Creatividad y Activos de Marca',
@@ -603,57 +605,67 @@ export const translations = {
               heading: 'Bases de Marca que Convierten',
               headline: 'Una marca consistente es la base de cualquier campaña que escala',
               items: [
-                'Logo, sistemas de color, tipografía y guía de marca diseñados para rendir en canales de pago y orgánicos',
-                'Identidad visual concebida con la conversión en mente',
-                'Bases de marca que hacen que cada anuncio, landing page y publicación sea reconocible al instante',
+                { name: 'Logo y guía de marca', desc: 'Color y tipografía que rinden en canales de pago y orgánicos' },
+                { name: 'Identidad visual', desc: 'Concebida con la conversión en mente' },
+                { name: 'Bases reconocibles', desc: 'Cada anuncio, landing page y publicación, reconocible al instante' },
               ],
             },
             {
               heading: 'Creatividades para Paid Media',
               headline: 'Creatividades diseñadas para ser testadas, iteradas y optimizadas',
               items: [
-                'Creatividades estáticas y en movimiento adaptadas a cada plataforma de Ads',
-                'Visuales alineados con la audiencia, la fase del funnel y el objetivo de campaña',
-                'Proceso de diseño iterativo integrado con nuestro equipo de performance: creamos, testamos y apostamos por lo que funciona',
+                { name: 'Creatividades estáticas y en movimiento', desc: 'Adaptadas a cada plataforma de Ads' },
+                { name: 'Visuales alineados', desc: 'Con la audiencia, la fase del funnel y el objetivo de campaña' },
+                { name: 'Diseño iterativo', desc: 'Con performance: creamos, testamos y apostamos por lo que funciona' },
               ],
             },
             {
               heading: 'Redes Sociales y Diseño Web',
               headline: 'Las superficies digitales donde tu audiencia se encuentra con tu marca',
               items: [
-                'Configuración del feed de redes sociales y contenido de lanzamiento alineado con tu guía de marca',
-                'Diseño o rediseño de web enfocado en claridad, velocidad y conversión',
-                'Integración fluida con nuestros flujos de performance marketing y automatización',
+                { name: 'Feed de redes sociales', desc: 'Configuración y contenido de lanzamiento según tu guía de marca' },
+                { name: 'Diseño web', desc: 'Diseño o rediseño enfocado en claridad, velocidad y conversión' },
+                { name: 'Integración fluida', desc: 'Con nuestros flujos de performance marketing y automatización' },
               ],
             },
             {
               heading: 'Servicios Creativos Adicionales',
               headline: 'Todo lo demás que tu marca pueda necesitar en el camino',
               items: [
-                'Diseño de merchandising, editorial y packaging',
-                'Creatividades personalizadas para lanzamientos de producto, eventos y campañas de temporada',
-                'Trabajo creativo por proyecto adaptado a objetivos comerciales específicos',
+                { name: 'Diseño de producto e impresión', desc: 'Merchandising, editorial y packaging' },
+                { name: 'Creatividades de lanzamiento', desc: 'Para lanzamientos de producto, eventos y campañas de temporada' },
+                { name: 'Trabajo por proyecto', desc: 'Trabajo creativo adaptado a objetivos comerciales específicos' },
               ],
             },
           ],
         },
       ],
     },
+    methodology: {
+      eyebrow: 'Nuestro método',
+      title: 'Cómo trabajamos',
+      accent: 'trabajamos',
+      items: [
+        { title: 'Diagnosticar',      desc: 'Tus objetivos, y después oferta, embudo, medición y fugas de dinero. Preguntamos mucho.' },
+        { title: 'Decidir y diseñar', desc: 'Qué canales merecen presupuesto, qué cambiar y qué dejar. Si no son los anuncios, lo decimos.' },
+        { title: 'Construir',         desc: 'Campañas, web, contenido y los sistemas que hay debajo, en el orden que pide la decisión.' },
+        { title: 'Medir y optimizar', desc: 'Medimos en clientes, cada contacto hasta la venta. El plan cambia con tu negocio.' },
+      ],
+    },
     whyArgo: {
-      eyebrow: 'Nuestra diferencia',
-      title: '¿Por qué ARGO?',
-      accent: 'ARGO',
+      eyebrow: 'Por qué ARGO',
+      title: 'Un socio de crecimiento, no una agencia',
+      accent: 'agencia',
       intro: [
-        'A diferencia de las agencias tradicionales, funcionamos como un partner cercano y flexible, profundamente comprometido con tu éxito.',
-        'La comunicación directa no es opcional; es esencial. Las preguntas y los desafíos surgen a lo largo de cualquier proyecto, y abordarlos rápidamente marca la diferencia.',
-        'Trabajamos desde las zonas horarias de Miami y Barcelona y atendemos online a clientes de todo el mundo, adaptándonos a la zona horaria de cada uno.',
+        'Asumimos el rol de CMO y mantenemos en un mismo equipo el marketing digital (orgánico y de performance), los sistemas de IA y el software a medida, y la marca. Hugo y Arnau lideran ARGO por igual, Arnau en IA y sistemas, Hugo en marketing y marca, y hablas directamente con ellos. Desde Barcelona y Miami, trabajamos en remoto con clientes de todo el mundo, en inglés y español.',
       ],
       items: [
-        { title: 'Ejecución Ágil y Eficiente',        desc: 'Nos integramos como una extensión de tu equipo; avanzando rápido, eliminando burocracia y entregando con precisión.' },
-        { title: 'Performance Creativo',               desc: 'La creatividad impulsa nuestra estrategia. Scripting sólido, conocimiento profundo de la audiencia y campañas diseñadas para convertir.' },
-        { title: 'Transparencia y Control de Datos',  desc: 'Visibilidad total de tus KPIs en todo momento. Siempre sabrás qué funciona, qué no y cuál es el siguiente paso.' },
-        { title: 'Infraestructura Escalable',         desc: 'Sistemas diseñados para crecer contigo; estables, eficientes y preparados para lo que venga.' },
+        { title: 'Comunicación directa y activa',          desc: 'Hablas con quienes hacen el trabajo, sin intermediarios. Te escribimos cuando detectamos algo.' },
+        { title: 'Un plan hecho para ti',                  desc: 'Sin paquetes cerrados: cada plan parte de tus objetivos y se adapta a tu negocio.' },
+        { title: 'Nada oculto',                            desc: 'Ves nuestros mismos números: inversión, coste por cliente, ingresos. Qué funciona, qué no y qué sigue.' },
+        { title: 'El rol de CMO, no una lista de tareas',  desc: 'Nos implicamos en tu crecimiento como socios, no como proveedores. El plan cambia con tu negocio.' },
       ],
+      more: 'Más sobre nosotros',
     },
     testimonials: {
       eyebrow: 'Casos reales',
@@ -677,7 +689,7 @@ export const translations = {
       items: [
         {
           q: '¿Cómo funciona el proceso de incorporación?',
-          a: 'Empezamos con una llamada de descubrimiento para entender tu negocio, objetivos y sistemas actuales. A partir de ahí, diseñamos un plan de acción personalizado y comenzamos la ejecución en pocos días. Sin procesos de incorporación largos ni idas y venidas innecesarias.',
+          a: 'El primer paso es escribirnos a través del formulario de contacto. Te respondemos en menos de 24 horas con los siguientes pasos: qué necesitamos para entender tu negocio, tus objetivos y tus sistemas actuales. A partir de ahí, diseñamos un plan de acción personalizado y comenzamos la ejecución en pocos días. Sin procesos de incorporación largos ni idas y venidas innecesarias.',
         },
         {
           q: '¿Con quién trabajaré en el día a día?',
@@ -742,7 +754,8 @@ export const translations = {
       cta:      'Volver al Inicio',
     },
     footer: {
-      tagline:      'Escalamos tu negocio con marketing digital y tecnología de IA.',
+      tagline:      'Un solo equipo para tu marketing y los sistemas que lo sostienen.',
+      locations:    'Barcelona · Miami — trabajamos con clientes de todo el mundo, en remoto y online.',
       navTitle:     'Navegación',
       contactTitle: 'Contacto',
       copy:         '© 2026 ARGO. Todos los derechos reservados.',

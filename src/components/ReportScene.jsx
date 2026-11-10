@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react'
 
 // Pages of the monthly client report, as the real one is laid out
-// (argo-universo/05-clientes/reportes/plantilla/report.html: Cormorant titles,
-// DM Sans labels, serif body, gold rules). The client is made up and the
+// (argo-universo/05-clientes/reportes/plantilla/report.html), set here in the
+// brand's typefaces: Playfair Display titles and figures, Inter text and labels,
+// gold rules (argo.css, .rp). The client is made up and the
 // figures are illustrative; everything that moves (numbers counting, bars
 // growing, rows arriving) starts when the scene becomes active.
 
@@ -57,7 +58,7 @@ function ChannelsPage({ active }) {
   const max = 1200
   return (
     <Header>
-      <div className="sec"><span className="n">02</span><span className="t">Paid media · <i>by channel</i></span></div>
+      <div className="sec"><span className="t">Paid media · <i>by channel</i></span></div>
       <div className="kpis tight">
         <Kpi value={3240} prefix="€" label="Ad spend" detail="Meta and Google" active={active} />
         <Kpi value={86} label="Leads" detail="Form and WhatsApp" delta="22% vs Sep" active={active} />
@@ -100,7 +101,7 @@ function AdsPage() {
   ]
   return (
     <Header>
-      <div className="sec"><span className="n">02</span><span className="t">Ad <i>by ad</i></span></div>
+      <div className="sec"><span className="t">Ad <i>by ad</i></span></div>
       <p className="lead">Four ads ran in {PERIOD}. One of them brought more than a third of the month's leads at the lowest cost, so it takes the budget from here.</p>
       <table>
         <thead><tr><th>Ad</th><th className="r">Result</th><th className="r">Cost</th></tr></thead>
@@ -134,7 +135,7 @@ function FunnelPage() {
   const steps = [['Website visits', 4120, ''], ['Started the form', 312, '7.6%'], ['Leads', 86, '27.6%'], ['Qualified', 54, '62.8%'], ['Booked a call', 31, '57.4%']]
   return (
     <Header>
-      <div className="sec"><span className="n">05</span><span className="t">Website traffic <i>&amp; leads</i></span></div>
+      <div className="sec"><span className="t">Website traffic <i>&amp; leads</i></span></div>
       <p className="lead">Data from GA4 and the CRM, 1–31 October. Every lead is traced from the ad it clicked to whether the clinic booked the call.</p>
       <div className="charts c2">
         <div className="chart">
@@ -175,7 +176,7 @@ function FunnelPage() {
 function SummaryPage({ active }) {
   return (
     <Header>
-      <div className="sec"><span className="n">01</span><span className="t">The month <i>at a glance</i></span></div>
+      <div className="sec"><span className="t">The month <i>at a glance</i></span></div>
       <p className="lead">Paid media, the website and the Google profile, in one place, with the same numbers the CRM has.</p>
       <div className="label">Paid media · Meta and Google</div>
       <div className="kpis tight">
@@ -207,16 +208,24 @@ export default function ReportScene({ page, active = true }) {
   const frame = useRef(null)
   const sheet = useRef(null)
 
-  // In the sticky panel the page is taller than the frame: it is read slowly,
-  // top to bottom and back (--over, argo.css). Inline it shows whole.
+  // The page is shown whole: scaled down to fit its frame (never up), and
+  // centred in it. Measured again whenever the frame or the page changes size.
   useEffect(() => {
-    const measure = () => {
-      const over = sheet.current.offsetHeight - frame.current.clientHeight
-      frame.current.style.setProperty('--over', `${Math.max(0, over)}px`)
+    const fit = () => {
+      const box = frame.current
+      const page = sheet.current
+      const cs = getComputedStyle(box)
+      const availW = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)
+      const availH = box.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom)
+      if (!page.offsetHeight || availH <= 0) return
+      const scale = Math.min(1, availW / page.offsetWidth, availH / page.offsetHeight)
+      page.style.setProperty('--fit', scale.toFixed(4))
+      page.style.setProperty('--dy', `${Math.max(0, (availH - page.offsetHeight * scale) / 2).toFixed(1)}px`)
     }
-    measure()
-    const observer = new ResizeObserver(measure)
+    fit()
+    const observer = new ResizeObserver(fit)
     observer.observe(frame.current)
+    observer.observe(sheet.current)
     return () => observer.disconnect()
   }, [])
 

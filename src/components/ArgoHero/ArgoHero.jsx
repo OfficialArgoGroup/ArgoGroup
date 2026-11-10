@@ -46,7 +46,7 @@ const DEFAULT_COPY = {
  */
 export default function ArgoHero({
   links = DEFAULT_LINKS,
-  bookHref = "#contacto",
+  bookHref = "#contacto", // null: no booking button
   workHref = "#casos",
   showNav = true, // set false if the site already has a global header
   cards = DEFAULT_CARDS,
@@ -77,6 +77,7 @@ export default function ArgoHero({
   const cardRefs = useRef([]);
   const burgerRef = useRef(null);
   const closeRef = useRef(null);
+  const sceneRef = useRef(null);
 
   // Mount the canvas engine once. Everything inside runs only in the browser,
   // so this component is safe for SSR/SSG (nothing touches window at render time).
@@ -95,9 +96,25 @@ export default function ArgoHero({
       { rotationSpeed, cards, showCards: true, theme }
     );
     scene.start();
-    return () => scene.destroy();
+    sceneRef.current = scene;
+    // The cards park beside the headline's widest line, measured on resize and
+    // when document.fonts is first ready. A face that finishes loading later
+    // (the bold headline) changes that width: measure again then too.
+    const remeasure = () => scene.resize();
+    if (document.fonts) document.fonts.addEventListener("loadingdone", remeasure);
+    return () => {
+      if (document.fonts) document.fonts.removeEventListener("loadingdone", remeasure);
+      sceneRef.current = null;
+      scene.destroy();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // A new headline (language switch) has a new width: the cards follow it.
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => sceneRef.current && sceneRef.current.resize());
+    return () => cancelAnimationFrame(frame);
+  }, [copy.title, copy.titleAccent]);
 
   // Mobile menu: lock page scroll, close on Escape, move focus in and back out.
   useEffect(() => {
@@ -147,9 +164,11 @@ export default function ArgoHero({
                 ))}
               </ul>
               <div className="ah-nav-right ah-in ah-d6">
-                <a className="ah-btn-sm" href={bookHref}>
-                  {copy.book}
-                </a>
+                {bookHref && (
+                  <a className="ah-btn-sm" href={bookHref}>
+                    {copy.book}
+                  </a>
+                )}
                 <button
                   ref={burgerRef}
                   className="ah-burger"
@@ -227,9 +246,11 @@ export default function ArgoHero({
             </p>
 
             <div className="ah-ctas ah-in ah-d5">
-              <a className="ah-btn ah-btn-gold" href={bookHref}>
-                {copy.book}
-              </a>
+              {bookHref && (
+                <a className="ah-btn ah-btn-gold" href={bookHref}>
+                  {copy.book}
+                </a>
+              )}
               <a className="ah-btn ah-btn-glass" href={workHref}>
                 {copy.work}
               </a>
@@ -268,9 +289,11 @@ export default function ArgoHero({
           </ul>
           <div className="ah-menu-foot">
             <p className="ah-label">{copy.locations}</p>
-            <a className="ah-btn ah-btn-gold" href={bookHref} onClick={() => setMenuOpen(false)}>
-              {copy.book}
-            </a>
+            {bookHref && (
+              <a className="ah-btn ah-btn-gold" href={bookHref} onClick={() => setMenuOpen(false)}>
+                {copy.book}
+              </a>
+            )}
           </div>
         </div>
       )}

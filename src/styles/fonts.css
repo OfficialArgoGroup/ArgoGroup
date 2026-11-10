@@ -1,13 +1,16 @@
-/* The site's two typefaces, served from this domain (public/fonts) instead of
-   Google Fonts, so loading a page sends nothing to a third party before the
-   visitor chooses on the cookie banner. Same files and weights Google served
-   (latin subset, variable weight; licences in public/fonts/OFL-*.txt). Not
-   content-hashed: give a changed font a new file name. */
+/* The brand's two typefaces (argo-universo/00-cerebro/marca/BRAND.md §4, the
+   same as the planning platform): Playfair Display for headings, Inter for
+   everything else. Served from this domain (public/fonts) instead of Google
+   Fonts, so loading a page sends nothing to a third party before the visitor
+   chooses on the cookie banner. Only the platform's weights are declared:
+   Playfair 600/700, Inter 400/500/600/700 (latin subset, variable files;
+   licences in public/fonts/OFL-*.txt). Not content-hashed: give a changed
+   font a new file name. */
 
 @font-face {
   font-family: 'Inter';
   font-style: normal;
-  font-weight: 300 700;
+  font-weight: 400 700;
   font-display: swap;
   src: url('/fonts/inter-latin-wght-normal.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
@@ -16,19 +19,8 @@
 @font-face {
   font-family: 'Playfair Display';
   font-style: normal;
-  font-weight: 600 800;
+  font-weight: 600 700;
   font-display: swap;
   src: url('/fonts/playfair-display-latin-wght-normal.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* The italic, for the second line of the home hero (ArgoHero). Nothing else on
-   the site sets Playfair in italic, so this face changes no other text. */
-@font-face {
-  font-family: 'Playfair Display';
-  font-style: italic;
-  font-weight: 400 900;
-  font-display: swap;
-  src: url('/fonts/playfair-display-latin-wght-italic.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }

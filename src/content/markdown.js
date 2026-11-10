@@ -28,12 +28,17 @@ function frontMatter(path, meta) {
 function homeBody(t) {
   const blocks = []
 
+  const h = t.argoHero
   blocks.push('## Overview')
-  blocks.push(`${t.hero.sub}. ${t.hero.sub2}. Offices in Barcelona and Miami.`)
-  blocks.push(t.hero.stats.map((s) => `- **${s.value}** — ${s.label}`).join('\n'))
+  blocks.push(`${h.title} ${h.titleAccent} ${h.lede}`)
+  blocks.push(`${h.pill}. ${h.locations}.`)
+  blocks.push(h.cards.map((card) => `- **${card.gold}** — ${card.caption}`).join('\n'))
 
   blocks.push(`## ${t.services.title}`)
   blocks.push(t.services.items.map((service, index) => `- [${service.title}](${canonicalFor(SERVICE_PATHS[index])})`).join('\n'))
+
+  blocks.push(`## ${t.methodology.title}`)
+  blocks.push(t.methodology.items.map((item) => `### ${item.title}\n\n${item.desc}`).join('\n\n'))
 
   blocks.push(`## ${t.whyArgo.title}`)
   blocks.push(t.whyArgo.intro.join('\n\n'))
@@ -59,11 +64,9 @@ function aboutBody(t) {
   return [
     `## ${a.title}`,
     a.sub,
-    ...a.intro,
     `## ${t.whyArgo.title}`,
     ...t.whyArgo.intro,
     ...t.whyArgo.items.map((item) => `### ${item.title}\n\n${item.desc}`),
-    ...a.sections.map((section) => `### ${section.title}\n\n${section.desc}`),
     `### ${a.factsTitle}`,
     a.facts.map((fact) => `- **${fact.label}:** ${fact.value}`).join('\n'),
     `### ${a.ctaTitle}`,
@@ -80,8 +83,11 @@ function serviceBody(index) {
       ...service.sections.flatMap((section) => [
         `### ${section.heading}`,
         section.headline,
-        section.items.map((item) => `- ${item}`).join('\n'),
+        section.items.map((item) => `- **${item.name}**: ${item.desc}`).join('\n'),
       ]),
+      ...(service.howWeOperate
+        ? [`### ${service.howWeOperate.title}`, service.howWeOperate.items.map((item, i) => `${i + 1}. **${item.title}** — ${item.desc}`).join('\n')]
+        : []),
       `### ${t.about.ctaTitle}`,
       `${t.about.ctaSub} ${canonicalFor('/contact')}`,
     ]

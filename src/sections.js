@@ -3,6 +3,7 @@
 // drift apart.
 export const SECTIONS = [
   { id: 'services', key: 'services' },
+  { id: 'how-we-operate', key: 'how' },
   { id: 'why-argo', key: 'why' },
   { id: 'faq', key: 'faq' },
 ]

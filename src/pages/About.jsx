@@ -14,26 +14,12 @@ export default function About() {
           <h1 className="section-title">{a.title}</h1>
           <p className="section-sub">{a.sub}</p>
         </Reveal>
-
-        <div className="about-intro">
-          {a.intro.map((paragraph, index) => (
-            <Reveal as="p" delay={index * 90} key={paragraph}>{paragraph}</Reveal>
-          ))}
-        </div>
       </div>
 
+      {/* Why ARGO and About are one section: the same one the home shows. */}
       <WhyArgo />
 
       <div className="container">
-        {/* Same card treatment as the Why ARGO grid. */}
-        <div className="about-cards">
-          {a.sections.map((section, index) => (
-            <Reveal className="why-card" delay={index * 110} key={section.title}>
-              <h2>{section.title}</h2>
-              <p>{section.desc}</p>
-            </Reveal>
-          ))}
-        </div>
 
         <Reveal className="facts">
           <h2>{a.factsTitle}</h2>

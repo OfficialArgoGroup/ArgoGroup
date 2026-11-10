@@ -147,7 +147,29 @@ test('the homepage only names the services, and each name leads to its own page'
     assert.ok(html.includes(`href="${SERVICE_PATHS[index]}"`), `${service.title} must link to ${SERVICE_PATHS[index]}`)
     assert.ok(!text.includes(service.sections[0].heading), `the homepage must not explain ${service.title}`)
   })
-  assert.ok(!html.includes('id="how-we-operate"'), 'How We Operate is gone')
+})
+
+test('the homepage carries only hero, services, how we operate, why ARGO, FAQ and the form, in that order', () => {
+  const html = htmlFor('/')
+  const order = ['id="services"', 'id="how-we-operate"', 'id="why-argo"', 'id="faq"', 'id="contact"']
+  const positions = order.map((marker) => html.indexOf(marker))
+  positions.forEach((position, index) => assert.ok(position > -1, `the homepage must have ${order[index]}`))
+  assert.deepEqual([...positions].sort((a, b) => a - b), positions, 'homepage sections are out of order')
+  assert.ok(!html.includes('ah-btn ah-btn-gold'), 'the hero must not offer the booking call')
+})
+
+test('Digital Marketing is split into Paid and Organic, and AI into its four areas', () => {
+  const [marketing, ai] = translations.en.services.items
+  assert.deepEqual(marketing.sections.map((s) => s.heading), ['Paid / Performance', 'Organic'])
+  assert.equal(ai.sections.length, 4)
+  const branding = translations.en.services.items[2]
+  assert.ok(!branding.howWeOperate, 'Branding has no How we operate box')
+  for (const [index, service] of [marketing, ai].entries()) {
+    const html = htmlFor(SERVICE_PATHS[index])
+    assert.ok(/class="[^"]*method-box/.test(html), `${SERVICE_PATHS[index]} must carry its compact How we operate`)
+    assert.ok(visibleText(html).includes(service.howWeOperate.items[0].desc), `${SERVICE_PATHS[index]} must carry its own steps`)
+  }
+  assert.ok(!/class="[^"]*method-box/.test(htmlFor(SERVICE_PATHS[2])), 'Branding must not carry How we operate')
 })
 
 test('the three service landings can be reached from the menu of every page', () => {
@@ -168,16 +190,20 @@ test('every service page carries its sections in the raw HTML, in both markup an
     assert.ok(text.includes(service.title), `${path} must name the service`)
     for (const section of service.sections) {
       assert.ok(text.includes(section.heading), `${path} must carry ${section.heading}`)
-      assert.ok(text.includes(section.items[0]), `${path} must carry the items of ${section.heading}`)
+      for (const item of section.items) {
+        assert.ok(text.includes(item.name) && text.includes(item.desc), `${path} must carry "${item.name}" in ${section.heading}`)
+      }
       assert.ok(markdown.includes(section.heading), `${path} markdown must carry ${section.heading}`)
     }
   })
 })
 
-test('the about page holds Why ARGO and says how the time zones work', () => {
+test('the about page holds Why ARGO and says where we work from and how', () => {
   const text = visibleText(htmlFor('/about'))
   assert.ok(text.includes(translations.en.whyArgo.items[0].title), '/about must carry Why ARGO')
-  assert.ok(text.includes('Miami and Barcelona time zones'), '/about must name the time zones')
+  for (const fragment of ['Barcelona and Miami', 'remotely', 'all over the world']) {
+    assert.ok(text.includes(fragment), `/about must say ${fragment}`)
+  }
   assert.ok(read('about.md').includes(translations.en.whyArgo.items[0].title), 'about.md must carry Why ARGO')
 })
 
@@ -331,4 +357,46 @@ test('404.md is the same recovery information as markdown', () => {
   assert.ok(markdown.includes(`${site.origin}/llms.txt`))
   assert.ok(markdown.includes(`${site.origin}/sitemap.xml`))
   assert.ok(markdown.includes(canonicalFor('/contact')))
+})
+
+// ── Service landings: text on the left, visual on the right ────────────────
+// A fixed design rule (README, "Landings de servicios"): on desktop the text
+// column comes before the visual in every block of every service landing, and
+// nothing in the styles may swap them; stacked (phones), each block's text
+// comes first and its visual under it.
+
+test('service landings: the text column comes before the visual, in every block', () => {
+  for (const path of SERVICE_PATHS) {
+    const html = htmlFor(path)
+    const text = html.indexOf('class="svc-text"')
+    const visual = html.indexOf('class="svc-visual"')
+    assert.ok(text > -1 && visual > -1, `${path} must have the text and the visual columns`)
+    assert.ok(text < visual, `${path}: the text column must come before the visual`)
+
+    const blocks = html.split('class="svc-section').slice(1)
+    assert.ok(blocks.length > 0, `${path} must have blocks`)
+    blocks.forEach((block, index) => {
+      const items = block.indexOf('class="svc-items"')
+      const inline = block.indexOf('class="svc-visual-inline"')
+      assert.ok(items > -1 && inline > items, `${path}, block ${index + 1}: stacked, the text must come before its visual`)
+    })
+  }
+})
+
+test('service landings: no style swaps the text and the visual', () => {
+  const css = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'styles', 'argo.css'), 'utf8')
+  const rules = css.replace(/\/\*[\s\S]*?\*\//g, '').match(/[^{}]+\{[^{}]*\}/g) || []
+  const swapping = /(^|[\s;])(order|grid-column|grid-area|grid-template-areas|direction)\s*:|row-reverse|column-reverse|\bdense\b/
+  for (const rule of rules) {
+    const [selector, body] = rule.split('{')
+    if (!/\.svc-(grid|text|visual)\b/.test(selector)) continue
+    assert.ok(!swapping.test(body), `this rule could swap the text and the visual: ${selector.trim()}`)
+  }
+})
+
+test('service landings do not list the other services at the foot', () => {
+  for (const path of SERVICE_PATHS) {
+    assert.ok(!htmlFor(path).includes('class="service-names"'), `${path} must not carry the list of services`)
+  }
+  assert.ok(htmlFor('/').includes('class="service-names"'), 'the home still lists the services')
 })

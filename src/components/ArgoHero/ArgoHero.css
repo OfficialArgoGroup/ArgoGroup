@@ -1,6 +1,6 @@
 /* ArgoHero — scoped styles. Every class is prefixed "ah-" so nothing collides with
-   Tailwind or the rest of the site. Fonts: Playfair Display 400 (+ italic) and
-   Inter 300/400/500 must be loaded by the site (see INTEGRATION.md). */
+   Tailwind or the rest of the site. Fonts: Playfair Display 700 and Inter
+   400/500, loaded by the site (src/styles/fonts.css; no italic). */
 
 .ah-track {
   /* The scroll runway. The hero stays pinned (sticky) for this whole height while
@@ -52,13 +52,9 @@
 @keyframes ah-sweep { 0% { transform: translateX(-300px) skewX(-22deg); } 22%, 100% { transform: translateX(560px) skewX(-22deg); } }
 .ah-pill { display: inline-flex; align-items: center; height: 34px; padding: 0 18px; border: 1px solid rgba(212, 175, 55, 0.6); border-radius: 999px; font: 500 11.5px/1 Inter, system-ui, sans-serif; letter-spacing: 0.3em; text-transform: uppercase; color: #d4af37; margin-bottom: 34px; white-space: nowrap; }
 /* 90px max: at 112px "Growth-driven marketing" is ~1260px wide and breaks the 1024px measure */
-.ah-title { margin: 0 0 28px; font-family: "Playfair Display", Georgia, serif; font-weight: 400; font-size: clamp(48px, 5.9vw, 90px); line-height: 0.95; letter-spacing: -0.015em; color: #f2ede4; text-wrap: balance; }
-.ah-title em { font-style: italic; font-weight: 400; }
-/* The site declares its upright Playfair face at 600–800 only (src/styles/fonts.css),
-   so other text keeps its SemiBold; a weight of 400 is clamped up to 600 by that
-   range. The file itself runs 400–900, so the hero asks the axis directly. */
-.ah-title, .ah-card-v, .ah-menu-links a { font-variation-settings: "wght" 400; }
-.ah-lede { margin: 0 0 44px; max-width: 576px; font: 300 clamp(16px, 1.25vw, 18px)/1.6 Inter, system-ui, sans-serif; color: rgba(242, 237, 228, 0.75); }
+.ah-title { margin: 0 0 28px; font-family: "Playfair Display", Georgia, serif; font-weight: 700; font-size: clamp(36px, 3.8vw, 58px); line-height: 1.06; letter-spacing: -0.01em; color: #f2ede4; text-wrap: balance; }
+.ah-title em { font-style: normal; font-weight: inherit; }
+.ah-lede { margin: 0 0 44px; max-width: 576px; font: 400 clamp(16px, 1.25vw, 18px)/1.6 Inter, system-ui, sans-serif; color: rgba(242, 237, 228, 0.75); }
 .ah-ctas { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 .ah-btn { display: inline-flex; align-items: center; justify-content: center; height: 54px; padding: 0 32px; border-radius: 999px; font: 500 15px/1 Inter, system-ui, sans-serif; text-decoration: none; letter-spacing: 0.01em; transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), background 0.3s, border-color 0.3s, color 0.3s; }
 .ah-btn:hover { transform: translateY(-2px); }
@@ -69,9 +65,9 @@
 
 /* floating data cards (positioned every frame by GlobeScene) */
 .ah-card { position: absolute; left: 0; top: 0; z-index: 15; background: #1a1a1a; border: 1px solid rgba(212, 175, 55, 0.22); padding: 12px 16px 13px 14px; opacity: 0; pointer-events: none; will-change: transform, opacity; }
-.ah-card-k { display: block; font: 500 10px/1 Inter, system-ui, sans-serif; letter-spacing: 0.26em; white-space: nowrap; text-transform: uppercase; color: #9ca3af; margin-bottom: 8px; }
-.ah-card-v { display: block; font: 400 22px/1 "Playfair Display", Georgia, serif; color: #f2ede4; white-space: nowrap; }
-.ah-card-v b { font-weight: 400; color: #d4af37; }
+.ah-card-k { display: block; font: 500 10px/1 Inter, system-ui, sans-serif; letter-spacing: 0.3em; white-space: nowrap; text-transform: uppercase; color: #9ca3af; margin-bottom: 8px; }
+.ah-card-v { display: block; font: 700 22px/1 "Playfair Display", Georgia, serif; color: #f2ede4; white-space: nowrap; }
+.ah-card-v b { font-weight: inherit; color: #d4af37; }
 .ah-card-c { display: block; margin-top: 8px; font: 400 11px/1 Inter, system-ui, sans-serif; color: rgba(242, 237, 228, 0.5); white-space: nowrap; }
 
 /* footer line */
@@ -94,9 +90,9 @@
 .ah-menu { position: fixed; inset: 0; z-index: 100; background: rgba(13, 13, 13, 0.92); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); display: flex; flex-direction: column; padding: 0 clamp(24px, 3.3vw, 48px) 48px; color: #f2ede4; font-family: Inter, system-ui, sans-serif; }
 .ah-menu-head { height: 84px; display: flex; align-items: center; justify-content: space-between; }
 .ah-menu-head img { height: 22px; width: auto; }
-.ah-menu-close { width: 44px; height: 44px; border: 0; background: transparent; color: #f2ede4; font: 300 30px/1 Inter, system-ui, sans-serif; cursor: pointer; padding: 0; }
+.ah-menu-close { width: 44px; height: 44px; border: 0; background: transparent; color: #f2ede4; font: 400 30px/1 Inter, system-ui, sans-serif; cursor: pointer; padding: 0; }
 .ah-menu-links { list-style: none; margin: auto 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.ah-menu-links a { display: block; font: 400 clamp(34px, 8vw, 48px)/1.2 "Playfair Display", Georgia, serif; color: #f2ede4; text-decoration: none; padding: 8px 0; }
+.ah-menu-links a { display: block; font: 700 clamp(30px, 7vw, 42px)/1.2 "Playfair Display", Georgia, serif; color: #f2ede4; text-decoration: none; padding: 8px 0; }
 .ah-menu-links a:hover { color: #d4af37; }
 .ah-menu-foot { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 
@@ -108,12 +104,12 @@
 }
 @media (max-width: 640px) {
   .ah-content { padding: 132px 24px 120px; }
-  .ah-title { font-size: 48px; }
-  .ah-pill { font-size: 10.5px; letter-spacing: 0.22em; padding: 0 14px; }
+  .ah-title { font-size: 38px; }
+  .ah-pill { height: auto; padding: 8px 14px; font-size: 10px; line-height: 1.5; letter-spacing: 0.3em; white-space: normal; text-align: center; }
   .ah-ctas { flex-direction: column; align-items: stretch; width: 100%; max-width: 360px; }
   .ah-btn { width: 100%; }
   .ah-foot { grid-template-columns: 1fr 1fr; height: 76px; }
-  .ah-foot .ah-label { letter-spacing: 0.2em; white-space: nowrap; }
+  .ah-foot .ah-label { font-size: 10px; line-height: 1.5; letter-spacing: 0.3em; white-space: normal; }
   .ah-foot .ah-scroll { grid-column: 2; justify-self: end; flex-direction: row; gap: 10px; }
   .ah-foot .ah-scroll-line { width: 40px; height: 1px; }
   .ah-foot .ah-scroll-line i { width: 100%; height: 1px; animation-name: ah-scanx; }

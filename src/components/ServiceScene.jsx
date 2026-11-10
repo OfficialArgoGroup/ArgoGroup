@@ -43,13 +43,15 @@ function Fan({ names }) {
 
 export default function ServiceScene({ service, section, active = true }) {
   if (service === 0) {
-    return <ReportScene page={['channels', 'ads', 'funnel'][section]} active={active} />
+    // 0 Paid / Performance: the ads report; 1 Organic: the funnel (visits to customers).
+    return <ReportScene page={['ads', 'funnel'][section]} active={active} />
   }
   if (service === 1) {
     switch (section) {
+      // 0 Internal platforms, 1 Automated systems, 2 Database & CRM, 3 Data & reporting
       case 0: return <PlatformShot src="/platform/marca.jpg" title="ARGO Platform · Content system" focusY="45%" />
-      case 1: return <PlatformShot src="/platform/crm.jpg" title="ARGO Platform · CRM" focusY="30%" />
-      case 2: return <PlatformShot src="/platform/outreach.jpg" title="ARGO Platform · Pipeline" focusY="65%" />
+      case 1: return <PlatformShot src="/platform/outreach.jpg" title="ARGO Platform · Pipeline" focusY="65%" />
+      case 2: return <PlatformShot src="/platform/crm.jpg" title="ARGO Platform · CRM" focusY="30%" />
       default: return <ReportScene page="summary" active={active} />
     }
   }

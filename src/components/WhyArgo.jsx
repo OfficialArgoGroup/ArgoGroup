@@ -1,41 +1,47 @@
+import { Link } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
+import { ArrowIcon } from './icons'
 import Reveal from './Reveal'
 import SectionTitle from './SectionTitle'
-import { icons } from './iconSet'
 
-// Positional, like SERVICE_ICONS in Services.jsx: presentation, not copy.
-const WHY_ICONS = ['zap', 'bulb', 'eye', 'building']
-
-export default function WhyArgo() {
+/**
+ * Why ARGO and About, as one section that fits one screen: label, a one-line
+ * title and a short intro across the top (who we are, who leads, where from),
+ * then the four differences in a row between fine rules. The home links on to
+ * /about, which carries the same section plus the facts (pages/About.jsx).
+ */
+export default function WhyArgo({ aboutLink = false }) {
   const { t } = useLang()
+  const w = t.whyArgo
 
   return (
     <section className="section why" id="why-argo">
       <div className="container">
-        <div className="why-grid">
-          <div>
-            <SectionTitle
-              eyebrow={t.whyArgo.eyebrow}
-              title={t.whyArgo.title}
-              accent={t.whyArgo.accent}
-            />
-            <div className="why-intro">
-              {t.whyArgo.intro.map((paragraph) => (
-                <Reveal as="p" key={paragraph}>{paragraph}</Reveal>
-              ))}
-            </div>
-          </div>
-
-          <div className="why-cards">
-            {t.whyArgo.items.map((item, index) => (
-              <Reveal className="why-card" delay={index * 90} key={item.title}>
-                <div className="feature-icon">{icons[WHY_ICONS[index]] ?? icons.zap}</div>
-                <h3>{item.title}</h3>
-                <p>{item.desc}</p>
-              </Reveal>
-            ))}
-          </div>
+        <SectionTitle eyebrow={w.eyebrow} title={w.title} accent={w.accent} />
+        <div className="why-intro">
+          {w.intro.map((paragraph) => (
+            <Reveal as="p" key={paragraph}>{paragraph}</Reveal>
+          ))}
         </div>
+
+        <ol className="why-list">
+          {w.items.map((item, index) => (
+            <Reveal as="li" className="why-item" delay={index * 90} key={item.title}>
+              <span className="why-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+            </Reveal>
+          ))}
+        </ol>
+
+        {aboutLink && (
+          <div className="why-foot">
+            <Link className="why-more" to="/about">
+              <span>{w.more}</span>
+              <ArrowIcon />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   )

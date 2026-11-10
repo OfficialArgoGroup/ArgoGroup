@@ -62,6 +62,17 @@ En local el formulario no llega al CRM y no se envía nada a Meta: las claves so
 
 Las versiones en Markdown de cada página (para buscadores e IA) salen solas de `src/i18n.js` al hacer la build: no hay que tocarlas aparte.
 
+## Landings de servicios (Digital Marketing, AI, Branding)
+
+`/digital-marketing`, `/ai-technology` y `/creative-brand` comparten plantilla: `src/pages/ServicePage.jsx`, con los estilos en `src/styles/argo.css` («Páginas de servicio») y los textos en `src/i18n.js` (`services.items`).
+
+**Reglas de diseño (no cambiarlas en futuros ajustes):**
+
+- **Texto siempre a la izquierda y visual siempre a la derecha**, en todos los bloques de las tres landings. No se alternan lados entre bloques ni entre landings, y en escritorio no se invierte el orden en ningún caso.
+- En móvil (menos de 900 px de ancho), apilado: **texto arriba y visual debajo**, en cada bloque.
+
+Lo comprueban dos tests de `tests/build-output.test.js` («service landings: …»): si un cambio pone el visual antes del texto o añade un estilo que pueda invertirlos (`order`, `grid-column`, `direction`, `row-reverse`…), `npm test` falla.
+
 ## Cómo publicar un cambio
 
 1. Parte de `main` actualizado y crea una rama:

@@ -41,7 +41,7 @@
      don't alias. */
   --radius: 2px;
   --radius-lg: 2px;
-  --label-track: 0.24em;
+  --label-track: 0.3em; /* labels in capitals: BRAND.md §4 */
   --section-y: clamp(5rem, 10vw, 8.5rem);
   --container: 76rem;
 
@@ -125,8 +125,8 @@ ul, ol { list-style: none; }
   align-items: center;
   gap: 0.6rem;
   font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
+  font-weight: 500;
+  letter-spacing: var(--label-track);
   text-transform: uppercase;
   color: var(--gold);
 }
@@ -139,15 +139,17 @@ ul, ol { list-style: none; }
 
 .section-title {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-size: clamp(1.75rem, 3.4vw, 2.6rem);
   font-weight: 700;
-  line-height: 1.12;
+  line-height: 1.15;
   color: var(--text);
   margin-top: 0.9rem;
   letter-spacing: 0.01em;
 }
+/* The accent word keeps its markup (SplitText) but no colour or style of its
+   own: titles read as one sober line. */
 .section-title em {
-  color: var(--gold);
+  color: inherit;
   font-style: normal;
 }
 
@@ -171,9 +173,9 @@ ul, ol { list-style: none; }
   min-height: 48px;
   padding: 0.85rem 1.75rem;
   border-radius: var(--radius);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.78rem;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--label-track);
   text-transform: uppercase;
   cursor: pointer;
   position: relative;
@@ -349,6 +351,7 @@ ul, ol { list-style: none; }
   display: block;
   padding: 0.75rem 0.9rem;
   font-family: var(--font-display);
+  font-weight: 700;
   font-size: 1.05rem;
   color: var(--text);
   text-decoration: none;
@@ -453,9 +456,10 @@ ul, ol { list-style: none; }
 .mobile-submenu { padding-top: 0.8rem; border-bottom: 1px solid var(--border-soft); }
 .mobile-submenu-label {
   font-size: 0.72rem;
-  letter-spacing: 0.2em;
+  letter-spacing: var(--label-track);
   text-transform: uppercase;
   color: var(--gold);
+  font-weight: 500;
 }
 .mobile-menu .mobile-submenu .nav-link {
   padding: 0.65rem 0;
@@ -555,7 +559,7 @@ ul, ol { list-style: none; }
   margin-top: 1.6rem;
   font-family: var(--font-display);
   font-size: clamp(3.1rem, 10.5vw, 7.75rem);
-  font-weight: 600;
+  font-weight: 700;
   line-height: 1;
   letter-spacing: 0.14em;
   color: var(--cream);
@@ -585,7 +589,7 @@ ul, ol { list-style: none; }
   max-width: 38rem;
   font-family: var(--font-display);
   font-size: clamp(1.45rem, 3vw, 2.15rem);
-  font-weight: 500;
+  font-weight: 700;
   color: var(--text);
   line-height: 1.25;
   margin-top: 2.2rem;
@@ -620,7 +624,7 @@ ul, ol { list-style: none; }
 .hero-stat .value {
   font-family: var(--font-display);
   font-size: clamp(1.15rem, 2vw, 1.4rem);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text);
 }
 .hero-stat .label {
@@ -648,10 +652,11 @@ ul, ol { list-style: none; }
 .clients-label {
   text-align: center;
   font-size: 0.72rem;
-  letter-spacing: 0.3em;
+  letter-spacing: var(--label-track);
   text-transform: uppercase;
   color: var(--text-muted);
   margin-bottom: 1.4rem;
+  font-weight: 500;
 }
 .marquee {
   position: relative;
@@ -676,6 +681,7 @@ ul, ol { list-style: none; }
   align-items: center;
   gap: 4.5rem;
   font-family: var(--font-display);
+  font-weight: 700;
   font-size: 1.25rem;
   color: var(--text-muted);
   white-space: nowrap;
@@ -715,15 +721,15 @@ ul, ol { list-style: none; }
 .service-name:hover::after, .service-name:focus-visible::after { transform: scaleX(1); }
 .service-name .num {
   font-size: 0.78rem;
-  letter-spacing: 0.2em;
-  font-weight: 600;
+  letter-spacing: var(--label-track);
+  font-weight: 500;
   color: var(--gold);
 }
 .service-name .name {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.6rem, 4.6vw, 3.25rem);
-  font-weight: 500;
+  font-size: clamp(1.45rem, 3.4vw, 2.4rem);
+  font-weight: 700;
   line-height: 1.12;
   transition: transform var(--dur-med) var(--ease-out), color var(--dur-med);
 }
@@ -749,46 +755,59 @@ ul, ol { list-style: none; }
 }
 .feature-icon svg { width: 22px; height: 22px; }
 
-/* ---------- Why ARGO ---------- */
-.why-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.1fr;
-  gap: clamp(2.5rem, 6vw, 5rem);
-  align-items: start;
-}
+/* ---------- Why ARGO (with About) ----------
+   One screen: label, one-line title and a short intro across the top; the four
+   differences in a row between fine vertical rules, like How we operate. */
+.why { padding-block: clamp(3rem, 8vh, 5rem); }
+.why .section-head { margin-bottom: clamp(0.9rem, 2.2vh, 1.4rem); }
 .why-intro p {
-  color: var(--text-muted);
-  margin-bottom: 1.1rem;
-  font-size: 1.02rem;
-}
-.why-intro p:first-of-type {
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 2.6vw, 1.55rem);
+  font-size: clamp(0.98rem, 1.1vw, 1.04rem);
+  line-height: 1.6;
   color: var(--text-soft);
-  line-height: 1.45;
 }
-.why-intro p strong { color: var(--gold); font-weight: 600; }
-
-.why-cards {
+.why-list {
+  list-style: none;
+  margin: clamp(1.5rem, 4vh, 2.5rem) 0 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-block: 1px solid var(--border-soft);
 }
-.why-card {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  padding: 1.6rem 1.4rem;
-  transition: border-color var(--dur-med), transform var(--dur-med) var(--ease-out), background-color var(--dur-med);
+.why-item { padding: clamp(1.1rem, 2.8vh, 1.6rem) clamp(0.85rem, 1.3vw, 1.2rem); }
+.why-item:first-child { padding-left: 0; }
+.why-item + .why-item { border-left: 1px solid var(--border-soft); }
+.why-num {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.55;
 }
-.why-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--gold-25);
-  background: linear-gradient(165deg, var(--gold-08), var(--surface) 60%);
+.why-item h3 {
+  margin: 0.65rem 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.02rem, 1.35vw, 1.15rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
 }
-.why-card .feature-icon { margin-bottom: 0.9rem; }
-.why-card h3 { font-size: 1.02rem; font-weight: 600; color: var(--text); margin-bottom: 0.45rem; }
-.why-card p { font-size: 0.88rem; color: var(--text-muted); }
+.why-item p { font-size: 0.86rem; line-height: 1.55; color: var(--text-muted); }
+.why-foot { display: flex; justify-content: flex-end; }
+
+/* Phones: two by two; narrow phones, one column. */
+@media (max-width: 899px) {
+  .why-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .why-item + .why-item { border-left: 0; }
+  .why-item:nth-child(2n) { border-left: 1px solid var(--border-soft); }
+  .why-item:nth-child(2n + 1) { padding-left: 0; }
+  .why-item:nth-child(n + 3) { border-top: 1px solid var(--border-soft); }
+}
+@media (max-width: 520px) {
+  .why-list { grid-template-columns: 1fr; }
+  .why-item, .why-item:nth-child(2n) { border-left: 0; padding-inline: 0; }
+  .why-item + .why-item { border-top: 1px solid var(--border-soft); }
+}
 
 /* ---------- Testimonios ---------- */
 .testimonials { background: var(--surface); border-block: 1px solid var(--border-soft); overflow: hidden; }
@@ -817,6 +836,7 @@ ul, ol { list-style: none; }
 .t-card:hover { border-color: var(--gold-25); transform: translateY(-4px); }
 .t-quote-mark {
   font-family: var(--font-display);
+  font-weight: 700;
   font-size: 3.4rem;
   line-height: 0.6;
   color: var(--gold);
@@ -987,7 +1007,7 @@ ul, ol { list-style: none; }
   background: linear-gradient(90deg, transparent, var(--gold), transparent);
 }
 
-.contact-info .section-title { font-size: clamp(1.9rem, 4vw, 2.8rem); }
+.contact-info .section-title { font-size: clamp(1.7rem, 3.2vw, 2.3rem); }
 /* The heading stays level with the form's top; the channels sit centred in
    the space left below it, so the column balances the taller form. Stacked,
    they simply follow. */
@@ -1130,6 +1150,7 @@ ul, ol { list-style: none; }
 @keyframes draw-check { to { stroke-dashoffset: 0; } }
 .form-success h3 {
   font-family: var(--font-display);
+  font-weight: 700;
   font-size: 1.8rem;
   color: var(--text);
 }
@@ -1181,20 +1202,21 @@ ul, ol { list-style: none; }
   margin-top: 1.2rem;
   font-size: 0.66rem;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: var(--label-track);
   text-transform: uppercase;
   color: var(--gold);
 }
 .footer-tagline { margin-top: 1rem; color: var(--text-muted); max-width: 24rem; font-size: 0.95rem; }
+.footer-locations { margin-top: 0.6rem; color: var(--text-muted); max-width: 24rem; font-size: 0.85rem; }
 .footer-social { display: flex; gap: 0.7rem; margin-top: 1.5rem; }
 
 .footer h4 {
   font-size: 0.78rem;
-  letter-spacing: 0.24em;
+  letter-spacing: var(--label-track);
   text-transform: uppercase;
   color: var(--gold);
   margin-bottom: 1.2rem;
-  font-weight: 600;
+  font-weight: 500;
 }
 .footer-col ul { display: grid; gap: 0.7rem; }
 .footer-col a {
@@ -1340,7 +1362,8 @@ ul, ol { list-style: none; }
 .legal-page { padding-top: 130px; padding-bottom: 5rem; max-width: 50rem; }
 .legal-page h1 {
   font-family: var(--font-display);
-  font-size: clamp(2.1rem, 5vw, 3rem);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 4vw, 2.5rem);
   color: var(--text);
   margin-bottom: 0.4rem;
 }
@@ -1367,7 +1390,6 @@ ul, ol { list-style: none; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1024px) {
-  .why-grid { grid-template-columns: 1fr; }
   .t-slide { flex-basis: 50%; }
 }
 
@@ -1385,7 +1407,6 @@ ul, ol { list-style: none; }
 @media (max-width: 640px) {
   .hero-stats { grid-template-columns: 1fr; }
   .form-grid { grid-template-columns: 1fr; }
-  .why-cards { grid-template-columns: 1fr; }
   .hero-ctas { flex-direction: column; width: 100%; }
   .hero-ctas .btn { width: 100%; }
   .hero-stat, .hero-stat + .hero-stat { padding: 1rem 0; border-left: 0; }
@@ -1511,7 +1532,7 @@ html.static-test .hero { min-height: 820px; }
 
 .about-intro { max-width: 52rem; margin-inline: auto; text-align: center; }
 .about-intro p { color: var(--text-muted); margin-bottom: 1rem; }
-.about-page .why { margin-top: var(--section-y); background: var(--surface); }
+.about-page .why { margin-top: clamp(2rem, 5vh, 3rem); background: var(--surface); }
 .about-page .about-cards { margin-top: var(--section-y); }
 .about-cards {
   display: grid;
@@ -1529,18 +1550,19 @@ html.static-test .hero { min-height: 820px; }
 }
 .facts h2 {
   font-size: 0.78rem;
-  letter-spacing: 0.18em;
+  letter-spacing: var(--label-track);
   text-transform: uppercase;
   color: var(--text);
   margin-bottom: 1.5rem;
+  font-weight: 500;
 }
 .facts dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 2rem; }
 .facts dl > div { border-bottom: 1px solid var(--border-soft); padding-bottom: 0.75rem; }
 .facts dt {
   color: var(--gold);
   font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  font-weight: 500;
+  letter-spacing: var(--label-track);
   text-transform: uppercase;
   margin-bottom: 0.3rem;
 }
@@ -1554,6 +1576,7 @@ html.static-test .hero { min-height: 820px; }
 }
 .about-cta h2 {
   font-family: var(--font-display);
+  font-weight: 700;
   font-size: 1.7rem;
   color: var(--text);
   margin-bottom: 0.7rem;
@@ -1572,7 +1595,8 @@ html.static-test .hero { min-height: 820px; }
 }
 .thanks-page h1 {
   font-family: var(--font-display);
-  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
   color: var(--text);
 }
 .thanks-page p { color: var(--text-muted); max-width: 28rem; }
@@ -1644,130 +1668,242 @@ html.static-test .hero { min-height: 820px; }
   .legal-back { min-height: 44px; }
 }
 
-/* ---------- Páginas de servicio ---------- */
-/* Just under the menu: the page opens on the title, the first section and the
-   whole visual, with nothing to scroll for. */
-.svc-page { padding-top: 6.5rem; padding-bottom: 0; }
-.svc-head { margin-bottom: 2rem; }
-.svc-head .section-title { font-size: clamp(2rem, 4.2vw, 3rem); }
+/* ---------- Páginas de servicio ----------
+   Two layouts:
+   - Stacked (phones, and screens under 700px tall): the blocks one under the
+     other, each with its visual below it, ordinary scrolling.
+   - Scene (desktop, from 900px wide and 700px tall; further down): one fixed
+     screen, information on the left half and the visual on the right half,
+     ONE block at a time; scrolling swaps block and visual together. */
+.svc-page { padding-top: 6rem; padding-bottom: 0; }
+.svc-head { margin-bottom: 1.25rem; }
+.svc-head .section-title { font-size: clamp(1.75rem, 3.2vw, 2.4rem); }
 .svc-back { display: inline-block; text-decoration: none; margin-bottom: 1rem; }
-.svc-page .section-sub { margin-top: 0.8rem; }
+.svc-page .section-sub { margin-top: 0.5rem; }
+.svc-page .about-cta { margin-top: 2.5rem; padding-top: 2rem; }
 
-.svc-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: clamp(2.5rem, 6vw, 5.5rem);
-  align-items: start;
-}
-.svc-section {
-  min-height: 70vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-block: 2.5rem;
-  border-top: 1px solid var(--border);
-}
-/* The first one starts right under the title, on screen from the start. */
-.svc-section:first-of-type { min-height: 0; justify-content: flex-start; }
-/* Tall enough that the sticky visual is still in place when this one is read. */
-.svc-section:last-child { min-height: calc(100svh - 6.5rem); }
-.svc-section .num {
-  font-size: 0.78rem;
-  letter-spacing: 0.2em;
-  font-weight: 600;
+.svc-grid { display: grid; grid-template-columns: minmax(0, 1fr); }
+.svc-text { display: flex; flex-direction: column; }
+.svc-stop, .svc-progress, .svc-visual { display: none; }
+
+/* A block as an editorial index: small number, title and subtitle on top,
+   then its points in two columns between fine rules. */
+.svc-section { padding-block: 1.6rem; border-top: 1px solid var(--border); }
+.svc-index { display: flex; flex-direction: column; margin-bottom: 1.1rem; }
+.svc-num {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
   color: var(--gold);
+  opacity: 0.55;
 }
 .svc-section h2 {
-  margin-top: 0.7rem;
+  margin-top: 0.55rem;
   font-family: var(--font-display);
-  font-size: clamp(1.55rem, 3vw, 2.2rem);
-  font-weight: 600;
-  line-height: 1.18;
+  font-size: clamp(1.2rem, 1.7vw, 1.45rem);
+  font-weight: 700;
+  line-height: 1.2;
   color: var(--text);
 }
 .svc-section .tagline {
-  margin-top: 0.7rem;
-  font-family: var(--font-display);
-  font-size: 1.08rem;
-  line-height: 1.4;
-  color: var(--gold-dark);
-}
-.svc-section ul { list-style: none; margin: 1.4rem 0 0; padding: 0; display: grid; gap: 0.8rem; }
-.svc-section li {
-  position: relative;
-  padding-left: 1.6rem;
+  margin-top: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  line-height: 1.45;
   color: var(--text-muted);
-  font-size: 0.97rem;
-  line-height: 1.55;
 }
-.svc-section li svg {
-  position: absolute;
-  left: 0;
-  top: 0.28em;
-  width: 15px;
-  height: 15px;
-  color: var(--gold);
+.svc-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2vw, 1.5rem);
+  border-bottom: 1px solid var(--border-soft);
+}
+.svc-items li { padding-block: 0.7rem; border-top: 1px solid var(--border-soft); }
+.svc-items h3 {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--text);
+}
+.svc-items p {
+  margin-top: 0.2rem;
+  font-size: 0.8rem;
+  line-height: 1.42;
+  color: var(--text-muted);
 }
 
-/* The visual: always on ink, whatever the page's theme. */
+/* The visual: a dark frame, square corners, the same padding on all four
+   sides of the picture and a thin label bar under it. */
 .svc-visual, .svc-visual-inline {
   --sv-ink: #0f0e0b;
   --sv-gold: #d4af37;
   --sv-text: #f2ede4;
   --sv-line: rgba(242, 237, 228, 0.2);
   --sv-soft: rgba(242, 237, 228, 0.1);
+  --frame-pad: clamp(0.9rem, 1.4vw, 1.25rem);
   background:
     radial-gradient(ellipse 70% 55% at 50% 45%, rgba(212, 175, 55, 0.09), transparent 75%),
     var(--sv-ink);
 }
-.svc-visual {
-  position: sticky;
-  top: 6.5rem;
-  /* Whole on screen under the menu, with the same margin below. */
-  height: min(calc(100svh - 8rem), 46rem);
-  overflow: hidden;
-}
+.svc-visual-inline { margin-top: 1.1rem; }
+/* Stacked on a wide but short screen: the visual at a readable size, not full width. */
+@media (min-width: 900px) { .svc-visual-inline { max-width: 34rem; } }
 .svc-scene {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
   opacity: 0;
-  transform: scale(0.97);
-  transition: opacity 0.6s var(--ease-out), transform 0.9s var(--ease-out);
+  transition: opacity 0.3s var(--ease-out);
 }
-.svc-scene.is-active { opacity: 1; transform: none; }
+.svc-scene.is-active { opacity: 1; }
 .svc-scene:not(.is-active) * { animation-play-state: paused !important; }
-
+.svc-scene > .scene { flex: 1; min-height: 0; width: auto; margin: var(--frame-pad) var(--frame-pad) 0; }
 .svc-caption {
-  margin: 0;
-  padding: 1rem 1.5rem;
+  margin: var(--frame-pad) 0 0;
+  padding: 0.45rem var(--frame-pad);
   border-top: 1px solid var(--sv-soft);
-  font-size: 0.74rem;
-  letter-spacing: 0.14em;
+  font-size: 0.64rem;
+  line-height: 1.4;
+  letter-spacing: var(--label-track);
   text-transform: uppercase;
-  color: rgba(242, 237, 228, 0.72);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: rgba(242, 237, 228, 0.66);
+  font-weight: 500;
 }
-.svc-caption span { color: var(--sv-gold); margin-right: 0.9rem; }
+.svc-caption span { color: var(--sv-gold); margin-right: 0.8rem; }
 
-.svc-visual-inline { display: none; margin-bottom: 1.5rem; }
+/* After the scene: How we operate (not on Branding) and the call to contact,
+   then the same room before the footer as any other section. */
+.svc-after { padding-bottom: clamp(3rem, 6vw, 4.5rem); }
 
+/* Phones: number and title side by side, the points in one column below. */
+@media (max-width: 899px) {
+  .svc-index { flex-direction: row; flex-wrap: wrap; align-items: baseline; column-gap: 0.8rem; }
+  .svc-section h2 { margin-top: 0; flex: 1; min-width: 12rem; }
+  .svc-section .tagline { flex-basis: 100%; }
+  .svc-items { grid-template-columns: 1fr; }
+}
 
-.svc-others { margin-block: clamp(3rem, 6vw, 5rem) var(--section-y); }
+/* ---------- Service pages: the scene (desktop) ----------
+   .svc-story is as tall as one screen per block, so there is scroll to run
+   through; .svc-stage sticks under the header for all of it and shows one
+   block at a time (ServicePage.jsx works out which from the scroll position).
+   Invisible .svc-stop markers, one screen apart, are the snap points, so a
+   scroll always lands on a whole block. Snapping is on only while the scene
+   is on screen (html.svc-snap, set by ServicePage.jsx); after it, ordinary
+   scrolling down to How we operate, the form and the footer.
+   Inside the stage, the same container as the header: the text starts on the
+   logo's line and the visual ends on the button's. */
+@media (min-width: 900px) and (min-height: 700px) {
+  html.svc-snap {
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 73px; /* the fixed header */
+  }
+  .svc-page {
+    --nav-h: 73px; /* .nav-inner (72px) + its bottom border */
+    --screen: calc(100svh - var(--nav-h));
+    /* Height of the two halves: what the screen leaves under the title, capped. */
+    --pane-h: min(calc(var(--screen) - 12.5rem), 36rem);
+    padding-top: var(--nav-h);
+  }
+  .svc-story { position: relative; height: calc(var(--blocks) * var(--screen)); }
+  .svc-stop {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(var(--i) * var(--screen));
+    height: var(--screen);
+    pointer-events: none;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+  .svc-stage { position: sticky; top: var(--nav-h); height: var(--screen); overflow: hidden; }
+  .svc-frame { height: 100%; display: flex; flex-direction: column; justify-content: center; }
 
-@media (max-width: 900px) {
-  .svc-grid { grid-template-columns: 1fr; }
-  .svc-visual { display: none; }
-  .svc-visual-inline { display: block; }
-  .svc-section, .svc-section:last-child { min-height: 0; }
-  .svc-page { padding-top: 6rem; }
+  /* The page title: full width, compact, on the first block only. */
+  .svc-head {
+    margin-bottom: clamp(1rem, 2.6vh, 1.6rem);
+    max-height: 10rem;
+    overflow: hidden;
+    transition: max-height 0.35s var(--ease-out), opacity 0.25s var(--ease-out), margin 0.35s var(--ease-out);
+  }
+  .svc-stage.is-past .svc-head { max-height: 0; opacity: 0; margin-bottom: 0; }
+  .svc-back { margin-bottom: clamp(0.3rem, 0.9vh, 0.6rem); }
+  .svc-head .section-title { margin-top: 0; font-size: clamp(1.55rem, 3.6vh, 2.15rem); line-height: 1.12; }
+  .svc-page .section-sub { margin-top: 0.35rem; font-size: clamp(0.86rem, 1.7vh, 0.98rem); }
+
+  /* 50 / 50, a generous gutter, both halves the same height. */
+  .svc-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: clamp(3rem, 5vw, 5rem);
+    height: var(--pane-h);
+  }
+  .svc-text { min-height: 0; }
+
+  /* The blocks share one place; only the active one shows. */
+  .svc-blocks { display: grid; }
+  .svc-blocks > .svc-section {
+    grid-area: 1 / 1;
+    border-top: 0;
+    padding-block: 0;
+    opacity: 0;
+    transform: translateY(10px);
+    visibility: hidden;
+    transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out), visibility 0s linear 0.3s;
+  }
+  .svc-blocks > .svc-section.is-active {
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .svc-index { margin-bottom: clamp(0.8rem, 2vh, 1.2rem); }
+  .svc-section h2 { white-space: nowrap; font-size: clamp(1.15rem, 2.6vh, 1.4rem); }
+  .svc-section .tagline { font-size: clamp(0.8rem, 1.6vh, 0.88rem); }
+  .svc-items li { padding-block: clamp(0.5rem, 1.3vh, 0.8rem); }
+  .svc-items h3 { font-size: clamp(0.86rem, 1.7vh, 0.93rem); }
+  .svc-items p { font-size: 0.78rem; line-height: 1.4; }
+
+  /* Where you are, at the foot of the information half: 01 / 04 and a line of dashes. */
+  .svc-progress {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: var(--label-track);
+    color: var(--text-muted);
+  }
+  .svc-progress b { font-weight: 500; color: var(--gold-dark); }
+  .svc-dots { display: flex; gap: 0.45rem; }
+  .svc-dots i { width: 1.4rem; height: 2px; background: var(--border); transition: background 0.3s var(--ease-out); }
+  .svc-dots i.on { background: var(--gold); }
+
+  .svc-visual { display: block; position: relative; height: 100%; overflow: hidden; }
+  .svc-visual-inline { display: none; }
+
+  /* The stop after the last block; from there on, no snapping (svc-snap is off). */
+  .svc-after { scroll-snap-align: start; }
+}
+/* Narrower desktops: 55 / 45 for the text. */
+@media (min-width: 900px) and (max-width: 1199px) and (min-height: 700px) {
+  .svc-grid { grid-template-columns: minmax(0, 11fr) minmax(0, 9fr); column-gap: clamp(2.5rem, 4vw, 3.5rem); }
 }
 
 /* ---------- Visuales de las páginas de servicio (components/ServiceScene.jsx) ---------- */
-/* The report's own typefaces, the same files the landings use (public/fonts). */
-@font-face { font-family: 'Cormorant Garamond'; font-weight: 500; font-display: swap; src: url('/fonts/cormorant-garamond-latin-500-normal.woff2') format('woff2'); }
-@font-face { font-family: 'Cormorant Garamond'; font-weight: 600; font-display: swap; src: url('/fonts/cormorant-garamond-latin-600-normal.woff2') format('woff2'); }
-@font-face { font-family: 'DM Sans'; font-weight: 300 700; font-display: swap; src: url('/fonts/dm-sans-latin-wght-normal.woff2') format('woff2'); }
+/* The report is set in the brand's two typefaces, like the rest of the site
+   (Playfair Display for titles and figures, Inter for text and labels). */
 
 .scene { position: relative; width: 100%; }
 .svc-scene > .scene { flex: 1; min-height: 0; }
@@ -1777,14 +1913,15 @@ html.static-test .hero { min-height: 820px; }
   --paper: #faf7f0; --paper2: #f2ede2; --line: #e4dcc9;
   --gold: #c9a843; --gold-deep: #a9852d;
   --ink: #1c1710; --muted: #6b6353; --warn: #a4513a; --ok: #5e7a4a;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans: 'DM Sans', Inter, system-ui, sans-serif;
+  --serif: var(--font-display);
+  --sans: var(--font-body);
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 1.5rem 1.5rem 0;
+  padding: 0;
   overflow: hidden;
 }
+/* The whole page, scaled to fit its frame and centred (ReportScene.jsx). */
 .rp-page {
   position: relative;
   width: 100%;
@@ -1792,13 +1929,14 @@ html.static-test .hero { min-height: 820px; }
   background: var(--paper);
   color: var(--ink);
   padding: 2.8rem 1.5rem 2.4rem;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-size: 0.78rem;
+  font-family: var(--sans);
+  font-size: 0.72rem;
   line-height: 1.5;
   box-shadow: 0 34px 70px -34px rgba(0, 0, 0, 0.9);
-  animation: rp-read 22s ease-in-out 1.5s infinite alternate;
+  flex: none;
+  transform: translateY(var(--dy, 0px)) scale(var(--fit, 1));
+  transform-origin: top center;
 }
-@keyframes rp-read { from { transform: translateY(0); } to { transform: translateY(calc(-1 * var(--over, 0px))); } }
 .rp .hdr, .rp .ftr {
   position: absolute;
   left: 1.5rem; right: 1.5rem;
@@ -1812,15 +1950,14 @@ html.static-test .hero { min-height: 820px; }
 }
 .rp .hdr { top: 0.9rem; border-bottom: 1px solid var(--line); padding-bottom: 0.35rem; }
 .rp .hdr b { font-weight: 500; color: var(--ink); letter-spacing: 0.3em; }
-.rp .hdr b span { color: var(--muted); font-weight: 300; }
+.rp .hdr b span { color: var(--muted); font-weight: 400; }
 .rp .ftr { bottom: 0.9rem; border-top: 1px solid var(--line); padding-top: 0.35rem; letter-spacing: 0.14em; }
 .rp .ftr .g { color: var(--gold-deep); }
 .rp .sec { display: flex; align-items: baseline; gap: 0.8rem; border-bottom: 1px solid var(--gold); padding-bottom: 0.6rem; margin-bottom: 1rem; }
-.rp .sec .n { font-family: var(--serif); font-size: 2.4rem; font-weight: 500; color: var(--gold); line-height: 1; }
-.rp .sec .t { font-family: var(--serif); font-size: 1.7rem; font-weight: 600; color: var(--gold-deep); line-height: 1; }
-.rp .sec .t i { font-style: italic; font-weight: 500; }
-.rp h2 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; color: var(--gold-deep); line-height: 1.1; margin: 1rem 0 0.4rem; }
-.rp h2 i { font-style: italic; font-weight: 500; }
+.rp .sec .t { font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: var(--gold-deep); line-height: 1; }
+.rp .sec .t i { font-style: normal; font-weight: inherit; }
+.rp h2 { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; color: var(--gold-deep); line-height: 1.1; margin: 1rem 0 0.4rem; }
+.rp h2 i { font-style: normal; font-weight: inherit; }
 .rp p { margin: 0 0 0.5rem; }
 .rp p.lead { font-size: 0.82rem; line-height: 1.5; margin-bottom: 0.7rem; }
 .rp .label {
@@ -1836,7 +1973,7 @@ html.static-test .hero { min-height: 820px; }
 .rp .kpis > div { padding: 0.6rem 0.5rem 0.55rem 0; border-right: 1px solid var(--line); }
 .rp .kpis > div + div { padding-left: 0.5rem; }
 .rp .kpis > div:last-child { border-right: 0; }
-.rp .kpis .v { font-family: var(--serif); font-size: 1.55rem; font-weight: 600; color: var(--gold-deep); line-height: 1; font-variant-numeric: tabular-nums; }
+.rp .kpis .v { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; color: var(--gold-deep); line-height: 1; font-variant-numeric: tabular-nums; }
 .rp .kpis .v small { font-size: 0.8rem; }
 .rp .kpis .k { font-family: var(--sans); font-size: 0.5rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); font-weight: 500; margin: 0.35rem 0 0.15rem; }
 .rp .kpis .d { font-size: 0.66rem; color: var(--muted); line-height: 1.3; }
@@ -1847,7 +1984,7 @@ html.static-test .hero { min-height: 820px; }
 .rp th { font-family: var(--sans); font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-deep); font-weight: 500; text-align: left; padding: 0.35rem 0.4rem 0.35rem 0; border-bottom: 1px solid var(--gold); }
 .rp td { font-size: 0.72rem; line-height: 1.35; padding: 0.4rem 0.4rem 0.4rem 0; border-bottom: 1px solid var(--line); vertical-align: baseline; }
 .rp th.r, .rp td.r { text-align: right; padding-right: 0; padding-left: 0.8rem; white-space: nowrap; }
-.rp td.num { font-family: var(--serif); font-size: 1rem; font-weight: 600; color: var(--ink); }
+.rp td.num { font-family: var(--serif); font-size: 0.85rem; font-weight: 700; color: var(--ink); }
 .rp td.num.g { color: var(--gold-deep); }
 .rp td .sub { display: block; color: var(--muted); font-size: 0.64rem; }
 .rp tr.total td { border-top: 1px solid var(--gold); border-bottom: 0; font-weight: 600; }
@@ -1859,7 +1996,7 @@ html.static-test .hero { min-height: 820px; }
 .rp .stats > div { padding: 0.55rem 0.45rem; border-right: 1px solid var(--line); }
 .rp .stats > div:first-child { padding-left: 0; }
 .rp .stats > div:last-child { border-right: 0; }
-.rp .stats .v { font-family: var(--serif); font-size: 1.3rem; color: var(--gold-deep); font-weight: 600; line-height: 1; }
+.rp .stats .v { font-family: var(--serif); font-size: 1.1rem; color: var(--gold-deep); font-weight: 700; line-height: 1; }
 .rp .stats .k { font-size: 0.62rem; color: var(--muted); line-height: 1.3; margin-top: 0.25rem; }
 .rp .stats .k b { color: var(--ink); font-weight: 600; }
 .rp .callout { background: var(--paper2); border-left: 2px solid var(--gold); padding: 0.6rem 0.8rem 0.3rem; margin: 0.6rem 0; }
@@ -1874,7 +2011,7 @@ html.static-test .hero { min-height: 820px; }
 .rp .sw.google { background: rgba(201, 168, 67, 0.4); }
 .rp .bars { display: flex; align-items: flex-end; justify-content: space-around; height: 5.2rem; border-bottom: 1px solid var(--line); gap: 0.5rem; }
 .rp .bars > div { flex: 0 0 2rem; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; }
-.rp .bars span { font-family: var(--serif); font-size: 0.82rem; font-weight: 600; color: var(--ink); line-height: 1; margin-bottom: 0.2rem; white-space: nowrap; }
+.rp .bars span { font-family: var(--serif); font-size: 0.7rem; font-weight: 700; color: var(--ink); line-height: 1; margin-bottom: 0.2rem; white-space: nowrap; }
 .rp .bars i { display: block; width: 100%; background: rgba(201, 168, 67, 0.45); min-height: 2px; transform-origin: bottom; }
 .rp .bars > div:last-child i { background: var(--gold); }
 .rp .bars.stacked i.meta { background: var(--gold); }
@@ -1884,7 +2021,7 @@ html.static-test .hero { min-height: 820px; }
 .rp .months span { flex: 0 0 2rem; text-align: center; }
 .rp .funnel { display: grid; gap: 0.2rem; margin: 0.4rem 0 0.2rem; }
 .rp .funnel > div { margin-inline: auto; display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; padding: 0.22rem 0.55rem; background: rgba(201, 168, 67, 0.16); border-top: 1px solid var(--gold); font-family: var(--sans); font-size: 0.54rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
-.rp .funnel > div b { font-family: var(--serif); font-size: 0.85rem; letter-spacing: 0; text-transform: none; font-weight: 600; color: var(--gold-deep); }
+.rp .funnel > div b { font-family: var(--serif); font-size: 0.72rem; letter-spacing: 0; text-transform: none; font-weight: 700; color: var(--gold-deep); }
 
 /* What moves on the page, once it is on show (.is-live). */
 .rp tbody tr, .rp .funnel > div, .rp .stats > div, .rp .callout { opacity: 0; transform: translateY(6px); }
@@ -1898,7 +2035,7 @@ html.static-test .hero { min-height: 820px; }
 @keyframes rp-grow { to { transform: scaleY(1); } }
 
 /* ----- The platform, in a window ----- */
-.shot { display: flex; flex-direction: column; padding: 1.5rem 1.5rem 0; }
+.shot { display: flex; flex-direction: column; }
 .shot-bar {
   display: flex; align-items: center; gap: 0.4rem;
   padding: 0.55rem 0.8rem;
@@ -1911,16 +2048,14 @@ html.static-test .hero { min-height: 820px; }
 .shot-view { flex: 1; min-height: 0; overflow: hidden; border: 1px solid rgba(242, 237, 228, 0.14); background: #0f0e0b; }
 .shot-view img {
   display: block; width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: 0% var(--fy, 50%);
-  animation: shot-pan 24s ease-in-out infinite alternate;
+  /* The whole screenshot, not a crop of it. */
+  object-fit: contain;
+  object-position: center;
 }
-@keyframes shot-pan { from { object-position: 0% var(--fy, 50%); } to { object-position: 100% var(--fy, 50%); } }
 
 /* ----- Pieces from the portfolio ----- */
 .pf {
   display: flex; gap: 0.75rem;
-  padding: 0 1.5rem;
   overflow: hidden;
   -webkit-mask-image: linear-gradient(transparent, #000 7%, #000 93%, transparent);
   mask-image: linear-gradient(transparent, #000 7%, #000 93%, transparent);
@@ -1932,7 +2067,7 @@ html.static-test .hero { min-height: 820px; }
   from { transform: translateY(calc((var(--dir, 1) - 1) * 25%)); }
   to { transform: translateY(calc((var(--dir, 1) + 1) * -25%)); }
 }
-.pf-fan { display: block; padding: 1.5rem; -webkit-mask-image: none; mask-image: none; }
+.pf-fan { display: block; -webkit-mask-image: none; mask-image: none; }
 .pf-fan img {
   position: absolute;
   top: 50%; left: 50%;
@@ -1945,17 +2080,17 @@ html.static-test .hero { min-height: 820px; }
 .pf-fan img:nth-child(2) { z-index: 1; width: 48%; }
 @keyframes pf-breathe { from { translate: 0 6px; } to { translate: 0 -6px; } }
 
-/* Inline on phones: the scene above its own section. */
-.svc-visual-inline .rp { padding: 1rem; }
-.svc-visual-inline .rp-page { animation: none; }
-.svc-visual-inline .shot { padding: 1rem; }
-.svc-visual-inline .shot-view { aspect-ratio: 4 / 3; }
-.svc-visual-inline .pf { height: 22rem; padding: 0 1rem; }
-.svc-visual-inline .pf-fan { height: 24rem; padding: 1rem; }
+/* Stacked under its block: framed like the desktop visual, at a fixed height
+   the report scales into. */
+.svc-visual-inline { padding: 1rem; }
+.svc-visual-inline .rp { height: 22rem; }
+.svc-visual-inline .shot-view { aspect-ratio: 16 / 10; }
+.svc-visual-inline .pf { height: 15rem; }
+.svc-visual-inline .pf-fan { height: 17rem; }
 
 @media (prefers-reduced-motion: reduce) {
   .svc-scene { transition: none; }
-  .rp-page, .shot-view img, .pf-col, .pf-fan img { animation: none !important; }
+  .pf-col, .pf-fan img { animation: none !important; }
   .rp tbody tr, .rp .funnel > div, .rp .stats > div, .rp .callout { opacity: 1; transform: none; animation: none !important; }
   .rp .bars i { transform: none; animation: none !important; }
 }
@@ -1972,3 +2107,99 @@ html.static-test .hero { min-height: 820px; }
   .svc-visual-inline .rp th.r, .svc-visual-inline .rp td.r { white-space: normal; padding-left: 0.5rem; }
   .svc-visual-inline .rp .funnel > div { white-space: normal; }
 }
+
+/* ---------- How we operate ---------- */
+/* Home: the whole section on one screen. The four steps in a row, between
+   fine vertical rules: small muted number, name, two or three lines. */
+.method {
+  background: var(--surface);
+  border-block: 1px solid var(--border-soft);
+  padding-block: clamp(3rem, 8vh, 5rem);
+}
+.method .section-head { margin-bottom: clamp(1.5rem, 4vh, 2.5rem); }
+.method-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-block: 1px solid var(--border-soft);
+}
+.method-item { padding: clamp(1.25rem, 3vh, 1.75rem) clamp(0.85rem, 1.3vw, 1.2rem); }
+.method-item + .method-item { border-left: 1px solid var(--border-soft); }
+.method-num {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.55;
+}
+.method-body h3 {
+  margin: 0.7rem 0 0.45rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.5vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text);
+}
+.method-body p { font-size: 0.86rem; line-height: 1.55; color: var(--text-muted); }
+
+/* Service pages: the same format, smaller still: number, name, one line. */
+.method-box {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding: clamp(1rem, 2vw, 1.4rem) clamp(1.1rem, 2.2vw, 1.6rem);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.method-box h2 {
+  margin-top: 0.45rem;
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.6vw, 1.2rem);
+  font-weight: 700;
+  color: var(--text);
+}
+.method-box ol {
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--border-soft);
+}
+.method-box li { padding: 0.75rem 1rem 0.1rem; }
+.method-box li:first-child { padding-left: 0; }
+.method-box li + li { border-left: 1px solid var(--border-soft); }
+.method-box .num { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--gold); opacity: 0.55; }
+.method-box h3 { margin: 0.3rem 0 0.15rem; font-size: 0.9rem; font-weight: 600; color: var(--text); }
+.method-box p { font-size: 0.8rem; line-height: 1.45; color: var(--text-muted); }
+
+/* Phones: two by two. */
+@media (max-width: 899px) {
+  .method-list, .method-box ol { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .method-item + .method-item, .method-box li + li { border-left: 0; }
+  .method-item:nth-child(2n), .method-box li:nth-child(2n) { border-left: 1px solid var(--border-soft); }
+  .method-item:nth-child(n + 3), .method-box li:nth-child(n + 3) { border-top: 1px solid var(--border-soft); }
+  .method-item:nth-child(2n + 1) { padding-left: 0; }
+  .method-box li:nth-child(2n + 1) { padding-left: 0; }
+  .method-box li { padding-bottom: 0.75rem; }
+}
+/* Narrow phones: one column. */
+@media (max-width: 520px) {
+  .method-list, .method-box ol { grid-template-columns: 1fr; }
+  .method-item:nth-child(2n), .method-box li:nth-child(2n) { border-left: 0; }
+  .method-item + .method-item, .method-box li + li { border-top: 1px solid var(--border-soft); }
+  .method-item, .method-box li { padding-inline: 0; }
+}
+
+/* Why ARGO on the home: on to /about. */
+.why-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-weight: 500;
+  font-size: 0.86rem;
+  color: var(--gold-dark);
+  text-decoration: none;
+}
+.why-more svg { width: 16px; height: 16px; transition: transform var(--dur-slow) var(--ease-out); }
+.why-more:hover svg { transform: translateX(0.3rem); }
+
