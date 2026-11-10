@@ -118,3 +118,5 @@ El código lee estas claves, pero **nunca van en el repo** (es público). Están
 - **`design/web-seria`**: el rediseño en curso. La home solo nombra los servicios, y cada servicio tiene su propia página (`/digital-marketing`, `/ai-technology`, `/creative-brand`) con material real. Hay un hero nuevo y cambios en About. **No está listo para producción.** Falta decidir si «Why ARGO» se queda también en la home, el primer pantallazo negro frente al resto de la web en crema y el horario fijo del contacto. Además le faltan los textos provisionales que ya están publicados (PR #31): habrá conflictos en `src/i18n.js` y `src/content/markdown.js` al juntarlos.
 - **`fix/tracking-unico`** (PR #30, no fusionar todavía): un único módulo para Píxel y CAPI. `design/web-seria` parte de esta rama.
 - PR #7 `feat/landings-crm`: vista previa antigua, no fusionar.
+- **`hugo/cambios-web`**: cambios de Hugo en la home y las páginas de servicio, encima de `design/web-seria`.
+- **`feat/landings-es`**: versiones en español de las landings (`/growth/es`, `/systems/es`). Los textos están pendientes de revisión: todavía no hay que fusionarla.
