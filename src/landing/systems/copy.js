@@ -6,6 +6,12 @@
 // Where the layout needed text the brief does not give (form labels, errors,
 // the sheet's Close, the thank-you page), it is grouped under `added` keys or
 // marked "not in the brief" so it is easy to review before publishing.
+//
+// Spanish (/systems/es) lives in copy.es.js, key for key; components read the
+// page's language through useCopy() at the end of this file.
+
+import { useLang } from '../shared/lang.js'
+import * as es from './copy.es.js'
 
 export const WHATSAPP_URL =
   'https://wa.me/34685162838?text=Hi%2C%20I%20saw%20your%20ad%20about%20custom%20systems%20and%20I%27d%20like%20a%20discovery%20call.'
@@ -211,3 +217,14 @@ export const meta = {
     description: thankYou.sub,
   },
 }
+
+// How many of each title's last words are gold (SystemsPage.jsx).
+export const gold = { work: 1, final: 4 }
+
+// ── Languages ───────────────────────────────────────────────────────────────
+const en = { WHATSAPP_URL, PRIVACY_URL, TERMS_URL, CTA, WHATSAPP_LINK, hero, work, method, about, finalCta, form, chrome, thankYou, meta, gold }
+
+export const COPY = { en, es }
+
+/** All of this landing's copy, in the page's language (shared/lang.js). */
+export const useCopy = () => COPY[useLang()]

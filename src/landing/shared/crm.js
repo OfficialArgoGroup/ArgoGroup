@@ -15,9 +15,10 @@ const orNothing = (value) => value || undefined
 
 /**
  * values: the form's fields; context: attribution, event id and load time;
- * ids: Meta's fbc and fbp; consentText: the exact text beside the checkbox.
+ * ids: Meta's fbc and fbp; consentText: the exact text beside the checkbox;
+ * lang: the page's language, so the reply goes out in it.
  */
-export function crmPayload({ landing, values, context, ids, consentText, variant }) {
+export function crmPayload({ landing, values, context, ids, consentText, variant, lang = 'en' }) {
   const { servicio, formulario } = CRM_FORMS[landing]
   // Both optional: the field takes a company name or a website, and the open
   // answer may be empty (the CRM accepts `mensaje` missing).
@@ -39,7 +40,7 @@ export function crmPayload({ landing, values, context, ids, consentText, variant
     // counts a double click once.
     abierto_en: context.mountedAt,
     id_envio: context.eventId,
-    idioma: 'en',
+    idioma: lang,
     pagina: window.location.href,
     referrer: orNothing(attribution.referrer),
     utm_source: orNothing(attribution.utm_source),

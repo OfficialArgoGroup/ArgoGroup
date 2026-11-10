@@ -5,7 +5,8 @@ import { cleanPhone, EMAIL_RE } from '../shared/fields.js'
 import { sendLead } from '../shared/submit.js'
 import { setTrackingContext, track, trackingActive } from '../shared/tracking.js'
 import { useMetaConsentBox } from '../shared/useMetaConsentBox.js'
-import { form as copy, PRIVACY_URL, WHATSAPP_URL } from './copy.js'
+import { useCopy } from './copy.js'
+import { landingPath, useLang } from '../shared/lang.js'
 
 // One step, typed fields, the same shape as the /growth form so both landings
 // send the same lead to the CRM (shared/crm.js; `servicio` and `formulario`
@@ -20,9 +21,8 @@ const REQUIRED = ['name', 'email', 'whatsapp', 'consent']
 const MAX_ANSWER = 5000
 const MIN_FILL_MS = 3000
 const ATTRIBUTION_KEY = 'argo_systems_attribution'
-const THANK_YOU = '/systems/thank-you'
 
-function errorFor(name, values) {
+function errorFor(name, values, copy) {
   switch (name) {
     case 'name': return values.name.trim() ? null : copy.added.errName
     case 'email': return EMAIL_RE.test(values.email.trim()) ? null : copy.added.errEmail
@@ -33,6 +33,7 @@ function errorFor(name, values) {
 }
 
 function Field({ name, label, required, help, error, textarea, more, ...rest }) {
+  const { form: copy } = useCopy()
   const id = `f-${name}`
   const describedBy = [help && `${id}-help`, error && `${id}-error`].filter(Boolean).join(' ') || undefined
   const control = {
@@ -60,6 +61,9 @@ function Field({ name, label, required, help, error, textarea, more, ...rest }) 
 }
 
 export default function LeadForm() {
+  const lang = useLang()
+  const { form: copy, PRIVACY_URL, WHATSAPP_URL } = useCopy()
+  const thankYou = `${landingPath('systems', lang)}/thank-you`
   const [values, setValues] = useState({ ...EMPTY, consent: false })
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle')
@@ -91,13 +95,13 @@ export default function LeadForm() {
     const next = { ...values, [name]: value }
     setValues(next)
     // Only re-check a field already showing an error, so typing never raises one mid-word.
-    if (errors[name]) setErrors((current) => ({ ...current, [name]: errorFor(name, next) }))
+    if (errors[name]) setErrors((current) => ({ ...current, [name]: errorFor(name, next, copy) }))
   }
 
   const blur = (event) => {
     const { name, value } = event.target
     if (!value.trim()) return
-    setErrors((current) => ({ ...current, [name]: errorFor(name, values) }))
+    setErrors((current) => ({ ...current, [name]: errorFor(name, values, copy) }))
   }
 
   const fieldProps = (name) => ({
@@ -113,7 +117,7 @@ export default function LeadForm() {
     event.preventDefault()
     if (status === 'sending') return
 
-    const found = Object.fromEntries(ORDER.map((name) => [name, errorFor(name, values)]).filter(([, message]) => message))
+    const found = Object.fromEntries(ORDER.map((name) => [name, errorFor(name, values, copy)]).filter(([, message]) => message))
     setErrors(found)
     const first = ORDER.find((name) => found[name])
     if (first) {
@@ -123,7 +127,7 @@ export default function LeadForm() {
 
     // Bots: fill the hidden field, or post faster than a person can type.
     if (honeypot || !context || Date.now() - context.mountedAt < MIN_FILL_MS) {
-      window.location.assign(THANK_YOU)
+      window.location.assign(thankYou)
       return
     }
 
@@ -135,6 +139,7 @@ export default function LeadForm() {
       context,
       ids,
       consentText: copy.consent.join(''),
+      lang,
     })
 
     setStatus('sending')
@@ -147,7 +152,7 @@ export default function LeadForm() {
         // Give the pixel a moment to send before the page unloads.
         if (trackingActive()) await new Promise((resolve) => setTimeout(resolve, 300))
       }
-      window.location.assign(THANK_YOU)
+      window.location.assign(thankYou)
     } catch {
       setStatus('failed')
     }
@@ -165,7 +170,7 @@ export default function LeadForm() {
     <form ref={formRef} className="lead-form" onSubmit={submit} noValidate data-started={started ? 'true' : undefined} data-more={more ? 'true' : undefined}>
       {/* Fills as the required fields become valid. Decorative: the fields say the rest. */}
       <div className="form-progress" aria-hidden="true">
-        <span style={{ '--p': REQUIRED.filter((name) => !errorFor(name, values)).length / REQUIRED.length }} />
+        <span style={{ '--p': REQUIRED.filter((name) => !errorFor(name, values, copy)).length / REQUIRED.length }} />
       </div>
       <div className="form-grid">
         <Field label={added.name} required autoComplete="name" placeholder={added.phName} {...fieldProps('name')} />

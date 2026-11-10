@@ -7,7 +7,7 @@ import { useFold } from '../shared/useFold.jsx'
 import ThankYou from '../shared/ThankYou.jsx'
 import { SYMBOL_H, SYMBOL_PATH, SYMBOL_W } from './BrandSymbol.jsx'
 import { CtaButton, Dock, Footer, TopBar, WhatsAppIcon } from './chrome.jsx'
-import { about, chrome, finalCta, hero, method, thankYou, WHATSAPP_LINK, WHATSAPP_URL, work } from './copy.js'
+import { useCopy } from './copy.js'
 import FormPanel from './FormPanel.jsx'
 import PlatformMock from './PlatformMock.jsx'
 import Ticker from './Ticker.jsx'
@@ -31,6 +31,7 @@ function Words({ text, goldFrom = Infinity, wideTail = false }) {
 
 /** The three differentiators. */
 function Points({ className = '' }) {
+  const { hero } = useCopy()
   return (
     <ul className={className ? `points ${className}` : 'points'}>
       {hero.points.map(([title, line], index) => (
@@ -91,6 +92,7 @@ export function SystemsPage() {
   const { sheetOpen, openForm, closeForm } = useFormPanel()
   useReveal()
   usePauseOffscreen()
+  const { about, chrome, finalCta, gold, hero, method, WHATSAPP_URL, work } = useCopy()
   // Phones: the long parts of sections 2–4 fold behind "See more".
   const { fold, seeMore } = useFold(chrome.added)
 
@@ -134,7 +136,7 @@ export function SystemsPage() {
         <section className="section tone-light" aria-labelledby="work-title" {...fold('work')}>
           <div className="wrap content">
             <p className="bridge" data-reveal=""><Marked text={work.bridge} /></p>
-            <h2 id="work-title" className="section-title" data-reveal="words"><Words text={work.title} goldFrom={lastWords(work.title, 1)} /></h2>
+            <h2 id="work-title" className="section-title" data-reveal="words"><Words text={work.title} goldFrom={lastWords(work.title, gold.work)} /></h2>
             <PlatformMock mock={work.mock} />
             <WorkList items={work.items} />
             <p className="focus" data-reveal="clip">{work.closing}</p>
@@ -187,7 +189,7 @@ export function SystemsPage() {
         {/* 5 · Close */}
         <section className="section tone-dark final plate" aria-labelledby="final-title" data-reveal="plate">
           <div className="wrap content">
-            <h2 id="final-title" className="section-title" data-reveal="words"><Words text={finalCta.title} goldFrom={lastWords(finalCta.title, 4)} /></h2>
+            <h2 id="final-title" className="section-title" data-reveal="words"><Words text={finalCta.title} goldFrom={lastWords(finalCta.title, gold.final)} /></h2>
             <p className="lead" data-reveal="">{finalCta.sub}</p>
             <CtaButton className="final-cta btn-boom" onOpen={openForm}>{finalCta.button}</CtaButton>
             <p className="contact">
@@ -209,6 +211,7 @@ export function SystemsPage() {
 /** /systems/thank-you. Same bar and style, no navigation, no calendar. */
 export function SystemsThankYou() {
   const cookies = useCookieBanner()
+  const { thankYou, WHATSAPP_LINK, WHATSAPP_URL } = useCopy()
   // No scroll reveals here; it tells boot.js the page script ran, so motion stays on.
   useReveal()
 

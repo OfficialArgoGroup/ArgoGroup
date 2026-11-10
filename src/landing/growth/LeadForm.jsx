@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { captureAttribution, metaIds, newEventId } from '../shared/attribution.js'
 import { Vary } from './chrome.jsx'
-import { form as copy, PRIVACY_URL, WHATSAPP_URL } from './copy.js'
+import { useCopy } from './copy.js'
+import { useLang } from '../shared/lang.js'
 import { crmPayload } from '../shared/crm.js'
 import { cleanPhone, EMAIL_RE } from '../shared/fields.js'
 import { sendLead } from '../shared/submit.js'
@@ -23,14 +24,14 @@ const MIN_FILL_MS = 3000
 
 // The open question per variant, grouped like the hero's text so CSS can show
 // the right one from the first paint (the form is above the fold on desktop).
-const QUESTIONS = Object.entries(
-  Object.entries(copy.openQuestion).reduce((byText, [key, text]) => {
+const groupQuestions = (openQuestion) => Object.entries(
+  Object.entries(openQuestion).reduce((byText, [key, text]) => {
     byText[text] = byText[text] ? `${byText[text]} ${key}` : key
     return byText
   }, {}),
 ).map(([text, keys]) => [keys, text])
 
-function errorFor(name, values) {
+function errorFor(name, values, copy) {
   switch (name) {
     case 'name': return values.name.trim() ? null : copy.added.errName
     case 'email': return EMAIL_RE.test(values.email.trim()) ? null : copy.errors.email
@@ -41,6 +42,7 @@ function errorFor(name, values) {
 }
 
 function Field({ name, label, required, help, error, textarea, more, ...rest }) {
+  const { form: copy } = useCopy()
   const id = `f-${name}`
   const describedBy = [help && `${id}-help`, error && `${id}-error`].filter(Boolean).join(' ') || undefined
   const control = {
@@ -68,6 +70,9 @@ function Field({ name, label, required, help, error, textarea, more, ...rest }) 
 }
 
 export default function LeadForm() {
+  const lang = useLang()
+  const { form: copy, PRIVACY_URL, WHATSAPP_URL } = useCopy()
+  const questions = groupQuestions(copy.openQuestion)
   const variantKey = useVariantKey()
   const [values, setValues] = useState({ ...EMPTY, consent: false })
   const [errors, setErrors] = useState({})
@@ -100,13 +105,13 @@ export default function LeadForm() {
     const next = { ...values, [name]: value }
     setValues(next)
     // Only re-check a field already showing an error, so typing never raises one mid-word.
-    if (errors[name]) setErrors((current) => ({ ...current, [name]: errorFor(name, next) }))
+    if (errors[name]) setErrors((current) => ({ ...current, [name]: errorFor(name, next, copy) }))
   }
 
   const blur = (event) => {
     const { name, value } = event.target
     if (!value.trim()) return
-    setErrors((current) => ({ ...current, [name]: errorFor(name, values) }))
+    setErrors((current) => ({ ...current, [name]: errorFor(name, values, copy) }))
   }
 
   const fieldProps = (name) => ({
@@ -122,7 +127,7 @@ export default function LeadForm() {
     event.preventDefault()
     if (status === 'sending') return
 
-    const found = Object.fromEntries(ORDER.map((name) => [name, errorFor(name, values)]).filter(([, message]) => message))
+    const found = Object.fromEntries(ORDER.map((name) => [name, errorFor(name, values, copy)]).filter(([, message]) => message))
     setErrors(found)
     const first = ORDER.find((name) => found[name])
     if (first) {
@@ -130,7 +135,7 @@ export default function LeadForm() {
       return
     }
 
-    const destination = thankYouUrl(variantKey)
+    const destination = thankYouUrl(variantKey, lang)
 
     // Bots: fill the hidden field, or post faster than a person can type.
     if (honeypot || !context || Date.now() - context.mountedAt < MIN_FILL_MS) {
@@ -147,6 +152,7 @@ export default function LeadForm() {
       ids,
       consentText: copy.consent.join(''),
       variant: variantKey,
+      lang,
     })
 
     setStatus('sending')
@@ -175,7 +181,7 @@ export default function LeadForm() {
     <form ref={formRef} className="lead-form" onSubmit={submit} noValidate data-started={started ? 'true' : undefined} data-more={more ? 'true' : undefined}>
       {/* Fills as the required fields become valid. Decorative: the fields say the rest. */}
       <div className="form-progress" aria-hidden="true">
-        <span style={{ '--p': REQUIRED.filter((name) => !errorFor(name, values)).length / REQUIRED.length }} />
+        <span style={{ '--p': REQUIRED.filter((name) => !errorFor(name, values, copy)).length / REQUIRED.length }} />
       </div>
       <div className="form-grid">
         <Field label={copy.added.name} required autoComplete="name" placeholder={copy.added.phName} {...fieldProps('name')} />
@@ -186,7 +192,7 @@ export default function LeadForm() {
         )}
         {/* Plain text, not inputMode="url": a company name needs the space bar. */}
         <Field label={copy.added.website} more autoComplete="organization" placeholder={copy.added.phWebsite} help={copy.help.website} {...fieldProps('website')} />
-        <Field label={<Vary options={QUESTIONS} />} more textarea maxLength={MAX_ANSWER} placeholder={copy.placeholder} {...fieldProps('open_answer')} />
+        <Field label={<Vary options={questions} />} more textarea maxLength={MAX_ANSWER} placeholder={copy.placeholder} {...fieldProps('open_answer')} />
       </div>
 
       <div className="field">

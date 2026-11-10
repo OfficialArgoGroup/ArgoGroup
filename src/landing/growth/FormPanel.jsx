@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { chrome, form } from './copy.js'
+import { useCopy } from './copy.js'
 import LeadForm from './LeadForm.jsx'
 import { DOCKED_FORM } from '../shared/useFormPanel.js'
 
@@ -42,6 +42,7 @@ function CardFrame({ cardRef }) {
  *   height while it is out, so the page under the sheet does not move.
  */
 export default function FormPanel({ sheetOpen, onClose, children }) {
+  const { chrome, form } = useCopy()
   const slotRef = useRef(null)
   const stageRef = useRef(null)
   const cardRef = useRef(null)

@@ -84,7 +84,7 @@ for (const route of routes) {
   const attr = (value) => value.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')
 
   for (const name of ['growth', 'systems']) {
-    const { meta } = await load('src', 'landing', name, 'copy.js')
+    const { COPY } = await load('src', 'landing', name, 'copy.js')
     // The stylesheet is small; inlining it saves a render-blocking round trip
     // on the mobile connections the ads send people in on.
     const template = readFileSync(join(DIST, `${name}.html`), 'utf8')
@@ -99,12 +99,17 @@ for (const route of routes) {
     }
     if (!template.includes('<style>')) throw new Error(`${name}.html: stylesheet not found to inline`)
 
+    // English at /<name>, Spanish at /<name>/es (src/landing/shared/lang.js).
     const pages = [
-      { path: `/${name}`, file: `${name}.html`, ...meta.landing },
-      { path: `/${name}/thank-you`, file: `${name}/thank-you.html`, ...meta.thankYou },
+      { path: `/${name}`, file: `${name}.html`, lang: 'en', ...COPY.en.meta.landing },
+      { path: `/${name}/thank-you`, file: `${name}/thank-you.html`, lang: 'en', ...COPY.en.meta.thankYou },
+      { path: `/${name}/es`, file: `${name}/es.html`, lang: 'es', ...COPY.es.meta.landing },
+      { path: `/${name}/es/thank-you`, file: `${name}/es/thank-you.html`, lang: 'es', ...COPY.es.meta.thankYou },
     ]
+    if (!template.includes('<html lang="en"')) throw new Error(`${name}.html: <html lang="en"> not found`)
     for (const page of pages) {
       write(page.file, template
+        .replace('<html lang="en"', () => `<html lang="${page.lang}"`)
         .replace('<!--landing-head-->', () => `<title>${attr(page.title)}</title>\n    <meta name="description" content="${attr(page.description)}" />`)
         .replace('<!--landing-boot-->', () => `<script>${boot}</script>`)
         .replace(APP_HTML, () => renderLanding(page.path)))

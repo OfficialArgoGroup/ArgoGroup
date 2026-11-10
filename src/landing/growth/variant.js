@@ -6,6 +6,7 @@
 // question) depends on this, so the swap is never seen.
 
 import { useSyncExternalStore } from 'react'
+import { landingPath } from '../shared/lang.js'
 
 export const DEFAULT_VARIANT = '1b'
 
@@ -26,7 +27,7 @@ export function splitVariant(key) {
 }
 
 /** Thank-you URL carrying the variant the lead came in on. */
-export function thankYouUrl(key) {
+export function thankYouUrl(key, lang = 'en') {
   const { variant, headline } = splitVariant(key)
-  return `/growth/thank-you?v=${variant}${headline ? `&h=${headline}` : ''}`
+  return `${landingPath('growth', lang)}/thank-you?v=${variant}${headline ? `&h=${headline}` : ''}`
 }

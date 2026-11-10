@@ -4,6 +4,12 @@
 // Where the layout needed text the brief does not give (form labels, a few
 // errors, the sheet's Close), it is grouped under `added` keys so it is easy
 // to review before publishing.
+//
+// Spanish (/growth/es) lives in copy.es.js, key for key; components read the
+// page's language through useCopy() at the end of this file.
+
+import { useLang } from '../shared/lang.js'
+import * as es from './copy.es.js'
 
 export const WHATSAPP_URL =
   'https://wa.me/34685162838?text=Hi%2C%20I%20saw%20your%20ad%20about%20the%20free%20diagnosis%20call.'
@@ -207,3 +213,14 @@ export const meta = {
     description: thankYou.sub,
   },
 }
+
+// How many of each title's last words are gold (GrowthPage.jsx).
+export const gold = { work: 2, method: 6, about: 3, final: 2 }
+
+// ── Languages ───────────────────────────────────────────────────────────────
+const en = { WHATSAPP_URL, PRIVACY_URL, TERMS_URL, CTA, WHATSAPP_LINK, hero, work, method, about, finalCta, form, chrome, thankYou, meta, gold }
+
+export const COPY = { en, es }
+
+/** All of this landing's copy, in the page's language (shared/lang.js). */
+export const useCopy = () => COPY[useLang()]

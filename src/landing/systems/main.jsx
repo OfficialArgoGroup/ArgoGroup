@@ -6,12 +6,19 @@ import './systems.css'
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import { startPageTracking } from '../shared/tracking.js'
+import { LangContext, langFromPath } from '../shared/lang.js'
 import { SystemsPage, SystemsThankYou } from './SystemsPage.jsx'
 
 const isThankYou = window.location.pathname.replace(/\/+$/, '').endsWith('/thank-you')
+// /systems/es: Spanish. The prerendered page already says so; `vite dev` serves the
+// English shell, so set it here too.
+const lang = langFromPath(window.location.pathname)
+document.documentElement.lang = lang
 const app = (
   <StrictMode>
-    {isThankYou ? <SystemsThankYou /> : <SystemsPage />}
+    <LangContext.Provider value={lang}>
+      {isThankYou ? <SystemsThankYou /> : <SystemsPage />}
+    </LangContext.Provider>
   </StrictMode>
 )
 

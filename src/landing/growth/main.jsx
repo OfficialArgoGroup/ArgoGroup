@@ -7,11 +7,18 @@ import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import { GrowthPage, GrowthThankYou } from './GrowthPage.jsx'
 import { startPageTracking } from '../shared/tracking.js'
+import { LangContext, langFromPath } from '../shared/lang.js'
 
 const isThankYou = window.location.pathname.replace(/\/+$/, '').endsWith('/thank-you')
+// /growth/es: Spanish. The prerendered page already says so; `vite dev` serves the
+// English shell, so set it here too.
+const lang = langFromPath(window.location.pathname)
+document.documentElement.lang = lang
 const app = (
   <StrictMode>
-    {isThankYou ? <GrowthThankYou /> : <GrowthPage />}
+    <LangContext.Provider value={lang}>
+      {isThankYou ? <GrowthThankYou /> : <GrowthPage />}
+    </LangContext.Provider>
   </StrictMode>
 )
 

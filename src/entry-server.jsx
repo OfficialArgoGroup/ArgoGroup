@@ -17,6 +17,7 @@ import TermsOfService from './pages/TermsOfService.jsx'
 import ThankYou from './pages/ThankYou.jsx'
 import { GrowthPage, GrowthThankYou } from './landing/growth/GrowthPage.jsx'
 import { SystemsPage, SystemsThankYou } from './landing/systems/SystemsPage.jsx'
+import { LangContext, langFromPath } from './landing/shared/lang.js'
 
 const noop = () => {}
 
@@ -58,15 +59,20 @@ const LANDINGS = {
   systems: { page: SystemsPage, thankYou: SystemsThankYou },
 }
 
-/** '/growth' → the landing, '/growth/thank-you' → its thank-you page. */
+/**
+ * '/growth' → the landing, '/growth/thank-you' → its thank-you page; the same
+ * under '/growth/es' in Spanish (landing/shared/lang.js).
+ */
 export function renderLanding(url) {
-  const [, name, thanks] = url.match(/^\/([a-z]+)(\/thank-you)?$/) || []
+  const [, name, , thanks] = url.match(/^\/([a-z]+)(\/es)?(\/thank-you)?$/) || []
   const landing = LANDINGS[name]
   if (!landing) throw new Error(`No landing for ${url}`)
   const Page = thanks ? landing.thankYou : landing.page
   return renderToString(
     <StrictMode>
-      <Page />
+      <LangContext.Provider value={langFromPath(url)}>
+        <Page />
+      </LangContext.Provider>
     </StrictMode>,
   )
 }

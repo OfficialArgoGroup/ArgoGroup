@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import BrandSymbol from './BrandSymbol.jsx'
-import { chrome, CTA, PRIVACY_URL, TERMS_URL, WHATSAPP_URL } from './copy.js'
+import { useCopy } from './copy.js'
 
 /** Text that differs per ad variant. CSS shows the span matching <html data-variant>. */
 export function Vary({ options }) {
@@ -14,13 +14,14 @@ export function Vary({ options }) {
  * before hydration; once hydrated, `onOpen` takes over (focus the docked form
  * on desktop, open the bottom sheet on phones).
  */
-export function CtaButton({ children = CTA, className = '', onOpen }) {
+export function CtaButton({ children, className = '', onOpen }) {
+  const { CTA } = useCopy()
   const open = (event) => {
     if (!onOpen) return
     event.preventDefault()
     onOpen()
   }
-  return <a className={`btn ${className}`} href="#form" onClick={open}>{children}</a>
+  return <a className={`btn ${className}`} href="#form" onClick={open}>{children ?? CTA}</a>
 }
 
 /** Chat bubble with a handset: reads as WhatsApp without using its logo file. */
@@ -39,6 +40,7 @@ export function WhatsAppIcon() {
  * readers get the plain text.
  */
 function Cities() {
+  const { chrome } = useCopy()
   const [from, to] = chrome.cities.split(' · ')
   return (
     <span className="cities">
@@ -51,6 +53,7 @@ function Cities() {
 }
 
 export function TopBar() {
+  const { chrome } = useCopy()
   return (
     <header className="topbar">
       <div className="wrap topbar-inner">
@@ -62,6 +65,7 @@ export function TopBar() {
 }
 
 export function Footer({ onCookies }) {
+  const { chrome, PRIVACY_URL, TERMS_URL } = useCopy()
   const { copyright, privacy, terms, cookies } = chrome.footer
   return (
     <footer className="footer">
@@ -115,6 +119,7 @@ function useStickyCta(enabled) {
  * pieces never cover each other: WhatsApp button, sticky CTA, cookie bar.
  */
 export function Dock({ cookies, onOpenForm, sheetOpen = false }) {
+  const { chrome, PRIVACY_URL, WHATSAPP_URL } = useCopy()
   const stickyVisible = useStickyCta(Boolean(onOpenForm)) && !sheetOpen
   // Client only: see the cookie bar below.
   const [running, setRunning] = useState(false)

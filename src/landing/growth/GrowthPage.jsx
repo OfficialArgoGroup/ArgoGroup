@@ -1,6 +1,6 @@
 import { SYMBOL_H, SYMBOL_PATH, SYMBOL_W } from './BrandSymbol.jsx'
 import { CtaButton, Dock, Footer, TopBar, WhatsAppIcon } from './chrome.jsx'
-import { about, chrome, finalCta, hero, method, thankYou, WHATSAPP_LINK, WHATSAPP_URL, work } from './copy.js'
+import { useCopy } from './copy.js'
 import FormPanel from './FormPanel.jsx'
 import ThankYou from '../shared/ThankYou.jsx'
 import Ticker from './Ticker.jsx'
@@ -32,11 +32,14 @@ function Words({ text, goldFrom = Infinity, wideTail = false }) {
 // keeps its first sentence, and its gold sentence moves above the form
 // (copy.js, hero.narrow).
 const SPLIT = '1b'
-const splitText = hero.headlines.find(([keys]) => keys === SPLIT)[1]
-const SPLIT_TAIL = splitText.slice(splitText.lastIndexOf('. ') + 2)
+const splitTail = (hero) => {
+  const text = hero.headlines.find(([keys]) => keys === SPLIT)[1]
+  return text.slice(text.lastIndexOf('. ') + 2)
+}
 
 /** The three differentiators. */
 function Points({ className = '' }) {
+  const { hero } = useCopy()
   return (
     <ul className={className ? `points ${className}` : 'points'}>
       {hero.points.map(([title, line], index) => (
@@ -93,6 +96,7 @@ export function GrowthPage() {
   const { sheetOpen, openForm, closeForm } = useFormPanel()
   useReveal()
   usePauseOffscreen()
+  const { about, chrome, finalCta, gold, hero, method, WHATSAPP_URL, work } = useCopy()
   // Phones: the long parts of sections 2–4 fold behind "See more".
   const { fold, seeMore } = useFold(chrome.added)
 
@@ -129,7 +133,7 @@ export function GrowthPage() {
           {/* Phones and portrait tablets: what left the hero, just above the
               form (the 1b gold sentence shows for 1b only, growth.css). */}
           <div className="form-intro only-narrow">
-            <p className="moved-line">{SPLIT_TAIL}</p>
+            <p className="moved-line">{splitTail(hero)}</p>
             <Points />
           </div>
         </FormPanel>
@@ -140,7 +144,7 @@ export function GrowthPage() {
         <section className="section tone-light" aria-labelledby="work-title" {...fold('work')}>
           <div className="wrap content">
             <p className="bridge" data-reveal="">{work.bridge}</p>
-            <h2 id="work-title" className="section-title" data-reveal="words"><Words text={work.title} goldFrom={lastWords(work.title, 2)} /></h2>
+            <h2 id="work-title" className="section-title" data-reveal="words"><Words text={work.title} goldFrom={lastWords(work.title, gold.work)} /></h2>
             <WorkList items={work.items} />
             {seeMore('work')}
           </div>
@@ -149,7 +153,7 @@ export function GrowthPage() {
         {/* 3 · Method */}
         <section className="section tone-dark plate" aria-labelledby="method-title" data-reveal="plate" {...fold('method')}>
           <div className="wrap content">
-            <h2 id="method-title" className="section-title" data-reveal="words"><Words text={method.title} goldFrom={lastWords(method.title, 6)} /></h2>
+            <h2 id="method-title" className="section-title" data-reveal="words"><Words text={method.title} goldFrom={lastWords(method.title, gold.method)} /></h2>
             <p className="lead" data-reveal="">{method.intro}</p>
             <ol className="steps">
               {method.steps.map(([title, text], index) => (
@@ -175,7 +179,7 @@ export function GrowthPage() {
         {/* 4 · Who we are */}
         <section className="section tone-light" aria-labelledby="about-title" {...fold('about')}>
           <div className="wrap content">
-            <h2 id="about-title" className="section-title" data-reveal="words"><Words text={about.title} goldFrom={lastWords(about.title, 3)} /></h2>
+            <h2 id="about-title" className="section-title" data-reveal="words"><Words text={about.title} goldFrom={lastWords(about.title, gold.about)} /></h2>
             <p className="lead" data-reveal="">{about.intro}</p>
             <ul className="rows">
               {about.rows.map(([title, text], index) => (
@@ -191,7 +195,7 @@ export function GrowthPage() {
         {/* 5 · Close */}
         <section className="section tone-dark final plate" aria-labelledby="final-title" data-reveal="plate">
           <div className="wrap content">
-            <h2 id="final-title" className="section-title" data-reveal="words"><Words text={finalCta.title} goldFrom={lastWords(finalCta.title, 2)} /></h2>
+            <h2 id="final-title" className="section-title" data-reveal="words"><Words text={finalCta.title} goldFrom={lastWords(finalCta.title, gold.final)} /></h2>
             <p className="lead" data-reveal="">{finalCta.sub}</p>
             <CtaButton className="final-cta btn-boom" onOpen={openForm}>{finalCta.button}</CtaButton>
             <p className="contact">
@@ -213,6 +217,7 @@ export function GrowthPage() {
 /** /growth/thank-you. Same bar and style, no navigation, no calendar. */
 export function GrowthThankYou() {
   const cookies = useCookieBanner()
+  const { thankYou, WHATSAPP_LINK, WHATSAPP_URL } = useCopy()
   // No scroll reveals here; it tells boot.js the page script ran, so motion stays on.
   useReveal()
 
