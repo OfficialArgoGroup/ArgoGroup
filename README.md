@@ -32,6 +32,10 @@ Abre la dirección que imprime (normalmente http://localhost:5173). Al guardar u
 
 En local el formulario no llega al CRM y no se envía nada a Meta: las claves solo existen en Cloudflare (ver [Claves](#claves-secrets)).
 
+### Mantenerlo al día
+
+Si abres el proyecto con Claude Code, cada vez que empiezas una sesión descarga lo nuevo de GitHub (`.claude/hooks/sync.mjs`). Si en tu ordenador no hay cambios a medias, pone tu rama al día él solo. Nunca sube nada: para que el otro vea tu trabajo, tienes que hacer commit y push (o pedírselo a Claude). Sin Claude Code, haz `git pull` antes de empezar.
+
 ### Comandos
 
 | Comando | Qué hace |

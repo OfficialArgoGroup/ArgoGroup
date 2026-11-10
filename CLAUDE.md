@@ -4,6 +4,10 @@ Instrucciones para Claude Code en este repo. Lo usan Arnau y Hugo, cada uno en s
 
 Lee primero el [README](README.md): cómo arrancar la web, dónde está cada cosa, cómo se publica, las claves y las ramas abiertas.
 
+## Al abrir el proyecto
+
+Al empezar cada sesión, `.claude/hooks/sync.mjs` descarga lo nuevo de GitHub. Si es seguro, también pone al día la rama actual: solo avanza (*fast-forward*), solo cuando no hay cambios locales ni commits sin subir, y nunca sube nada. Si su mensaje dice que ha traído cambios, que hay algo pendiente o que hace falta `npm install`, cuéntaselo al usuario en una o dos líneas al principio de tu primera respuesta. Si no ha podido actualizar la rama, no lo arregles por tu cuenta (merge, rebase, stash): pregunta.
+
 ## Reglas
 
 - **`main` es producción.** Todo lo que entra en `main` se publica solo en www.groupargous.com. Nunca hagas commit ni push directamente a `main`. Trabaja en una rama y pasa a `main` con un pull request que revise una persona.
