@@ -8,9 +8,10 @@ import { site } from '../site.js'
 /**
  * The contact panel: direct channels on one side, the form on the other.
  * Shared by the homepage section and the /contact route, which differ only in
- * their copy and in whether the heading is the page's H1.
+ * their copy and in whether the heading is the page's H1. A service page
+ * passes its `servicio` for the CRM (src/services.js).
  */
-export default function ContactCard({ eyebrow, title, accent, sub, heading = 'h2' }) {
+export default function ContactCard({ eyebrow, title, accent, sub, heading = 'h2', servicio }) {
   const { t } = useLang()
   const Heading = heading
 
@@ -51,7 +52,7 @@ export default function ContactCard({ eyebrow, title, accent, sub, heading = 'h2
       </div>
 
       <div className="contact-form-wrap">
-        <ContactForm />
+        <ContactForm servicio={servicio} />
       </div>
     </Reveal>
   )

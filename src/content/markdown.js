@@ -5,6 +5,7 @@
 
 import { site, canonicalFor, markdownPathFor, routes } from '../site.js'
 import { translations } from '../i18n.js'
+import { SERVICE_PAGES } from '../services.js'
 import { htmlToMarkdown } from './htmlToMarkdown.js'
 
 const joinBlocks = (blocks) => blocks.filter(Boolean).join('\n\n').replace(/\n{3,}/g, '\n\n').trim() + '\n'
@@ -32,19 +33,14 @@ function homeBody(t) {
   blocks.push(`${t.hero.sub}. ${t.hero.sub2}. We work from Barcelona and Miami, with clients worldwide.`)
   blocks.push(t.hero.stats.map((s) => `- **${s.value}** — ${s.label}`).join('\n'))
 
+  // The homepage only introduces each service; the detail is on its page.
   blocks.push(`## ${t.services.title}`)
-  for (const service of t.services.items) {
+  t.services.items.forEach((service, index) => {
     blocks.push(`### ${service.title}`)
-    blocks.push(`_${service.subtitle}_`)
-    for (const section of service.sections) {
-      if (section.heading) blocks.push(`#### ${section.heading}`)
-      if (section.headline) blocks.push(`${section.headline}`)
-      blocks.push(section.items.map((item) => `- ${item}`).join('\n'))
-    }
-  }
+    blocks.push(`${service.summary}. ${t.services.more}: ${canonicalFor(SERVICE_PAGES[index].path)}`)
+  })
 
-  blocks.push(`## ${t.methodology.title}`)
-  blocks.push(t.methodology.items.map((item) => `### ${item.number}. ${item.title}\n\n${item.desc}`).join('\n\n'))
+  blocks.push(...methodBlocks(t, t.methodology.items))
 
   blocks.push(`## ${t.whyArgo.title}`)
   blocks.push(t.whyArgo.intro.join('\n\n'))
@@ -63,6 +59,34 @@ function homeBody(t) {
   ].join('\n'))
 
   return blocks
+}
+
+function methodBlocks(t, items) {
+  return [
+    `## ${t.methodology.title}`,
+    items.map((item) => `### ${item.number}. ${item.title}\n\n${item.desc}`).join('\n\n'),
+  ]
+}
+
+function serviceBody(index) {
+  return (t) => {
+    const service = t.services.items[index]
+    const blocks = [`## ${service.title}`, `_${service.subtitle}_`]
+    for (const section of service.sections) {
+      blocks.push(`### ${section.heading}`)
+      blocks.push(section.headline)
+      blocks.push(section.items.map((item) => `- ${item}`).join('\n'))
+    }
+    blocks.push(...methodBlocks(t, service.method ?? t.methodology.items))
+    blocks.push(`## ${t.homeContact.title}`)
+    blocks.push(t.homeContact.sub)
+    blocks.push([
+      `- Contact form: ${canonicalFor(SERVICE_PAGES[index].path)} (on this page) or ${canonicalFor('/contact')}`,
+      `- Email: ${site.email}`,
+      `- WhatsApp: ${site.whatsapp}`,
+    ].join('\n'))
+    return blocks
+  }
 }
 
 function aboutBody(t) {
@@ -117,6 +141,7 @@ function thankYouBody(t) {
 const BUILDERS = {
   '/': homeBody,
   '/about': aboutBody,
+  ...Object.fromEntries(SERVICE_PAGES.map((page, index) => [page.path, serviceBody(index)])),
   '/contact': contactBody,
   '/thank-you': thankYouBody,
 }

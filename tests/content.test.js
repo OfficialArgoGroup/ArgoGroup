@@ -6,6 +6,7 @@ import { llmsTxt, markdownFor } from '../src/content/markdown.js'
 import { buildJsonLd, serializeJsonLd } from '../src/seo/jsonld.js'
 import { canonicalFor, markdownPathFor, routes, site } from '../src/site.js'
 import { translations } from '../src/i18n.js'
+import { SERVICE_PAGES } from '../src/services.js'
 
 // ── htmlToMarkdown ─────────────────────────────────────────────────────────
 
@@ -160,4 +161,23 @@ test('serializeJsonLd escapes characters that could break out of a script tag', 
   assert.ok(!serialized.includes('>'))
   assert.ok(!serialized.includes('&'))
   assert.equal(JSON.parse(serialized).name, '</script><b>&')
+})
+
+// ── service pages ──────────────────────────────────────────────────────────
+
+test('every service has a page, and English and Spanish have the same steps', () => {
+  assert.equal(SERVICE_PAGES.length, translations.en.services.items.length)
+  assert.equal(SERVICE_PAGES.length, translations.es.services.items.length)
+  translations.en.services.items.forEach((service, index) => {
+    const es = translations.es.services.items[index]
+    assert.equal(Boolean(service.method), Boolean(es.method), `${service.title}: own steps in one language only`)
+    if (service.method) assert.equal(service.method.length, es.method.length)
+  })
+})
+
+test('service pages send a service value the CRM accepts', () => {
+  // The values in the CRM contract (tests/lead.test.js checks the same list).
+  for (const page of SERVICE_PAGES) {
+    assert.ok(['marketing_digital', 'sistemas_ia', 'ambos', 'otro'].includes(page.crm), `${page.path}: ${page.crm}`)
+  }
 })

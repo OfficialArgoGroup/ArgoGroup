@@ -4,6 +4,7 @@
 
 import { site, canonicalFor } from '../site.js'
 import { translations } from '../i18n.js'
+import { SERVICE_PAGES } from '../services.js'
 
 const postalAddress = (loc) => ({
   '@type': 'PostalAddress',
@@ -53,10 +54,12 @@ const organization = (t) => ({
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: t.services.title,
-    itemListElement: t.services.items.map((service) => ({
+    itemListElement: t.services.items.map((service, index) => ({
       '@type': 'Offer',
       itemOffered: {
         '@type': 'Service',
+        '@id': `${canonicalFor(SERVICE_PAGES[index].path)}#service`,
+        url: canonicalFor(SERVICE_PAGES[index].path),
         name: service.title,
         description: service.subtitle,
         provider: { '@id': `${site.origin}/#organization` },
@@ -127,14 +130,19 @@ const PAGE_TYPES = {
  */
 export function buildJsonLd(path, meta, lang = 'en') {
   const t = translations[lang] || translations.en
+  const servicePage = SERVICE_PAGES.find((page) => page.path === path)
   const graph = [
     organization(t),
     website(t),
-    webPage(path, {
-      type: (PAGE_TYPES[path] || {}).type || 'WebPage',
-      name: meta.title,
-      description: meta.description,
-    }),
+    {
+      ...webPage(path, {
+        type: (PAGE_TYPES[path] || {}).type || 'WebPage',
+        name: meta.title,
+        description: meta.description,
+      }),
+      // A service's page is about that service, not the organization.
+      ...(servicePage ? { about: { '@id': `${canonicalFor(path)}#service` } } : {}),
+    },
   ]
   if (path === '/') graph.push(faqPage(t))
   return { '@context': 'https://schema.org', '@graph': graph }

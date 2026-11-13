@@ -9,6 +9,7 @@ import { test } from 'node:test'
 
 import { canonicalFor, markdownPathFor, routes, site } from '../src/site.js'
 import { translations } from '../src/i18n.js'
+import { SERVICE_PAGES } from '../src/services.js'
 
 const DIST = resolve(dirname(fileURLToPath(import.meta.url)), '..', 'dist')
 
@@ -138,6 +139,31 @@ test('the homepage renders its service and FAQ copy into the raw HTML', () => {
     assert.ok(text.includes(service.title), `raw HTML is missing service: ${service.title}`)
   }
   assert.ok(text.includes(translations.en.faq.items[0].q), 'raw HTML is missing the FAQ')
+})
+
+test('the homepage links each service block to its own page', () => {
+  const html = htmlFor('/')
+  for (const page of SERVICE_PAGES) {
+    assert.match(html, new RegExp(`<a[^>]+class="service-tab service-link"[^>]+href="${page.path}"`), `missing link to ${page.path}`)
+  }
+})
+
+test('each service page has its cards, its own «How we operate» and the contact form', () => {
+  const t = translations.en
+  SERVICE_PAGES.forEach((page, index) => {
+    const service = t.services.items[index]
+    const html = htmlFor(page.path)
+    const text = visibleText(html)
+    assert.match(html, new RegExp(`<h1[^>]*>${service.title}</h1>`), `${page.path}: the service is the H1`)
+    for (const section of service.sections) {
+      assert.ok(text.includes(section.heading), `${page.path}: missing card ${section.heading}`)
+    }
+    for (const step of service.method ?? t.methodology.items) {
+      assert.ok(text.includes(step.desc), `${page.path}: missing step ${step.title}`)
+    }
+    assert.ok(html.indexOf('id="how-we-operate"') < html.indexOf('id="contact"'), `${page.path}: steps come before the form`)
+    assert.ok(html.includes('class="form-grid"'), `${page.path}: missing the contact form`)
+  })
 })
 
 test('the app still mounts on a root node with the prerendered markup inside', () => {

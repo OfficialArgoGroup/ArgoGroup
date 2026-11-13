@@ -15,6 +15,8 @@ import ThankYou from './pages/ThankYou'
 import PrivacyPolicy from './pages/PrivacyPolicy'
 import CookiePolicy from './pages/CookiePolicy'
 import TermsOfService from './pages/TermsOfService'
+import ServicePage from './pages/ServicePage'
+import { SERVICE_PAGES } from './services.js'
 import { getConsent } from './lib/consent'
 import { initPixel } from './lib/pixel'
 
@@ -35,6 +37,9 @@ export function AppLayout({ showBanner, setShowBanner }) {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        {SERVICE_PAGES.map((page, index) => (
+          <Route key={page.path} path={page.path} element={<ServicePage index={index} />} />
+        ))}
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/thank-you" element={<ThankYou />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
