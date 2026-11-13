@@ -15,6 +15,8 @@ import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
 import CookiePolicy from './pages/CookiePolicy.jsx'
 import TermsOfService from './pages/TermsOfService.jsx'
 import ThankYou from './pages/ThankYou.jsx'
+import ServicePage from './pages/ServicePage.jsx'
+import { SERVICE_PAGES } from './services.js'
 import { GrowthPage, GrowthThankYou } from './landing/growth/GrowthPage.jsx'
 import { SystemsPage, SystemsThankYou } from './landing/systems/SystemsPage.jsx'
 
@@ -28,6 +30,10 @@ const PAGES = {
   '/privacy-policy': PrivacyPolicy,
   '/cookie-policy': CookiePolicy,
   '/terms-of-service': TermsOfService,
+  ...Object.fromEntries(SERVICE_PAGES.map((page, index) => [
+    page.path,
+    function Service() { return <ServicePage index={index} /> },
+  ])),
 }
 
 /**

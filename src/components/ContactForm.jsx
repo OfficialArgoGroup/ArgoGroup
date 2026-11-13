@@ -25,7 +25,7 @@ const cookie = (name) => {
   return match ? decodeURIComponent(match[1]) : undefined
 }
 
-export default function ContactForm() {
+export default function ContactForm({ servicio = 'otro' }) {
   const navigate = useNavigate()
   const { t, lang } = useLang()
   const f = t.contactForm
@@ -102,9 +102,10 @@ export default function ContactForm() {
       email: values.email.trim(),
       telefono: cleanPhone(values.phone) || undefined,
       empresa: values.company.trim() || undefined,
-      // The form does not ask which service; the CRM needs one. The subject
-      // has no field of its own there, so it opens the message.
-      servicio: 'otro',
+      // The form does not ask which service; the CRM needs one. A service
+      // page sends its own (src/services.js), elsewhere it is 'otro'. The
+      // subject has no field of its own there, so it opens the message.
+      servicio,
       mensaje: `${f.subject}: ${values.subject.trim()}\n\n${values.message.trim()}`,
       consentimiento: true,
       consentimiento_texto: `${f.consent} ${f.privacyLink} ${f.consentEnd}`,

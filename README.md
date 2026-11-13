@@ -53,6 +53,7 @@ Si abres el proyecto con Claude Code, cada vez que empiezas una sesión descarga
 | Textos de la web (home, servicios, About, contacto, títulos y descripciones de Google) | `src/i18n.js` |
 | Datos de la empresa (email, teléfono, WhatsApp, dirección web) | `src/site.js` |
 | Secciones de la home y su orden | `src/pages/Home.jsx`, `src/sections.js` |
+| Páginas de cada servicio (`/digital-marketing`, `/ai-technology`, `/creative-brand`): URL y valor `servicio` para el CRM | `src/services.js`, `src/pages/ServicePage.jsx` (textos en `src/i18n.js`) |
 | Páginas | `src/pages/` |
 | Piezas de la página (menú, hero, servicios, formulario, banner de cookies, pie…) | `src/components/` |
 | Estilos | `src/styles/` (+ Tailwind en `tailwind.config.js`) |
@@ -124,3 +125,7 @@ El código lee estas claves, pero **nunca van en el repo** (es público). Están
 - PR #7 `feat/landings-crm`: vista previa antigua, no fusionar.
 - **`hugo/cambios-web`**: cambios de Hugo en la home y las páginas de servicio, encima de `design/web-seria`.
 - **`feat/landings-es`**: versiones en español de las landings (`/growth/es`, `/systems/es`). Los textos están pendientes de revisión: todavía no hay que fusionarla.
+
+## Pendientes
+
+- **CRM: valor propio para Creatividad y marca.** Los contactos que llegan desde `/creative-brand` se envían con `servicio: 'otro'`, porque el CRM (argo-planning) todavía no acepta `creatividad_marca`. Cuando lo acepte, cámbialo en `src/services.js` y en la lista de `tests/content.test.js`. Mientras tanto, el campo `pagina` dice de qué página viene el contacto.

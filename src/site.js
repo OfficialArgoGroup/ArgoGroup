@@ -33,6 +33,9 @@ export const site = {
 export const routes = [
   { path: '/', slug: 'index', sitemap: true, changefreq: 'weekly', priority: '1.0' },
   { path: '/about', slug: 'about', sitemap: true, changefreq: 'monthly', priority: '0.8' },
+  { path: '/digital-marketing', slug: 'digital-marketing', sitemap: true, changefreq: 'monthly', priority: '0.9' },
+  { path: '/ai-technology', slug: 'ai-technology', sitemap: true, changefreq: 'monthly', priority: '0.9' },
+  { path: '/creative-brand', slug: 'creative-brand', sitemap: true, changefreq: 'monthly', priority: '0.9' },
   { path: '/contact', slug: 'contact', sitemap: true, changefreq: 'monthly', priority: '0.9' },
   { path: '/privacy-policy', slug: 'privacy-policy', sitemap: true, changefreq: 'yearly', priority: '0.3' },
   { path: '/cookie-policy', slug: 'cookie-policy', sitemap: true, changefreq: 'yearly', priority: '0.3' },

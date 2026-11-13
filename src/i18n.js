@@ -15,6 +15,21 @@ export const translations = {
           description:
             'Group ARGO is a growth partner for digital marketing and AI technology, working with businesses worldwide from Barcelona and Miami.',
         },
+        '/digital-marketing': {
+          title: 'Digital Marketing | Group ARGO',
+          description:
+            'Ads, SEO, content and email, measured on what each customer costs, not each lead. Request a discovery call.',
+        },
+        '/ai-technology': {
+          title: 'AI Systems and Custom Software | Group ARGO',
+          description:
+            'Your methodology, built into software: internal platforms, CRM and lead follow-up, automation and reporting.',
+        },
+        '/creative-brand': {
+          title: 'Creative and Brand | Group ARGO',
+          description:
+            'A brand people recognize, and creative built to be tested: brand foundations, ad creative, social media and website.',
+        },
         '/contact': {
           title: 'Contact Group ARGO | Growth Digital Marketing & AI Technology',
           description:
@@ -109,6 +124,8 @@ export const translations = {
       // The word the section heading sets in the display serif. Must appear
       // verbatim in `title`; SectionTitle falls back to the plain title if not.
       accent: 'services',
+      // The link on each service block of the homepage, to its own page.
+      more: 'See more',
       items: [
         {
           title: 'Digital marketing',
@@ -146,6 +163,14 @@ export const translations = {
         {
           title: 'AI systems and custom software',
           subtitle: 'Your methodology, built into software',
+          // «How we operate» on this service's page. Without it (digital
+          // marketing) the page uses the general one, t.methodology.items.
+          method: [
+            { number: '01', title: 'Diagnose',             desc: 'Your goals first. Then your processes, your tools, your data and where work gets stuck or done by hand. We ask a lot of questions, and some may move away from what you came to ask for.' },
+            { number: '02', title: 'Decide and design',    desc: 'What to automate, what to connect, what to build from scratch and what to leave as it is. If a tool you already have covers it, we say so.' },
+            { number: '03', title: 'Build',                desc: 'Your platform, CRM and lead follow-up, automations and reporting, connected to the tools you already use, in the order the decision calls for.' },
+            { number: '04', title: 'Measure and optimize', desc: 'Live dashboards on your own systems show what the work is doing: spend, cost per customer, revenue. When your business changes, the system changes with it.' },
+          ],
           sections: [
             {
               heading: 'Internal platforms and applications',
@@ -188,6 +213,12 @@ export const translations = {
         {
           title: 'Creative and brand',
           subtitle: 'A brand people recognize, and creative built to be tested',
+          method: [
+            { number: '01', title: 'Diagnose',             desc: 'Your goals first. Then your brand, the people you sell to, and how your ads, social media and website look today. We ask a lot of questions, and some may move away from what you came to ask for.' },
+            { number: '02', title: 'Decide and design',    desc: 'What your brand needs first: foundations, ad creative, social media or website. If the problem isn\'t the design, we say so.' },
+            { number: '03', title: 'Build',                desc: 'Brand guide, ads, social media and website, designed next to the people running your campaigns, in the order the decision calls for.' },
+            { number: '04', title: 'Measure and optimize', desc: 'Creative tested inside your campaigns: we keep what works, improve what doesn\'t and test again. When your business changes, the brand work changes with it.' },
+          ],
           sections: [
             {
               heading: 'Brand foundations',
@@ -371,6 +402,21 @@ export const translations = {
           description:
             'Group ARGO es un socio de crecimiento en marketing digital y tecnología de IA. Trabajamos desde Barcelona y Miami con clientes de todo el mundo, en inglés y español.',
         },
+        '/digital-marketing': {
+          title: 'Marketing digital | Group ARGO',
+          description:
+            'Anuncios, SEO, contenido y email, medidos por lo que cuesta cada cliente, no cada contacto. Pide una primera llamada.',
+        },
+        '/ai-technology': {
+          title: 'Sistemas de IA y software a medida | Group ARGO',
+          description:
+            'Tu metodología, convertida en software: plataformas internas, CRM y seguimiento de contactos, automatización e informes.',
+        },
+        '/creative-brand': {
+          title: 'Creatividad y marca | Group ARGO',
+          description:
+            'Una marca que se reconoce y creatividades hechas para probarse: bases de marca, anuncios, redes y web.',
+        },
         '/contact': {
           title: 'Contacta con Group ARGO | Marketing digital de crecimiento y tecnología de IA',
           description:
@@ -463,6 +509,7 @@ export const translations = {
       eyebrow: 'Lo que hacemos',
       title: 'Nuestros servicios',
       accent: 'servicios',
+      more: 'Ver más',
       items: [
         {
           title: 'Marketing digital',
@@ -500,6 +547,12 @@ export const translations = {
         {
           title: 'Sistemas de IA y software a medida',
           subtitle: 'Tu metodología, convertida en software',
+          method: [
+            { number: '01', title: 'Diagnosticar',      desc: 'Primero tus objetivos. Después tus procesos, tus herramientas, tus datos y dónde se atasca el trabajo o se hace a mano. Hacemos muchas preguntas, y algunas pueden alejarse de lo que venías a pedir.' },
+            { number: '02', title: 'Decidir y diseñar', desc: 'Qué automatizar, qué conectar, qué construir desde cero y qué dejar como está. Si una herramienta que ya tienes lo cubre, te lo decimos.' },
+            { number: '03', title: 'Construir',         desc: 'Tu plataforma, el CRM y el seguimiento de contactos, las automatizaciones y los informes, conectados a las herramientas que ya usas, en el orden que pide la decisión.' },
+            { number: '04', title: 'Medir y optimizar', desc: 'Paneles en directo sobre tus propios sistemas muestran lo que está pasando: inversión, coste por cliente, ingresos. Cuando tu negocio cambia, el sistema cambia con él.' },
+          ],
           sections: [
             {
               heading: 'Plataformas internas y aplicaciones',
@@ -542,6 +595,12 @@ export const translations = {
         {
           title: 'Creatividad y marca',
           subtitle: 'Una marca que se reconoce y creatividades hechas para probarse',
+          method: [
+            { number: '01', title: 'Diagnosticar',      desc: 'Primero tus objetivos. Después tu marca, las personas a las que vendes y cómo se ven hoy tus anuncios, tus redes y tu web. Hacemos muchas preguntas, y algunas pueden alejarse de lo que venías a pedir.' },
+            { number: '02', title: 'Decidir y diseñar', desc: 'Qué necesita primero tu marca: bases, creatividades para anuncios, redes o web. Si el problema no es el diseño, te lo decimos.' },
+            { number: '03', title: 'Construir',         desc: 'Guía de marca, anuncios, redes y web, diseñados junto a quienes llevan tus campañas, en el orden que pide la decisión.' },
+            { number: '04', title: 'Medir y optimizar', desc: 'Creatividades probadas dentro de tus campañas: nos quedamos con lo que funciona, mejoramos lo que no y volvemos a probar. Cuando tu negocio cambia, el trabajo de marca cambia con él.' },
+          ],
           sections: [
             {
               heading: 'Bases de marca',

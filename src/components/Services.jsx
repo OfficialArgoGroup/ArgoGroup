@@ -1,23 +1,18 @@
-import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 import SectionTitle from './SectionTitle'
 import Reveal from './Reveal'
-import { CheckIcon } from './icons'
+import { ArrowIcon, CheckIcon } from './icons'
 import { icons } from './iconSet'
+import { SERVICE_PAGES } from '../services.js'
 
-// Icons per service, per section, positionally. They live here rather than in
-// i18n because they are presentation, not copy — and both languages share the
-// same service structure.
-const SERVICE_ICONS = [
-  ['target', 'sliders', 'trending'],
-  ['cpu', 'database', 'workflow', 'chart'],
-  ['gem', 'layers', 'monitor', 'sparkles'],
-]
-
+/**
+ * The homepage's introduction to the three services: one block each, with its
+ * short line, the whole block a link to the service's own page (where the
+ * detail now lives, see src/pages/ServicePage.jsx).
+ */
 export default function Services() {
   const { t } = useLang()
-  const [active, setActive] = useState(0)
-  const services = t.services.items
 
   return (
     <section className="section services" id="services">
@@ -28,47 +23,17 @@ export default function Services() {
           accent={t.services.accent}
         />
 
-        <div className="service-tabs" role="tablist" aria-label={t.services.title}>
-          {services.map((service, index) => (
-            <button
-              key={service.title}
-              className={index === active ? 'service-tab active' : 'service-tab'}
-              role="tab"
-              id={`serviceTab${index}`}
-              aria-selected={index === active}
-              aria-controls={`servicePane${index}`}
-              onClick={() => setActive(index)}
-            >
+        <div className="service-tabs service-links">
+          {t.services.items.map((service, index) => (
+            <Link key={service.title} className="service-tab service-link" to={SERVICE_PAGES[index].path}>
               <span className="num">0{index + 1}</span>
               <span className="name">{service.title}</span>
               <span className="desc">{service.subtitle}</span>
-            </button>
-          ))}
-        </div>
-
-        {/* Every pane stays in the DOM: the inactive ones are still the page's
-            copy, and crawlers that do not click tabs should read all of it. */}
-        <div className="service-panel">
-          {services.map((service, index) => (
-            <div
-              key={service.title}
-              className={index === active ? 'service-pane active' : 'service-pane'}
-              role="tabpanel"
-              id={`servicePane${index}`}
-              aria-labelledby={`serviceTab${index}`}
-            >
-              <p className="service-intro">{service.subtitle}</p>
-              <div className="section-grid">
-                {service.sections.map((section, sectionIndex) => (
-                  <FeatureCard
-                    key={section.heading}
-                    icon={SERVICE_ICONS[index]?.[sectionIndex]}
-                    section={section}
-                    order={sectionIndex}
-                  />
-                ))}
-              </div>
-            </div>
+              <span className="more">
+                {t.services.more}
+                <ArrowIcon />
+              </span>
+            </Link>
           ))}
         </div>
       </div>
@@ -76,7 +41,8 @@ export default function Services() {
   )
 }
 
-function FeatureCard({ icon, section, order }) {
+/** One of a service's cards, as on its page. */
+export function FeatureCard({ icon, section, order }) {
   // The gold spotlight in .feature-card::before follows these two properties.
   const trackPointer = (event) => {
     const rect = event.currentTarget.getBoundingClientRect()
