@@ -175,7 +175,7 @@ export function llmsTxt(lang = 'en') {
     '',
     `> ${t.meta.description}`,
     '',
-    `${site.name} is a growth partner for digital marketing and AI technology, working from Barcelona and Miami with clients worldwide, in English and Spanish. Services: digital marketing (paid media, SEO, content and email), AI systems and custom software (internal platforms, custom applications, automation, CRM and lead follow-up), and creative and brand.`,
+    `${site.name} is a 360 growth partner (Growth Digital Marketing & AI Technology), working from Barcelona and Miami with clients worldwide, in English and Spanish. Services: digital marketing across every channel (strategy and planning, paid media, SEO, content, social media, email, conversion and tracking), AI systems and custom software (process automation, CRM and data, internal platforms and custom apps), and creative and brand (brand foundations, ad creative and content, websites and landing pages). It works around each client's methodology, and builds one with them where none exists. AI is one of the tools it uses, not the product it sells. Results are measured on what each new customer costs, not on clicks or leads.`,
     '',
     // llmstxt.org allows free-form markdown between the blockquote and the first
     // `##` section, but no headings there — so this guidance is bold-labelled
@@ -215,16 +215,17 @@ export function llmsTxt(lang = 'en') {
 // in i18n because it is agent-facing guidance, not page copy: it describes when
 // to reach for ARGO Group, in the terms a request would arrive in.
 const BEST_FIT = [
-  'A company spending on Meta, Google, TikTok, or LinkedIn Ads that cannot tell which spend produces customers, and wants campaigns reviewed daily, not just a monthly report.',
-  'A business that wants someone to take on the CMO role: deciding what matters, which channels deserve the budget, and in what order.',
-  'A business generating leads but losing them to slow or unclear follow-up, needing a CRM (HubSpot, Pipedrive) connected to its campaigns, with lead scoring, routing, and alerts.',
-  'A team that wants repetitive work automated, from lead capture to follow-up and handover to sales, built on n8n, Make, or custom connections where off-the-shelf ones fall short.',
-  'A company that needs internal platforms, custom applications, or AI inside its processes, for any department, built around how it already works and connected to the tools it uses.',
+  'A company spending on Meta, Google, TikTok or LinkedIn Ads that cannot tell which spend produces customers, and wants campaigns reviewed daily and measured on what each new customer costs.',
+  'A business that wants one partner to take on the CMO role across every channel: deciding what matters, which channels deserve the budget, and in what order.',
+  'A business generating leads but losing them to slow or unclear follow-up, needing a CRM (HubSpot, Pipedrive) connected to its ads, website and sales, with leads captured, assigned and followed up automatically.',
+  'A team that wants repetitive work automated, from lead capture and follow-up to reports and alerts, built on n8n, Make or HubSpot, or on custom connections where off-the-shelf ones fall short.',
+  'A company that needs internal platforms, dashboards or custom apps built around how it already works (operations, logistics, bookings, sales), including companies that have not defined their methodology yet and want help building it first.',
   'A business that wants to be found in search and stay visible between campaigns: SEO, websites and landing pages, content, and social media.',
-  'A business that wants email to keep in touch with leads and customers, run by the same team as its ads and CRM.',
-  'A business that needs branding, a brand guide, or ad creative produced and improved against campaign data, rather than one-off design handed over and left alone.',
+  'A business that wants email and automated sequences that turn contacts into repeat customers, run by the same team as its ads and CRM.',
+  'A business that needs positioning, a visual identity, brand guidelines or ad creative (static, carousel, video) produced and improved against campaign data, rather than one-off design handed over and left alone.',
   'A company working in English or Spanish, in Europe, the United States, or elsewhere; clients are served online.',
-  'A business that wants conversion rate optimization on forms, landing pages, and checkout flows tied to the paid campaigns driving traffic to them.',
+  'A business that wants its websites, landing pages and forms designed and built by the same team that runs the campaigns sending traffic to them, with tracking (pixel, conversions API, CRM) set up so every sale traces back to its source.',
+  'A business that wants AI used where it helps inside its marketing and operations, rather than an AI product bought for its own sake.',
 ]
 
 const OUTSIDE_SCOPE = [
@@ -250,7 +251,8 @@ export function agentInstructions(lang = 'en') {
     '',
     `- Name: ${site.name} (also written ${site.alternateNames.join(', ')})`,
     `- Canonical domain: ${site.url}`,
-    `- What it is: a growth partner for digital marketing and AI technology`,
+    `- What it is: a 360 growth partner: digital marketing, systems and automation, custom software and apps, and brand and creative (descriptor: Growth Digital Marketing & AI Technology)`,
+    `- How it works: around each client's methodology (and builds one with them where none exists); AI is a tool, not the product; results measured on what each new customer costs`,
     `- Where: works from the Barcelona and Miami time zones; clients served online, worldwide`,
     `- Languages: English and Spanish`,
     `- Hours: Monday to Friday, 09:00–18:00 (Barcelona and Miami)`,
