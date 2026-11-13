@@ -11,17 +11,17 @@ export const SERVICE_PAGES = [
   {
     path: '/digital-marketing',
     crm: 'marketing_digital',
-    icons: ['target', 'sliders', 'trending'],
+    icons: ['target', 'sliders', 'trending', 'chart'],
   },
   {
     path: '/ai-technology',
     crm: 'sistemas_ia',
-    icons: ['cpu', 'database', 'workflow', 'chart'],
+    icons: ['workflow', 'cpu', 'database'],
   },
   {
     path: '/creative-brand',
     crm: 'otro',
-    icons: ['gem', 'layers', 'monitor', 'sparkles'],
+    icons: ['gem', 'layers', 'monitor'],
   },
 ]
 

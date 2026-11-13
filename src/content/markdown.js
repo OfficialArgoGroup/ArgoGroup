@@ -37,7 +37,7 @@ function homeBody(t) {
   blocks.push(`## ${t.services.title}`)
   t.services.items.forEach((service, index) => {
     blocks.push(`### ${service.title}`)
-    blocks.push(`${service.subtitle}. ${t.services.more}: ${canonicalFor(SERVICE_PAGES[index].path)}`)
+    blocks.push(`${service.summary}. ${t.services.more}: ${canonicalFor(SERVICE_PAGES[index].path)}`)
   })
 
   blocks.push(...methodBlocks(t, t.methodology.items))

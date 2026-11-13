@@ -9,7 +9,8 @@ import { SERVICE_PAGES } from '../services.js'
 /**
  * The homepage's introduction to the three services: one block each, with its
  * short line, the whole block a link to the service's own page (where the
- * detail now lives, see src/pages/ServicePage.jsx).
+ * detail now lives, see src/pages/ServicePage.jsx). `summary` is the short
+ * line; `subtitle` is the longer one under the title on the service page.
  */
 export default function Services() {
   const { t } = useLang()
@@ -28,7 +29,7 @@ export default function Services() {
             <Link key={service.title} className="service-tab service-link" to={SERVICE_PAGES[index].path}>
               <span className="num">0{index + 1}</span>
               <span className="name">{service.title}</span>
-              <span className="desc">{service.subtitle}</span>
+              <span className="desc">{service.summary}</span>
               <span className="more">
                 {t.services.more}
                 <ArrowIcon />
